@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata schemaVersion="2">
+    <id>Codaxy.Xlio</id>    
+    <title>Codaxy Excel IO Library</title>
+    <version>0.8.0</version>
+    <authors>Codaxy</authors>
+    <description>Codaxy Excel IO library provides useful tool for rading/writing Excel files.</description>
+	<dependencies>
+		<dependency id="SharpZipLib" />
+	</dependencies>
+	<projectUrl>https://github.com/codaxy/xlio</projectUrl></metadata>
+</package>
