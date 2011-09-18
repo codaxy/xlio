@@ -202,7 +202,7 @@ namespace Codaxy.Xlio.IO
             if (c.indexedSpecified)
             {
                 if (c.indexed <= indexedColors.Count)
-                    return indexedColors[(int)c.indexed].Clone();
+                    return indexedColors[(int)c.indexed-1].Clone();
                 return null;
             }
             else
