@@ -42,13 +42,16 @@ namespace Codaxy.Xlio.IO
                                 {
                                     case ST_CellType.n:
                                         var n = Convert.ToDouble(c.v);
-                                        value = data.style!=null && NumberFormat.IsDateTimeFormat(data.style.format) ? value = Util.ToDateTime(n) : n;
+                                        value = data.style != null && NumberFormat.IsDateTimeFormat(data.style.format) ? value = Util.ToDateTime(n) : n;
                                         break;
                                     case ST_CellType.inlineStr:
                                         value = c.v;
                                         break;
                                     case ST_CellType.s:
                                         value = sharedStrings[Convert.ToInt32(c.v)];
+                                        break;
+                                    case ST_CellType.b:
+                                        value = c.v != null && c.v.Length > 0 && (c.v[0] == 'T' || c.v[0] == 't' || c.v[0] == '1');
                                         break;
                                 }
                                 row[cell.Col].Value = value;

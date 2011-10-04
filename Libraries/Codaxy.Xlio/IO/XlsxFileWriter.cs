@@ -307,6 +307,12 @@ namespace Codaxy.Xlio.IO
                 value = (String)data.Value;
                 return sharedStrings.Get(value).ToString();
             }
+            if (type == typeof(bool))
+            {
+                ct = ST_CellType.b;
+                value = (bool)data.Value == true ? "TRUE" : "FALSE";
+            }
+
             ct = ST_CellType.inlineStr;           
             return value = String.Format(CultureInfo.InvariantCulture, "{0}", data.Value);
         }
