@@ -11,6 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{FF25CE48
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{64C97DF5-95D0-4674-AC11-AC8D7C8ACDE4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{0F8C47A7-6AAD-44EE-B14D-4B11E7A507CA}"
+	ProjectSection(SolutionItems) = preProject
+		NuGet\Codaxy.Xlio\Codaxy.Xlio.nuspec = NuGet\Codaxy.Xlio\Codaxy.Xlio.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
