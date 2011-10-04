@@ -310,7 +310,7 @@ namespace Codaxy.Xlio.IO
             if (type == typeof(bool))
             {
                 ct = ST_CellType.b;
-                value = (bool)data.Value == true ? "TRUE" : "FALSE";
+                return value = (bool)data.Value == true ? "1" : "0";
             }
 
             ct = ST_CellType.inlineStr;           
