@@ -20,12 +20,12 @@ namespace Codaxy.Xlio.IO
 
     public partial class XlsxFileWriter : IDisposable
     {
-        ZipOutputStream output;
+        ZipOutputStream output;		
         Workbook workbook;
         public XlsxFileWriterOptions Options { get; set; }
         public XlsxFileWriter(Stream output)
         {
-            this.output = new ZipOutputStream(output) { UseZip64 = UseZip64.Off };            
+            this.output = new ZipOutputStream(output) { UseZip64 = UseZip64.Off };			
         }
 
         SharedStrings sharedStrings;
@@ -307,6 +307,12 @@ namespace Codaxy.Xlio.IO
                 value = (String)data.Value;
                 return sharedStrings.Get(value).ToString();
             }
+            if (type == typeof(bool))
+            {
+                ct = ST_CellType.b;
+                return value = (bool)data.Value == true ? "1" : "0";
+            }
+
             ct = ST_CellType.inlineStr;           
             return value = String.Format(CultureInfo.InvariantCulture, "{0}", data.Value);
         }
@@ -334,17 +340,18 @@ namespace Codaxy.Xlio.IO
             return res;
         }
 
-        private void WriteFile<T>(string filePath, T data, XmlSerializerNamespaces ns)
-        {
-            var entry = new ZipEntry(filePath);
-            output.PutNextEntry(entry);
-            var xs = new XmlSerializer(typeof(T));            
-            xs.Serialize(output, data, ns);
-        }
+		private void WriteFile<T>(string filePath, T data, XmlSerializerNamespaces ns)
+		{
+			var entry = new ZipEntry(filePath);
+			output.PutNextEntry(entry);
+			var xs = new XmlSerializer(typeof(T));
+			var writer = new StreamWriter(output, Encoding.UTF8);
+			xs.Serialize(writer, data, ns);
+		}
 
         public void Dispose()
-        {
-            this.output.Dispose();
+        {			
+            this.output.Dispose();			
             this.output = null;
         }
 

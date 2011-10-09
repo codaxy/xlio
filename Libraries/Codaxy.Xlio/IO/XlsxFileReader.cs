@@ -185,9 +185,10 @@ namespace Codaxy.Xlio.IO
             if (zipEntry == null)
                 throw ExceptionFactory.InvalidOperation("File '{0}' not found in archive!", fileName);
             using (var stream = archive.GetInputStream(zipEntry))
+			using (var reader = new StreamReader(stream, true))
             {
-                XmlSerializer s = new XmlSerializer(typeof(T));
-                return (T)s.Deserialize(stream);
+				XmlSerializer s = new XmlSerializer(typeof(T));
+                return (T)s.Deserialize(reader);
             }
         }
 

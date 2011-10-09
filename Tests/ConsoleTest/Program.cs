@@ -11,7 +11,7 @@ namespace ConsoleTest
     class Program
     {
         static void Main(string[] args)
-        {
+        {            
             Stopwatch stopwatch = Stopwatch.StartNew();
             System.IO.Directory.CreateDirectory(".\\write");
             foreach (var f in System.IO.Directory.GetFileSystemEntries(".", "read\\*.xlsx").OrderBy(a=>a))
@@ -39,6 +39,21 @@ namespace ConsoleTest
             Thread.Sleep(5000);
 
             
+        }
+
+        //TODO: move to tests
+        private static void BoolTest()
+        {
+            var f = new Workbook();
+            var sheet = new Sheet("1");
+            f.Sheets.AddSheet(sheet);
+            sheet[0, 0].Value = true;
+            f.Save("bool.xlsx");
+
+            f = Workbook.ReadFile("bool.xlsx");
+            if (!(f.Sheets[0].Cells[0, 0].Value is bool))
+                throw new InvalidOperationException();
+                 
         }
     }
 }

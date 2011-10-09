@@ -63,63 +63,64 @@ namespace Codaxy.Xlio.IO
             fonts = new List<CellFont>();
             if (styles.fonts!=null && styles.fonts.font!=null)
                 foreach (var font in styles.fonts.font)
-                {
-                    CellFont f = new CellFont();
-                    for (int i = 0; i < font.ItemsElementName.Length; i++)
+                    if (font.ItemsElementName != null && font.Items!=null)
                     {
-                        var item = font.Items[i];
-                        CT_BooleanProperty bp;
-                        switch (font.ItemsElementName[i])
+                        CellFont f = new CellFont();
+                        for (int i = 0; i < font.ItemsElementName.Length; i++)
                         {
-                            case ItemsChoiceType3.name:
-                                CT_FontName name;
-                                if (Util.TryCast(item, out name))
-                                    f.Name = name.val;
-                                break;
-                            case ItemsChoiceType3.sz:
-                                CT_FontSize size;
-                                if (Util.TryCast(item, out size))
-                                    f.Size = size.val;
-                                break;
-                            case ItemsChoiceType3.b:
-                                if (Util.TryCast(item, out bp))
-                                    f.Bold = bp.val;
-                                break;
-                            case ItemsChoiceType3.strike:
-                                if (Util.TryCast(item, out bp))
-                                    f.Strike = bp.val;
-                                break;
-                            case ItemsChoiceType3.shadow:
-                                if (Util.TryCast(item, out bp))
-                                    f.Shadow = bp.val;
-                                break;
-                            case ItemsChoiceType3.outline:
-                                if (Util.TryCast(item, out bp))
-                                    f.Outline = bp.val;
-                                break;
-                            case ItemsChoiceType3.i:
-                                if (Util.TryCast(item, out bp))
-                                    f.Italic = bp.val;
-                                break;
-                            case ItemsChoiceType3.u:
-                                CT_UnderlineProperty up;
-                                if (Util.TryCast(item, out up))
-                                    f.Underline = (FontUnderline)up.val;
-                                break;
-                            case ItemsChoiceType3.vertAlign:
-                                CT_VerticalAlignFontProperty vafp;
-                                if (Util.TryCast(item, out vafp))
-                                    f.Script = (FontScript)vafp.val;
-                                break;
-                            case ItemsChoiceType3.color:
-                                CT_Color1 color;
-                                if (Util.TryCast(item, out color))
-                                    f.Color = GetColor(color);
-                                break;
+                            var item = font.Items[i];
+                            CT_BooleanProperty bp;
+                            switch (font.ItemsElementName[i])
+                            {
+                                case ItemsChoiceType3.name:
+                                    CT_FontName name;
+                                    if (Util.TryCast(item, out name))
+                                        f.Name = name.val;
+                                    break;
+                                case ItemsChoiceType3.sz:
+                                    CT_FontSize size;
+                                    if (Util.TryCast(item, out size))
+                                        f.Size = size.val;
+                                    break;
+                                case ItemsChoiceType3.b:
+                                    if (Util.TryCast(item, out bp))
+                                        f.Bold = bp.val;
+                                    break;
+                                case ItemsChoiceType3.strike:
+                                    if (Util.TryCast(item, out bp))
+                                        f.Strike = bp.val;
+                                    break;
+                                case ItemsChoiceType3.shadow:
+                                    if (Util.TryCast(item, out bp))
+                                        f.Shadow = bp.val;
+                                    break;
+                                case ItemsChoiceType3.outline:
+                                    if (Util.TryCast(item, out bp))
+                                        f.Outline = bp.val;
+                                    break;
+                                case ItemsChoiceType3.i:
+                                    if (Util.TryCast(item, out bp))
+                                        f.Italic = bp.val;
+                                    break;
+                                case ItemsChoiceType3.u:
+                                    CT_UnderlineProperty up;
+                                    if (Util.TryCast(item, out up))
+                                        f.Underline = (FontUnderline)up.val;
+                                    break;
+                                case ItemsChoiceType3.vertAlign:
+                                    CT_VerticalAlignFontProperty vafp;
+                                    if (Util.TryCast(item, out vafp))
+                                        f.Script = (FontScript)vafp.val;
+                                    break;
+                                case ItemsChoiceType3.color:
+                                    CT_Color1 color;
+                                    if (Util.TryCast(item, out color))
+                                        f.Color = GetColor(color);
+                                    break;
+                            }
                         }
+                        fonts.Add(f);
                     }
-                    fonts.Add(f);
-                }
 
             numFmts = new Dictionary<uint, string>();
             if (styles.numFmts!=null && styles.numFmts.numFmt!=null)
@@ -202,7 +203,7 @@ namespace Codaxy.Xlio.IO
             if (c.indexedSpecified)
             {
                 if (c.indexed <= indexedColors.Count)
-                    return indexedColors[(int)c.indexed].Clone();
+                    return indexedColors[(int)c.indexed-1].Clone();
                 return null;
             }
             else
