@@ -34,7 +34,7 @@ namespace Codaxy.Xlio.Generic
             for (var i = 0; i < exportColumns.Length; i++)
             {
                 sheet[0, i].Value = exportColumns[i].Caption ?? exportColumns[i].Name;
-                sheet[0, i].Style.Fill = new CellFill { Pattern = FillPattern.Solid, Foreground = new Color(255, 128, 128, 255) };
+                sheet[0, i].Style.Fill = new CellFill { Pattern = FillPattern.Solid, Foreground = new Color(255, 0xAD, 0xD8, 0xE6) };
             }
 
             int row = 1;

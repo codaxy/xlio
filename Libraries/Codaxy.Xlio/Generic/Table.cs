@@ -42,25 +42,31 @@ namespace Codaxy.Xlio.Generic
 
         static Func<object, object> GetExportConverter(Type propertyType)
         {
+            if (TypeInfo.IsNullableType(propertyType))
+                return GetNullableConverter(GetExportConverter(Nullable.GetUnderlyingType(propertyType)));
+            
+            if (propertyType == typeof(Guid))
+                return GuidExportConverter;           
             return null;
         }
 
         static Func<object, object> GetImportConverter(Type propertyType)
         {
             if (TypeInfo.IsNullableType(propertyType))
-                return GetNullableImportConverter(Nullable.GetUnderlyingType(propertyType));
+                return GetNullableConverter(GetImportConverter(Nullable.GetUnderlyingType(propertyType)));
 
             if (propertyType == typeof(DateTime))
                 return DateTimeImportConverter;            
             if (propertyType == typeof(Guid))
-                return GuidConverter;            
+                return GuidImportConverter;            
 
             return GetStandardConverter(propertyType);
         }
 
-        private static Func<object, object> GetNullableImportConverter(Type type)
+        private static Func<object, object> GetNullableConverter(Func<object, object> converter)
         {
-            var converter = GetImportConverter(type);
+            if (converter == null)
+                return null;                    
             return (value) =>
             {
                 if (value == null)
@@ -74,14 +80,7 @@ namespace Codaxy.Xlio.Generic
             if (o is Double)
                 return XlioUtil.ToDateTime((double)o);
             return Convert.ChangeType(o, typeof(DateTime));
-        }
-
-        static object NullableDateTimeImportConverter(object o)
-        {
-            if (o == null)
-                return null;
-            return (DateTime?)DateTimeImportConverter(o);
-        }
+        }        
 
         public class Column
         {
@@ -95,10 +94,17 @@ namespace Codaxy.Xlio.Generic
             public Action<T, object> Setter { get; set; }
         }
 
-        static object GuidConverter(object o)
+        static object GuidImportConverter(object o)
         {
             if (o is String)
                 return new Guid((String)o);
+            return o;
+        }
+
+        static object GuidExportConverter(object o)
+        {
+            if (o is Guid)
+                return o.ToString();
             return o;
         }
 
@@ -106,7 +112,7 @@ namespace Codaxy.Xlio.Generic
         {
             if (o == null)
                 return null;
-            return (Guid?)GuidConverter(o);
+            return (Guid?)GuidImportConverter(o);
         }
 
         public static Func<object, object> GetStandardConverter(Type type)
