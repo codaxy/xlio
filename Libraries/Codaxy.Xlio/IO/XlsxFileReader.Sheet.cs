@@ -42,7 +42,7 @@ namespace Codaxy.Xlio.IO
                                 {
                                     case ST_CellType.n:
                                         var n = Convert.ToDouble(c.v);
-                                        value = data.style != null && NumberFormat.IsDateTimeFormat(data.style.format) ? value = Util.ToDateTime(n) : n;
+                                        value = data.style != null && NumberFormat.IsDateTimeFormat(data.style.format) ? value = XlioUtil.ToDateTime(n) : n;
                                         break;
                                     case ST_CellType.inlineStr:
                                         value = c.v;

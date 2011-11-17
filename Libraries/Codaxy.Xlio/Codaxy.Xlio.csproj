@@ -99,6 +99,7 @@
     <Compile Include="Workbook.IO.cs" />
     <Compile Include="IO\XlsxFileReader.cs" />
     <Compile Include="SheetRange.cs" />
+    <Compile Include="XlioUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

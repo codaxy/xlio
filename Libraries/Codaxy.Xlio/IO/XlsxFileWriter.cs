@@ -299,7 +299,7 @@ namespace Codaxy.Xlio.IO
             if (type == typeof(DateTime))
             {
                 ct = ST_CellType.n;
-                return value = String.Format(CultureInfo.InvariantCulture, "{0}", Util.ToExcelDateTime((DateTime)data.Value));
+                return value = String.Format(CultureInfo.InvariantCulture, "{0}", XlioUtil.ToExcelDateTime((DateTime)data.Value));
             }
             if (type == typeof(string))
             {
