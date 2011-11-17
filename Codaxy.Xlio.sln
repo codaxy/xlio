@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{0F8C47A7
 		NuGet\Codaxy.Xlio\Codaxy.Xlio.nuspec = NuGet\Codaxy.Xlio\Codaxy.Xlio.nuspec
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codaxy.Xlio.Generic.Tests", "Tests\Codaxy.Xlio.Generic.Tests\Codaxy.Xlio.Generic.Tests.csproj", "{4CB9462B-DDD7-487A-A23F-29F5828FC0EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,12 +58,23 @@ Global
 		{1F33404D-3231-4317-8EE8-F66E591C5A3A}.Release|Mixed Platforms.Build.0 = Release|x86
 		{1F33404D-3231-4317-8EE8-F66E591C5A3A}.Release|x86.ActiveCfg = Release|x86
 		{1F33404D-3231-4317-8EE8-F66E591C5A3A}.Release|x86.Build.0 = Release|x86
+		{4CB9462B-DDD7-487A-A23F-29F5828FC0EC}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{4CB9462B-DDD7-487A-A23F-29F5828FC0EC}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{4CB9462B-DDD7-487A-A23F-29F5828FC0EC}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{4CB9462B-DDD7-487A-A23F-29F5828FC0EC}.Debug|x86.ActiveCfg = Debug|x86
+		{4CB9462B-DDD7-487A-A23F-29F5828FC0EC}.Debug|x86.Build.0 = Debug|x86
+		{4CB9462B-DDD7-487A-A23F-29F5828FC0EC}.Release|Any CPU.ActiveCfg = Release|x86
+		{4CB9462B-DDD7-487A-A23F-29F5828FC0EC}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{4CB9462B-DDD7-487A-A23F-29F5828FC0EC}.Release|Mixed Platforms.Build.0 = Release|x86
+		{4CB9462B-DDD7-487A-A23F-29F5828FC0EC}.Release|x86.ActiveCfg = Release|x86
+		{4CB9462B-DDD7-487A-A23F-29F5828FC0EC}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{75101596-E55E-4A6B-8D95-DF9C8193A799} = {64C97DF5-95D0-4674-AC11-AC8D7C8ACDE4}
+		{4CB9462B-DDD7-487A-A23F-29F5828FC0EC} = {64C97DF5-95D0-4674-AC11-AC8D7C8ACDE4}
 		{1F33404D-3231-4317-8EE8-F66E591C5A3A} = {FF25CE48-6BCC-4F51-B84A-A30D75820120}
 	EndGlobalSection
 EndGlobal
