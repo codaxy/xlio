@@ -24,11 +24,11 @@ namespace Codaxy.Xlio
                 if (Char.IsDigit(reference[i]))
                     row = 10 * row + (reference[i] - '0');
                 else if (Char.IsLetter(reference[i]))
-                    col = 26 * col + (Char.ToUpper(reference[i]) - 'A');
+                    col = 26 * col + (Char.ToUpper(reference[i]) - 'A') + 1;
                 else
                     throw ExceptionFactory.Argument("Value '{0}' is not a valid cell reference!", reference.Substring(start, count));
             }
-            return new Cell { Col = col, Row = row - 1 };
+            return new Cell { Col = col - 1, Row = row - 1 };
         }
 
         public static string Format(int row, int col)
@@ -37,8 +37,8 @@ namespace Codaxy.Xlio
             do
             {
                 stack.Push((Char)('A' + (col % 26)));
-                col /= 26;
-            } while (col > 0);
+                col = col / 26 - 1;
+            } while (col >= 0);
             return new String(stack.ToArray()) + (row + 1).ToString();
         }
 

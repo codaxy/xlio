@@ -36,9 +36,7 @@ namespace ConsoleTest
                 }
             }           
 
-            Thread.Sleep(5000);
-
-            
+            Thread.Sleep(2500);            
         }
 
         //TODO: move to tests

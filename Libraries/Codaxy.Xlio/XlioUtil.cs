@@ -22,5 +22,21 @@ namespace Codaxy.Xlio
                 res += 1;
             return res;
         }
+
+        /// <summary>
+        /// Returns the Excel name of the zero indexed column number 0->A, 1->B
+        /// </summary>
+        /// <param name="column">Zero indexed column number.</param>
+        /// <returns></returns>
+        public static string GetColumnName(int col)
+        {
+            Stack<char> stack = new Stack<char>();
+            do
+            {
+                stack.Push((Char)('A' + (col % 26)));
+                col = col / 26 - 1;
+            } while (col >= 0);
+            return new String(stack.ToArray());
+        }
     }
 }
