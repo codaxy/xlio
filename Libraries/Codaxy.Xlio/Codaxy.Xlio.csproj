@@ -74,7 +74,8 @@
     <Compile Include="Cell.cs" />
     <Compile Include="CellData.cs" />
     <Compile Include="CellStyle.cs" />
-    <Compile Include="Generic\Table.cs" />
+    <Compile Include="Generic\ColumnInfo.cs" />
+    <Compile Include="Generic\TableInfo.cs" />
     <Compile Include="Generic\XlioExporter.cs" />
     <Compile Include="Generic\XlioImporter.cs" />
     <Compile Include="IO\ContentTypes.Consts.cs" />

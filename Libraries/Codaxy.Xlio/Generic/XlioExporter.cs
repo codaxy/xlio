@@ -7,15 +7,15 @@ using Codaxy.Xlio;
 
 namespace Codaxy.Xlio.Generic
 {
-    public class XlioExporter<T> where T:new()
+    public class XlioExporter
     {
-        public static void Export(IEnumerable<T> data, String filePath, Table<T> t = null)
+        public static void Export<T>(IEnumerable<T> data, String filePath, TableInfo<T> t = null) where T:new()
         {
             using (var fs = File.Create(filePath))
                 Export(data, fs, t);
         }
 
-        public static void Export(IEnumerable<T> data, Stream stream, Table<T> t = null)
+        public static void Export<T>(IEnumerable<T> data, Stream stream, TableInfo<T> t = null) where T:new()
         {
             var wb = new Workbook();
             var sheet = new Sheet("Sheet 1");
@@ -24,10 +24,10 @@ namespace Codaxy.Xlio.Generic
             wb.SaveToStream(stream, IO.XlsxFileWriterOptions.AutoFit);
         }
 
-        public static void Export(IEnumerable<T> data, Sheet sheet, Table<T> t = null)
+        public static void Export<T>(IEnumerable<T> data, Sheet sheet, TableInfo<T> t = null) where T : new()
         {
             if (t == null)
-                t = Table<T>.Build();
+                t = TableInfo<T>.Build();
 
             var exportColumns = t.Columns.Where(a => a.Getter != null).ToArray();
 

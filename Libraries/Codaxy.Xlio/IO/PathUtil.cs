@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Codaxy.Xlio.IO
 {
-    public class PathUtil
+    class PathUtil
     {
         public static void SplitFilePath(string path, out String filePath, out String fileName)
         {

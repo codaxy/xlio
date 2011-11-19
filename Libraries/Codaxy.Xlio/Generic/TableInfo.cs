@@ -8,23 +8,23 @@ using Codaxy.Xlio.IO;
 
 namespace Codaxy.Xlio.Generic
 {
-    public class Table<T>
+    public class TableInfo<T>
     {
-        public List<Column> Columns { get; set; }        
+        public List<ColumnInfo<T>> Columns { get; set; }        
 
-        public static Table<T> Build()
+        public static TableInfo<T> Build()
         {
             var type = typeof(T);
             var properties = type.GetProperties();
-            var result = new Table<T>
+            var result = new TableInfo<T>
             {
-                Columns = new List<Column>()
+                Columns = new List<ColumnInfo<T>>()
             };
 
             foreach (var p in properties)
             {
                 var prop = p;
-                result.Columns.Add(new Column
+                result.Columns.Add(new ColumnInfo<T>
                 {
                     Name = prop.Name,
                     Getter = prop.CanRead ? (row) => { return prop.GetValue(row, null); } : (Func<T, object>)null,
@@ -80,19 +80,7 @@ namespace Codaxy.Xlio.Generic
             if (o is Double)
                 return XlioUtil.ToDateTime((double)o);
             return Convert.ChangeType(o, typeof(DateTime));
-        }        
-
-        public class Column
-        {
-            public String Caption { get; set; }
-            public String Name { get; set; }
-            public Func<T, object> Getter { get; set; }
-            public Func<object, object> ExportConverter { get; set; }
-            public Func<T, CellData> Exporter { get; set; }
-            public Func<object, object> ImportConverter { get; set; }
-            public Func<CellData, T> Importer { get; set; }
-            public Action<T, object> Setter { get; set; }
-        }
+        }   
 
         static object GuidImportConverter(object o)
         {

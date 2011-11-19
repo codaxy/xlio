@@ -7,38 +7,20 @@ using Codaxy.Xlio;
 
 namespace Codaxy.Xlio.Generic
 {
-    public class XlioImporter<T> where T:new()
+    public class XlioImporter
     {
-        public static List<T> Import(String filePath, Table<T> t = null)
-        {
-            var wb = Xlio.Workbook.ReadFile(filePath);
-            return Import(wb, t);
-        }
-
-        public static List<T> Import(Stream stream, Table<T> t = null)
-        {
-            var wb = Xlio.Workbook.ReadStream(stream);            
-            return Import(wb, t);
-        }
-
-        public static List<T> Import(Workbook wb, Table<T> t = null)
-        {
-            var sheet = wb.Sheets[0];
-            return Import(sheet, t);
-        }
-
-        class ColumnInfo
+        class ImportedColumnInfo<T>
         {
             public int Index { get; set; }
-            public Table<T>.Column Column { get; set; }
+            public ColumnInfo<T> Column { get; set; }
         }
 
-        public static List<T> Import(Sheet sheet, Table<T> t = null)
+        public static List<T> Import<T>(Sheet sheet, TableInfo<T> t = null) where T : new()
         {
             if (t == null)
-                t = Table<T>.Build();
+                t = TableInfo<T>.Build();
 
-            var importColumns = new List<ColumnInfo>();
+            var importColumns = new List<ImportedColumnInfo<T>>();
             var firstRow = sheet[0].Data;
             foreach (var cell in firstRow)
             {
@@ -48,7 +30,7 @@ namespace Codaxy.Xlio.Generic
                     var c = t.Columns.FirstOrDefault(a => a.Name == name) ?? t.Columns.FirstOrDefault(a => a.Caption == name);
                     if (c != null && c.Setter!=null)
                     {
-                        importColumns.Add(new ColumnInfo { Index = cell.Key, Column = c });
+                        importColumns.Add(new ImportedColumnInfo<T> { Index = cell.Key, Column = c });
                     }
                 }
             }
@@ -69,6 +51,24 @@ namespace Codaxy.Xlio.Generic
             }
 
             return result;            
+        }
+
+        public static List<T> Import<T>(String filePath, TableInfo<T> t = null) where T : new()
+        {
+            var wb = Xlio.Workbook.ReadFile(filePath);
+            return Import(wb, t);
+        }
+
+        public static List<T> Import<T>(Stream stream, TableInfo<T> t = null) where T : new()
+        {
+            var wb = Xlio.Workbook.ReadStream(stream);
+            return Import(wb, t);
+        }
+
+        public static List<T> Import<T>(Workbook wb, TableInfo<T> t = null) where T : new()
+        {
+            var sheet = wb.Sheets[0];
+            return Import(sheet, t);
         }
     }
 }

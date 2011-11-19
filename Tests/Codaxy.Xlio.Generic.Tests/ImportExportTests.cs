@@ -30,8 +30,8 @@ namespace Codaxy.Xlio.Generic.Tests
             };
 
             var tmpFile = "output.xlsx";//Path.ChangeExtension(Path.GetTempFileName(), ".xlsx");
-            XlioExporter<C1>.Export(data, tmpFile);
-            var import = XlioImporter<C1>.Import(tmpFile);
+            XlioExporter.Export(data, tmpFile);
+            var import = XlioImporter.Import<C1>(tmpFile);
 
             Assert.AreEqual(import.Count, data.Count);
 
