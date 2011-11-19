@@ -21,7 +21,7 @@ namespace Codaxy.Xlio.Generic
             var sheet = new Sheet("Sheet 1");
             Export(data, sheet, t);
             wb.Sheets.AddSheet(sheet);
-            wb.SaveToStream(stream);
+            wb.SaveToStream(stream, IO.XlsxFileWriterOptions.AutoFit);
         }
 
         public static void Export(IEnumerable<T> data, Sheet sheet, Table<T> t = null)
@@ -31,10 +31,16 @@ namespace Codaxy.Xlio.Generic
 
             var exportColumns = t.Columns.Where(a => a.Getter != null).ToArray();
 
+            var headerStyle = new CellStyle
+            {
+                Fill = new CellFill { Pattern = FillPattern.Solid, Foreground = new Color(255, 0x46, 0x82, 0xB4) },
+                Font = new CellFont { Color = new Color(255, 255, 255, 255), Bold = true }
+            };
+
             for (var i = 0; i < exportColumns.Length; i++)
             {
                 sheet[0, i].Value = exportColumns[i].Caption ?? exportColumns[i].Name;
-                sheet[0, i].Style.Fill = new CellFill { Pattern = FillPattern.Solid, Foreground = new Color(255, 0xAD, 0xD8, 0xE6) };
+                sheet[0, i].Style = headerStyle;
             }
 
             int row = 1;
