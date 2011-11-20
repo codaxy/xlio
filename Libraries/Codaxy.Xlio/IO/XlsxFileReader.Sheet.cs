@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Codaxy.Xlio.Model.Oxml;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace Codaxy.Xlio.IO
 {
@@ -41,14 +42,14 @@ namespace Codaxy.Xlio.IO
                                 switch (c.t)
                                 {
                                     case ST_CellType.n:
-                                        var n = Convert.ToDouble(c.v);
+                                        var n = Convert.ToDouble(c.v, CultureInfo.InvariantCulture);
                                         value = data.style != null && NumberFormat.IsDateTimeFormat(data.style.format) ? value = XlioUtil.ToDateTime(n) : n;
                                         break;
                                     case ST_CellType.inlineStr:
                                         value = c.v;
                                         break;
                                     case ST_CellType.s:
-                                        value = sharedStrings[Convert.ToInt32(c.v)];
+                                        value = sharedStrings[Convert.ToInt32(c.v, CultureInfo.InvariantCulture)];
                                         break;
                                     case ST_CellType.b:
                                         value = c.v != null && c.v.Length > 0 && (c.v[0] == 'T' || c.v[0] == 't' || c.v[0] == '1');

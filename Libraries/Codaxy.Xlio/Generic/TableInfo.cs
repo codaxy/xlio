@@ -79,7 +79,7 @@ namespace Codaxy.Xlio.Generic
         {
             if (o is Double)
                 return XlioUtil.ToDateTime((double)o);
-            return Convert.ChangeType(o, typeof(DateTime));
+            return Convert.ChangeType(o, typeof(DateTime), CultureInfo.InvariantCulture);
         }   
 
         static object GuidImportConverter(object o)
