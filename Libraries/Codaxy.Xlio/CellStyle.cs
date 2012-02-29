@@ -54,7 +54,17 @@ namespace Codaxy.Xlio
             if (!Util.TryCast(obj, out o))
                 return false;
             return border == o.border && fill == o.fill && font == o.font && alignment == o.alignment && format == o.format; 
-        }        
+        }
+
+        public static bool operator ==(CellStyle c1, CellStyle c2)
+        {
+            return Util.AreEqual(c1, c2);
+        }
+
+        public static bool operator !=(CellStyle c1, CellStyle c2)
+        {
+            return !(c1 == c2);
+        }
     }
 
     public enum HorizontalAlignment
@@ -109,6 +119,16 @@ namespace Codaxy.Xlio
                 && WrapText == o.WrapText
                 && JustifyLastLine == o.JustifyLastLine;
         }
+
+        public static bool operator ==(CellAlignment c1, CellAlignment c2)
+        {
+            return Util.AreEqual(c1, c2);
+        }
+
+        public static bool operator !=(CellAlignment c1, CellAlignment c2)
+        {
+            return !(c1 == c2);
+        }
     }
 
     public class Color {
@@ -152,7 +172,17 @@ namespace Codaxy.Xlio
             if (!Util.TryCast(obj, out o))
                 return false;
             return a == o.a && r == o.r && b == o.b && g == o.g && tint == o.tint;
-        }        
+        }
+
+        public static bool operator ==(Color c1, Color c2)
+        {
+            return Util.AreEqual(c1, c2);
+        }
+
+        public static bool operator !=(Color c1, Color c2)
+        {
+            return !(c1 == c2);
+        }
     }
 
     public enum FillPattern
@@ -196,8 +226,17 @@ namespace Codaxy.Xlio
                 return false;
             return Background == o.Background && Foreground == o.Foreground && Pattern == o.Pattern;
         }
-    }
 
+        public static bool operator ==(CellFill c1, CellFill c2)
+        {
+            return Util.AreEqual(c1, c2);
+        }
+
+        public static bool operator !=(CellFill c1, CellFill c2)
+        {
+            return !(c1 == c2);
+        }
+    }
 
     public class CellBorder
     {
@@ -264,6 +303,16 @@ namespace Codaxy.Xlio
                 && DiagonalDown == o.DiagonalDown
                 && Outline == o.Outline;
         }
+
+        public static bool operator ==(CellBorder c1, CellBorder c2)
+        {
+            return Util.AreEqual(c1, c2);
+        }
+
+        public static bool operator !=(CellBorder c1, CellBorder c2)
+        {
+            return !(c1 == c2);
+        }
     }
 
     public enum BorderStyle
@@ -287,6 +336,16 @@ namespace Codaxy.Xlio
             if (!Util.TryCast(obj, out o))
                 return false;
             return Style == o.Style && Color == o.Color;
+        }
+
+        public static bool operator ==(BorderEdge c1, BorderEdge c2)
+        {
+            return Util.AreEqual(c1, c2);
+        }
+
+        public static bool operator !=(BorderEdge c1, BorderEdge c2)
+        {
+            return !(c1 == c2);
         }
     }
 
@@ -340,6 +399,16 @@ namespace Codaxy.Xlio
                 && Shadow == o.Shadow
                 && Color == o.Color
                 && Script == o.Script;
+        }
+
+        public static bool operator ==(CellFont c1, CellFont c2)
+        {
+            return Util.AreEqual(c1, c2);
+        }
+
+        public static bool operator !=(CellFont c1, CellFont c2)
+        {
+            return !(c1 == c2);
         }
     }
 }
