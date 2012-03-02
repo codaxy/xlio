@@ -2,9 +2,9 @@ XLIO
 ----
 Xlio is a small C# library designed for reading and writing Excel files (.xlsx only).
 It provides an elegant class system which feels natural for the developers.
-It's very fast, and has no external dependencies.
+It's very fast and has no external dependencies.
 
-Check the following example, to see how typical Xlio code looks like.
+Check the following example to see how typical Xlio code looks like.
 
 	var workbook = Workbook.ReadFile(@"C:\Work\Test.xlsx");
 	var sheet = workbook.Sheets[0];
