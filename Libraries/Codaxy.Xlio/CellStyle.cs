@@ -239,6 +239,11 @@ namespace Codaxy.Xlio
         {
             return !(c1 == c2);
         }
+
+        public static CellFill Solid(Color color)
+        {
+            return new CellFill { Foreground = color, Pattern = FillPattern.Solid };
+        }
     }
 
     public class CellBorder
