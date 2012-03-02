@@ -42,6 +42,6 @@ namespace Codaxy.Xlio
         {
             get { return mergedCells != null; }
 
-        }
+        }       
     }
 }

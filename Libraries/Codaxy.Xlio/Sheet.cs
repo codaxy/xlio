@@ -24,7 +24,7 @@ namespace Codaxy.Xlio
                 var cell = Cell.Parse(location);
                 return this[cell];
             }
-        }
+        }        
 
         public CellData this[Cell cell]
         {

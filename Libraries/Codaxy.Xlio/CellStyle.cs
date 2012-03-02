@@ -131,21 +131,22 @@ namespace Codaxy.Xlio
         }
     }
 
-    public class Color {
-
+    public class Color
+    {
         public byte a, r, g, b;
         public double tint { get; set; }
 
         public Color() { }
+        public Color(byte r, byte g, byte b) : this(255, r, g, b) { }
         public Color(params byte[] argb)
         {
-            if (argb.Length > 0) 
+            if (argb.Length > 0)
                 a = argb[0];
-            if (argb.Length > 1) 
+            if (argb.Length > 1)
                 r = argb[1];
-            if (argb.Length > 2) 
+            if (argb.Length > 2)
                 g = argb[2];
-            if (argb.Length > 3) 
+            if (argb.Length > 3)
                 b = argb[3];
         }
 
@@ -153,7 +154,7 @@ namespace Codaxy.Xlio
         {
             return new Color
             {
-                a = a, 
+                a = a,
                 r = r,
                 g = g,
                 b = b,
@@ -183,6 +184,8 @@ namespace Codaxy.Xlio
         {
             return !(c1 == c2);
         }
+
+        public static Color Black { get { return new Color(255, 0, 0, 0); } }
     }
 
     public enum FillPattern
@@ -346,6 +349,16 @@ namespace Codaxy.Xlio
         public static bool operator !=(BorderEdge c1, BorderEdge c2)
         {
             return !(c1 == c2);
+        }
+
+        public static BorderEdge Hair()
+        {
+            return new BorderEdge { Color = Color.Black, Style = BorderStyle.Hair };
+        }
+        
+        public static BorderEdge Hair(Color c)
+        {
+            return new BorderEdge { Color = c, Style = BorderStyle.Hair };
         }
     }
 
