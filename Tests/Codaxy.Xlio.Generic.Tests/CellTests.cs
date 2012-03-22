@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PetaTest;
+using System.Globalization;
+using System.Threading;
 
 namespace Codaxy.Xlio.Generic.Tests
 {
@@ -25,6 +27,15 @@ namespace Codaxy.Xlio.Generic.Tests
             Assert.AreEqual(25, Cell.Parse("Z").Col);
             Assert.AreEqual(26, Cell.Parse("AA1").Col);
             Assert.AreEqual(52, Cell.Parse("BA1").Col);            
+        }
+
+        [Test(Active = true)]
+        public void ParseNumberTest()
+        {
+            var culture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("sr-Latn-BA");
+            Assert.AreEqual(11.11, Convert.ToDouble("11.11", CultureInfo.InvariantCulture));
+            Thread.CurrentThread.CurrentCulture = culture;
         }
     }
 }
