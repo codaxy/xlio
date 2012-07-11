@@ -12,13 +12,17 @@ namespace Codaxy.Xlio
 
         public static DateTime ToDateTime(double excelDateTime)
         {
-            if (excelDateTime > 59) excelDateTime -= 1; //Excel/Lotus 2/29/1900 bug   
+            //Excel/Lotus 2/29/1900 bug   
+            if (excelDateTime > 59)
+                excelDateTime -= 1;
             return baseDate.AddDays(excelDateTime);
         }
 
         public static double ToExcelDateTime(DateTime dateTime)
         {
-            var res = (dateTime - baseDate).TotalDays;
+            //Excel does not support milliseconds and causes rounding problems
+            var trimmedMilliseconds = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second);
+            var res = (trimmedMilliseconds - baseDate).TotalDays;
             if (res > 58)
                 res += 1;
             return res;
