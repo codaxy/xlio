@@ -232,8 +232,10 @@ namespace Codaxy.Xlio.IO
                         }
                         else
                         {
-                            String sv;
-                            var v = WriteCellValue(data, out ct, out sv);
+                            String sv, format;
+                            var v = WriteCellValue(data, out ct, out sv, out format);
+                            if (format != null && data.style!=null && data.style.format == null)
+                                data.Style.Format = format;
                             cell.v = v;
                             cell.t = ct;
                             if (calcAutoFit && sv != null && !cd.Value.IsMerged && cd.Key < 256)
@@ -282,8 +284,10 @@ namespace Codaxy.Xlio.IO
             WriteFile(sheetPath, ws, SpreadsheetNs(false));            
         }
 
-        private string WriteCellValue(CellData data, out ST_CellType ct, out String value)
+        private string WriteCellValue(CellData data, out ST_CellType ct, out String value, out String format)
         {
+            format = null;
+
             if (data.Value == null)
             {
                 ct = ST_CellType.n;
@@ -298,8 +302,10 @@ namespace Codaxy.Xlio.IO
             }
             if (type == typeof(DateTime))
             {
+                var dt = (DateTime)data.Value;
                 ct = ST_CellType.n;
-                return value = String.Format(CultureInfo.InvariantCulture, "{0}", XlioUtil.ToExcelDateTime((DateTime)data.Value));
+                format = dt.Hour == 0 && dt.Minute == 0 && dt.Second == 0 && dt.Millisecond == 0 ? "m/d/yyyy" : "m/d/yyyy\\ h:mm:ss";
+                return value = String.Format(CultureInfo.InvariantCulture, "{0}", XlioUtil.ToExcelDateTime(dt));
             }
             if (type == typeof(string))
             {
