@@ -15,7 +15,7 @@ namespace Codaxy.Xlio.Generic
             public ColumnInfo<T> Column { get; set; }
         }
 
-        public static List<T> Import<T>(Sheet sheet, TableInfo<T> t = null) where T : new()
+        public static List<T> Import<T>(Sheet sheet, TableInfo<T> t = null, bool skipEmptyRows = true) where T : new()
         {
             if (t == null)
                 t = TableInfo<T>.Build();
@@ -40,14 +40,22 @@ namespace Codaxy.Xlio.Generic
             for (var i = 1; i < sheet.Cells.Data.Data.Count; i++)
             {
                 var row = new T();
+                bool empty = true;
                 foreach (var ic in importColumns)
                 {
                     var v = sheet.Cells[i, ic.Index].Value;
+                    
+                    if (empty && v!=null && !String.IsNullOrEmpty(v.ToString().Trim()))
+                        empty = false;
+
                     if (ic.Column.ImportConverter != null)
                         v = ic.Column.ImportConverter(v);
+                    
                     ic.Column.Setter(row, v);
                 }
-                result.Add(row);
+
+                if (!empty || !skipEmptyRows)
+                    result.Add(row);
             }
 
             return result;            

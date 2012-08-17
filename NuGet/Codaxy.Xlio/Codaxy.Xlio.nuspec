@@ -3,7 +3,7 @@
   <metadata schemaVersion="2">
     <id>Codaxy.Xlio</id>    
     <title>Codaxy Excel IO Library</title>
-    <version>0.9.2.2</version>
+    <version>0.9.2.3</version>
     <authors>Codaxy</authors>
     <description>Codaxy Excel IO library provides useful tool for rading/writing Excel files.</description>
 	<dependencies>
