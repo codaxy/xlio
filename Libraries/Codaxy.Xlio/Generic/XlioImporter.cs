@@ -39,7 +39,7 @@ namespace Codaxy.Xlio.Generic
 
             for (var i = 1; i < sheet.Cells.Data.Data.Count; i++)
             {
-                if (!skipEmptyRows || sheet.Cells[i].Data.Values.Any(a => a != null))
+                if (!skipEmptyRows || sheet.Cells[i].Data.Values.Any(a => a.Value != null))
                 {
                     var row = new T();
                     foreach (var ic in importColumns)
