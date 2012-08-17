@@ -39,44 +39,40 @@ namespace Codaxy.Xlio.Generic
 
             for (var i = 1; i < sheet.Cells.Data.Data.Count; i++)
             {
-                var row = new T();
-                bool empty = true;
-                foreach (var ic in importColumns)
+                if (!skipEmptyRows || sheet.Cells[i].Data.Values.Any(a => a != null))
                 {
-                    var v = sheet.Cells[i, ic.Index].Value;
-                    
-                    if (empty && v!=null && !String.IsNullOrEmpty(v.ToString().Trim()))
-                        empty = false;
+                    var row = new T();
+                    foreach (var ic in importColumns)
+                    {
+                        var v = sheet.Cells[i, ic.Index].Value;
+                        if (ic.Column.ImportConverter != null)
+                            v = ic.Column.ImportConverter(v);
 
-                    if (ic.Column.ImportConverter != null)
-                        v = ic.Column.ImportConverter(v);
-                    
-                    ic.Column.Setter(row, v);
-                }
-
-                if (!empty || !skipEmptyRows)
+                        ic.Column.Setter(row, v);
+                    }
                     result.Add(row);
+                }
             }
 
             return result;            
         }
 
-        public static List<T> Import<T>(String filePath, TableInfo<T> t = null) where T : new()
+        public static List<T> Import<T>(String filePath, TableInfo<T> t = null, bool skipEmptyRows = true) where T : new()
         {
             var wb = Xlio.Workbook.ReadFile(filePath);
-            return Import(wb, t);
+            return Import(wb, t, skipEmptyRows);
         }
 
-        public static List<T> Import<T>(Stream stream, TableInfo<T> t = null) where T : new()
+        public static List<T> Import<T>(Stream stream, TableInfo<T> t = null, bool skipEmptyRows = true) where T : new()
         {
             var wb = Xlio.Workbook.ReadStream(stream);
-            return Import(wb, t);
+            return Import(wb, t, skipEmptyRows);
         }
 
-        public static List<T> Import<T>(Workbook wb, TableInfo<T> t = null) where T : new()
+        public static List<T> Import<T>(Workbook wb, TableInfo<T> t = null, bool skipEmptyRows = true) where T : new()
         {
             var sheet = wb.Sheets[0];
-            return Import(sheet, t);
+            return Import(sheet, t, skipEmptyRows);
         }
     }
 }
