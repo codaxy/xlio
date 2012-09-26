@@ -29,7 +29,7 @@ namespace Codaxy.Xlio.Generic.Tests
             Assert.AreEqual(52, Cell.Parse("BA1").Col);            
         }
 
-        [Test(Active = true)]
+        [Test(Active = false)]
         public void ParseNumberTest()
         {
             var culture = Thread.CurrentThread.CurrentCulture;

@@ -11,6 +11,7 @@ namespace Codaxy.Xlio
         {
             SheetName = sheetName;
             cells = new Matrix<CellData>();
+            Columns = new SheetColumnCollection();
         }
         
         public string SheetName { get; internal set; }
@@ -65,5 +66,11 @@ namespace Codaxy.Xlio
             get { return cells[row]; }
             set { cells[row] = value; }
         }
+
+        public double? DefaultRowHeight { get; set; }
+        public bool ShowGridLines { get; set; }
+        public Cell ActiveCell { get; set; }
+
+        public SheetColumnCollection Columns { get; private set; }
     }
 }

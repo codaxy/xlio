@@ -31,6 +31,11 @@ namespace Codaxy.Xlio
             return new Cell { Col = col - 1, Row = row - 1 };
         }
 
+        public static int ParseColumn(String reference)
+        {
+            return Parse(reference).Col;
+        }
+
         public static string Format(int row, int col)
         {
             Stack<char> stack = new Stack<char>();

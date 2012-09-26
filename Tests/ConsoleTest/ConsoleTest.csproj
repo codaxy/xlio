@@ -113,6 +113,9 @@
     <None Include="read\06 - 100 Columns.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="read\AdvancedSimExport.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Codaxy.Xlio\Codaxy.Xlio.csproj">

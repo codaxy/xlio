@@ -26,7 +26,7 @@ namespace Codaxy.Xlio.Generic.Tests
         {
             List<C1> data = new List<C1>() {
                 new C1 { Bool = true, Guid = Guid.NewGuid(), String = "Test", Double = 5.5, Int = 3, Time = DateTime.Now },
-                new C1()
+                new C1 { Bool = true }
             };
 
             var tmpFile = "output.xlsx";//Path.ChangeExtension(Path.GetTempFileName(), ".xlsx");

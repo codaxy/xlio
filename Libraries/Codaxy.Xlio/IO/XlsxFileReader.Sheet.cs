@@ -15,17 +15,47 @@ namespace Codaxy.Xlio.IO
             Dictionary<uint, SharedFormula> sharedFormulas = new Dictionary<uint, SharedFormula>();
             try
             {
-                var sheetData = ReadFile<CT_Worksheet>(sheetPath);
+                var xml = ReadFile<CT_Worksheet>(sheetPath);
 
-                if (sheetData.mergeCells!=null && sheetData.mergeCells.mergeCell != null)
-                    foreach (var mc in sheetData.mergeCells.mergeCell)
+                if (xml.sheetFormatPr != null)
+                {
+                    sheet.DefaultRowHeight = xml.sheetFormatPr.defaultRowHeight;                    
+                }
+
+                if (xml.sheetViews!=null && xml.sheetViews.sheetView!=null)
+                    foreach (var sheetView in xml.sheetViews.sheetView)                        
+                    {
+                        sheet.ShowGridLines = sheetView.showGridLines;
+
+                        if (sheetView.selection != null && sheetView.selection.Length == 1)
+                            sheet.ActiveCell = Cell.Parse(sheetView.selection[0].activeCell);
+                    }
+
+                if (xml.cols != null)
+                {
+                    foreach (var col in xml.cols)
+                    {
+                        sheet.Columns.AppendRange((int)col.min - 1, (int)col.max - 1, new SheetColumn
+                        {
+                            BestFit = col.bestFit,
+                            Width = col.customWidth && col.widthSpecified ? col.width : (double?)null,
+                            style = GetStyle(col.style),
+                            Phonetic = col.phonetic,
+                            OutlineLevel = col.outlineLevel,
+                            Hidden = col.hidden
+                        });
+                    }
+                }
+
+                if (xml.mergeCells!=null && xml.mergeCells.mergeCell != null)
+                    foreach (var mc in xml.mergeCells.mergeCell)
                     {
                         var range = Range.Parse(mc.@ref);
                         sheet[range].Merge();
                     }
                 
-                if (sheetData.sheetData!=null)
-                foreach (var rd in sheetData.sheetData)
+                if (xml.sheetData!=null)
+                foreach (var rd in xml.sheetData)
                 {
                     var row = sheet[(int)rd.r - 1];
                     if (rd.c!=null)

@@ -5158,9 +5158,9 @@ namespace Codaxy.Xlio.Model.Oxml
 
         //private CT_SheetDimension dimensionField;
 
-        //private CT_SheetViews sheetViewsField;
+        private CT_SheetViews sheetViewsField;
 
-        //private CT_SheetFormatPr sheetFormatPrField;
+        private CT_SheetFormatPr sheetFormatPrField;
 
         private CT_Col[] colsField;
 
@@ -5250,25 +5250,31 @@ namespace Codaxy.Xlio.Model.Oxml
         //    }
         //}
 
-        ///// <remarks/>
-        //public CT_SheetViews sheetViews {
-        //    get {
-        //        return this.sheetViewsField;
-        //    }
-        //    set {
-        //        this.sheetViewsField = value;
-        //    }
-        //}
+        /// <remarks/>
+        public CT_SheetViews sheetViews
+        {
+            get
+            {
+                return this.sheetViewsField;
+            }
+            set
+            {
+                this.sheetViewsField = value;
+            }
+        }
 
-        ///// <remarks/>
-        //public CT_SheetFormatPr sheetFormatPr {
-        //    get {
-        //        return this.sheetFormatPrField;
-        //    }
-        //    set {
-        //        this.sheetFormatPrField = value;
-        //    }
-        //}
+        /// <remarks/>
+        public CT_SheetFormatPr sheetFormatPr
+        {
+            get
+            {
+                return this.sheetFormatPrField;
+            }
+            set
+            {
+                this.sheetFormatPrField = value;
+            }
+        }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("col", typeof(CT_Col), IsNullable = false)]
@@ -5918,4 +5924,2034 @@ namespace Codaxy.Xlio.Model.Oxml
             }
         }
     }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public partial class CT_SheetViews
+    {
+
+        private CT_SheetView[] sheetViewField;
+
+        private CT_ExtensionList extLstField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("sheetView")]
+        public CT_SheetView[] sheetView
+        {
+            get
+            {
+                return this.sheetViewField;
+            }
+            set
+            {
+                this.sheetViewField = value;
+            }
+        }
+
+        /// <remarks/>
+        public CT_ExtensionList extLst
+        {
+            get
+            {
+                return this.extLstField;
+            }
+            set
+            {
+                this.extLstField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public partial class CT_SheetView
+    {
+
+        private CT_Pane paneField;
+
+        private CT_Selection[] selectionField;
+
+        private CT_PivotSelection[] pivotSelectionField;
+
+        private CT_ExtensionList extLstField;
+
+        private bool windowProtectionField;
+
+        private bool showFormulasField;
+
+        private bool showGridLinesField;
+
+        private bool showRowColHeadersField;
+
+        private bool showZerosField;
+
+        private bool rightToLeftField;
+
+        private bool tabSelectedField;
+
+        private bool showRulerField;
+
+        private bool showOutlineSymbolsField;
+
+        private bool defaultGridColorField;
+
+        private bool showWhiteSpaceField;
+
+        private ST_SheetViewType viewField;
+
+        private string topLeftCellField;
+
+        private uint colorIdField;
+
+        private uint zoomScaleField;
+
+        private uint zoomScaleNormalField;
+
+        private uint zoomScaleSheetLayoutViewField;
+
+        private uint zoomScalePageLayoutViewField;
+
+        private uint workbookViewIdField;
+
+        public CT_SheetView()
+        {
+            this.windowProtectionField = false;
+            this.showFormulasField = false;
+            this.showGridLinesField = true;
+            this.showRowColHeadersField = true;
+            this.showZerosField = true;
+            this.rightToLeftField = false;
+            this.tabSelectedField = false;
+            this.showRulerField = true;
+            this.showOutlineSymbolsField = true;
+            this.defaultGridColorField = true;
+            this.showWhiteSpaceField = true;
+            this.viewField = ST_SheetViewType.normal;
+            this.colorIdField = ((uint)(64));
+            this.zoomScaleField = ((uint)(100));
+            this.zoomScaleNormalField = ((uint)(0));
+            this.zoomScaleSheetLayoutViewField = ((uint)(0));
+            this.zoomScalePageLayoutViewField = ((uint)(0));
+        }
+
+        /// <remarks/>
+        public CT_Pane pane
+        {
+            get
+            {
+                return this.paneField;
+            }
+            set
+            {
+                this.paneField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("selection")]
+        public CT_Selection[] selection
+        {
+            get
+            {
+                return this.selectionField;
+            }
+            set
+            {
+                this.selectionField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("pivotSelection")]
+        public CT_PivotSelection[] pivotSelection
+        {
+            get
+            {
+                return this.pivotSelectionField;
+            }
+            set
+            {
+                this.pivotSelectionField = value;
+            }
+        }
+
+        /// <remarks/>
+        public CT_ExtensionList extLst
+        {
+            get
+            {
+                return this.extLstField;
+            }
+            set
+            {
+                this.extLstField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool windowProtection
+        {
+            get
+            {
+                return this.windowProtectionField;
+            }
+            set
+            {
+                this.windowProtectionField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool showFormulas
+        {
+            get
+            {
+                return this.showFormulasField;
+            }
+            set
+            {
+                this.showFormulasField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(true)]
+        public bool showGridLines
+        {
+            get
+            {
+                return this.showGridLinesField;
+            }
+            set
+            {
+                this.showGridLinesField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(true)]
+        public bool showRowColHeaders
+        {
+            get
+            {
+                return this.showRowColHeadersField;
+            }
+            set
+            {
+                this.showRowColHeadersField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(true)]
+        public bool showZeros
+        {
+            get
+            {
+                return this.showZerosField;
+            }
+            set
+            {
+                this.showZerosField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool rightToLeft
+        {
+            get
+            {
+                return this.rightToLeftField;
+            }
+            set
+            {
+                this.rightToLeftField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool tabSelected
+        {
+            get
+            {
+                return this.tabSelectedField;
+            }
+            set
+            {
+                this.tabSelectedField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(true)]
+        public bool showRuler
+        {
+            get
+            {
+                return this.showRulerField;
+            }
+            set
+            {
+                this.showRulerField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(true)]
+        public bool showOutlineSymbols
+        {
+            get
+            {
+                return this.showOutlineSymbolsField;
+            }
+            set
+            {
+                this.showOutlineSymbolsField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(true)]
+        public bool defaultGridColor
+        {
+            get
+            {
+                return this.defaultGridColorField;
+            }
+            set
+            {
+                this.defaultGridColorField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(true)]
+        public bool showWhiteSpace
+        {
+            get
+            {
+                return this.showWhiteSpaceField;
+            }
+            set
+            {
+                this.showWhiteSpaceField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(ST_SheetViewType.normal)]
+        public ST_SheetViewType view
+        {
+            get
+            {
+                return this.viewField;
+            }
+            set
+            {
+                this.viewField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string topLeftCell
+        {
+            get
+            {
+                return this.topLeftCellField;
+            }
+            set
+            {
+                this.topLeftCellField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "64")]
+        public uint colorId
+        {
+            get
+            {
+                return this.colorIdField;
+            }
+            set
+            {
+                this.colorIdField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "100")]
+        public uint zoomScale
+        {
+            get
+            {
+                return this.zoomScaleField;
+            }
+            set
+            {
+                this.zoomScaleField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
+        public uint zoomScaleNormal
+        {
+            get
+            {
+                return this.zoomScaleNormalField;
+            }
+            set
+            {
+                this.zoomScaleNormalField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
+        public uint zoomScaleSheetLayoutView
+        {
+            get
+            {
+                return this.zoomScaleSheetLayoutViewField;
+            }
+            set
+            {
+                this.zoomScaleSheetLayoutViewField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
+        public uint zoomScalePageLayoutView
+        {
+            get
+            {
+                return this.zoomScalePageLayoutViewField;
+            }
+            set
+            {
+                this.zoomScalePageLayoutViewField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public uint workbookViewId
+        {
+            get
+            {
+                return this.workbookViewIdField;
+            }
+            set
+            {
+                this.workbookViewIdField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public partial class CT_Pane
+    {
+
+        private double xSplitField;
+
+        private double ySplitField;
+
+        private string topLeftCellField;
+
+        private ST_Pane activePaneField;
+
+        private ST_PaneState stateField;
+
+        public CT_Pane()
+        {
+            this.xSplitField = 0;
+            this.ySplitField = 0;
+            this.activePaneField = ST_Pane.topLeft;
+            this.stateField = ST_PaneState.split;
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(0)]
+        public double xSplit
+        {
+            get
+            {
+                return this.xSplitField;
+            }
+            set
+            {
+                this.xSplitField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(0)]
+        public double ySplit
+        {
+            get
+            {
+                return this.ySplitField;
+            }
+            set
+            {
+                this.ySplitField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string topLeftCell
+        {
+            get
+            {
+                return this.topLeftCellField;
+            }
+            set
+            {
+                this.topLeftCellField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(ST_Pane.topLeft)]
+        public ST_Pane activePane
+        {
+            get
+            {
+                return this.activePaneField;
+            }
+            set
+            {
+                this.activePaneField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(ST_PaneState.split)]
+        public ST_PaneState state
+        {
+            get
+            {
+                return this.stateField;
+            }
+            set
+            {
+                this.stateField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public enum ST_Pane
+    {
+
+        /// <remarks/>
+        bottomRight,
+
+        /// <remarks/>
+        topRight,
+
+        /// <remarks/>
+        bottomLeft,
+
+        /// <remarks/>
+        topLeft,
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public enum ST_PaneState
+    {
+
+        /// <remarks/>
+        split,
+
+        /// <remarks/>
+        frozen,
+
+        /// <remarks/>
+        frozenSplit,
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public partial class CT_PivotSelection
+    {
+
+        private CT_PivotArea pivotAreaField;
+
+        private ST_Pane paneField;
+
+        private bool showHeaderField;
+
+        private bool labelField;
+
+        private bool dataField;
+
+        private bool extendableField;
+
+        private uint countField;
+
+        private ST_Axis axisField;
+
+        private bool axisFieldSpecified;
+
+        private uint dimensionField;
+
+        private uint startField;
+
+        private uint minField;
+
+        private uint maxField;
+
+        private uint activeRowField;
+
+        private uint activeColField;
+
+        private uint previousRowField;
+
+        private uint previousColField;
+
+        private uint clickField;
+
+        private string idField;
+
+        public CT_PivotSelection()
+        {
+            this.paneField = ST_Pane.topLeft;
+            this.showHeaderField = false;
+            this.labelField = false;
+            this.dataField = false;
+            this.extendableField = false;
+            this.countField = ((uint)(0));
+            this.dimensionField = ((uint)(0));
+            this.startField = ((uint)(0));
+            this.minField = ((uint)(0));
+            this.maxField = ((uint)(0));
+            this.activeRowField = ((uint)(0));
+            this.activeColField = ((uint)(0));
+            this.previousRowField = ((uint)(0));
+            this.previousColField = ((uint)(0));
+            this.clickField = ((uint)(0));
+        }
+
+        /// <remarks/>
+        public CT_PivotArea pivotArea
+        {
+            get
+            {
+                return this.pivotAreaField;
+            }
+            set
+            {
+                this.pivotAreaField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(ST_Pane.topLeft)]
+        public ST_Pane pane
+        {
+            get
+            {
+                return this.paneField;
+            }
+            set
+            {
+                this.paneField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool showHeader
+        {
+            get
+            {
+                return this.showHeaderField;
+            }
+            set
+            {
+                this.showHeaderField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool label
+        {
+            get
+            {
+                return this.labelField;
+            }
+            set
+            {
+                this.labelField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool data
+        {
+            get
+            {
+                return this.dataField;
+            }
+            set
+            {
+                this.dataField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool extendable
+        {
+            get
+            {
+                return this.extendableField;
+            }
+            set
+            {
+                this.extendableField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
+        public uint count
+        {
+            get
+            {
+                return this.countField;
+            }
+            set
+            {
+                this.countField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public ST_Axis axis
+        {
+            get
+            {
+                return this.axisField;
+            }
+            set
+            {
+                this.axisField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool axisSpecified
+        {
+            get
+            {
+                return this.axisFieldSpecified;
+            }
+            set
+            {
+                this.axisFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
+        public uint dimension
+        {
+            get
+            {
+                return this.dimensionField;
+            }
+            set
+            {
+                this.dimensionField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
+        public uint start
+        {
+            get
+            {
+                return this.startField;
+            }
+            set
+            {
+                this.startField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
+        public uint min
+        {
+            get
+            {
+                return this.minField;
+            }
+            set
+            {
+                this.minField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
+        public uint max
+        {
+            get
+            {
+                return this.maxField;
+            }
+            set
+            {
+                this.maxField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
+        public uint activeRow
+        {
+            get
+            {
+                return this.activeRowField;
+            }
+            set
+            {
+                this.activeRowField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
+        public uint activeCol
+        {
+            get
+            {
+                return this.activeColField;
+            }
+            set
+            {
+                this.activeColField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
+        public uint previousRow
+        {
+            get
+            {
+                return this.previousRowField;
+            }
+            set
+            {
+                this.previousRowField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
+        public uint previousCol
+        {
+            get
+            {
+                return this.previousColField;
+            }
+            set
+            {
+                this.previousColField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
+        public uint click
+        {
+            get
+            {
+                return this.clickField;
+            }
+            set
+            {
+                this.clickField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, Namespace = "http://schemas.openxmlformats.org/officeDocument/2006/relationships")]
+        public string id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public enum ST_SheetViewType
+    {
+
+        /// <remarks/>
+        normal,
+
+        /// <remarks/>
+        pageBreakPreview,
+
+        /// <remarks/>
+        pageLayout,
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public partial class CT_Selection
+    {
+
+        private ST_Pane paneField;
+
+        private string activeCellField;
+
+        private uint activeCellIdField;
+
+        private string[] sqrefField;
+
+        public CT_Selection()
+        {
+            this.paneField = ST_Pane.topLeft;
+            this.activeCellIdField = ((uint)(0));
+            this.sqrefField = new string[] {
+                    "A1"};
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(ST_Pane.topLeft)]
+        public ST_Pane pane
+        {
+            get
+            {
+                return this.paneField;
+            }
+            set
+            {
+                this.paneField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string activeCell
+        {
+            get
+            {
+                return this.activeCellField;
+            }
+            set
+            {
+                this.activeCellField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
+        public uint activeCellId
+        {
+            get
+            {
+                return this.activeCellIdField;
+            }
+            set
+            {
+                this.activeCellIdField = value;
+            }
+        }
+
+        /// <remarks/>
+        // CODEGEN Warning: DefaultValue attribute on members of type System.String[] is not supported in this version of the .Net Framework.
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string[] sqref
+        {
+            get
+            {
+                return this.sqrefField;
+            }
+            set
+            {
+                this.sqrefField = value;
+            }
+        }
+    }
+
+    // <remarks/>
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public partial class CT_PivotArea
+    {
+
+        private CT_PivotAreaReferences referencesField;
+
+        private CT_ExtensionList extLstField;
+
+        private int fieldField;
+
+        private bool fieldFieldSpecified;
+
+        private ST_PivotAreaType typeField;
+
+        private bool dataOnlyField;
+
+        private bool labelOnlyField;
+
+        private bool grandRowField;
+
+        private bool grandColField;
+
+        private bool cacheIndexField;
+
+        private bool outlineField;
+
+        private string offsetField;
+
+        private bool collapsedLevelsAreSubtotalsField;
+
+        private ST_Axis axisField;
+
+        private bool axisFieldSpecified;
+
+        private uint fieldPositionField;
+
+        private bool fieldPositionFieldSpecified;
+
+        public CT_PivotArea()
+        {
+            this.typeField = ST_PivotAreaType.normal;
+            this.dataOnlyField = true;
+            this.labelOnlyField = false;
+            this.grandRowField = false;
+            this.grandColField = false;
+            this.cacheIndexField = false;
+            this.outlineField = true;
+            this.collapsedLevelsAreSubtotalsField = false;
+        }
+
+        /// <remarks/>
+        public CT_PivotAreaReferences references
+        {
+            get
+            {
+                return this.referencesField;
+            }
+            set
+            {
+                this.referencesField = value;
+            }
+        }
+
+        /// <remarks/>
+        public CT_ExtensionList extLst
+        {
+            get
+            {
+                return this.extLstField;
+            }
+            set
+            {
+                this.extLstField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public int field
+        {
+            get
+            {
+                return this.fieldField;
+            }
+            set
+            {
+                this.fieldField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool fieldSpecified
+        {
+            get
+            {
+                return this.fieldFieldSpecified;
+            }
+            set
+            {
+                this.fieldFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(ST_PivotAreaType.normal)]
+        public ST_PivotAreaType type
+        {
+            get
+            {
+                return this.typeField;
+            }
+            set
+            {
+                this.typeField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(true)]
+        public bool dataOnly
+        {
+            get
+            {
+                return this.dataOnlyField;
+            }
+            set
+            {
+                this.dataOnlyField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool labelOnly
+        {
+            get
+            {
+                return this.labelOnlyField;
+            }
+            set
+            {
+                this.labelOnlyField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool grandRow
+        {
+            get
+            {
+                return this.grandRowField;
+            }
+            set
+            {
+                this.grandRowField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool grandCol
+        {
+            get
+            {
+                return this.grandColField;
+            }
+            set
+            {
+                this.grandColField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool cacheIndex
+        {
+            get
+            {
+                return this.cacheIndexField;
+            }
+            set
+            {
+                this.cacheIndexField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(true)]
+        public bool outline
+        {
+            get
+            {
+                return this.outlineField;
+            }
+            set
+            {
+                this.outlineField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string offset
+        {
+            get
+            {
+                return this.offsetField;
+            }
+            set
+            {
+                this.offsetField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool collapsedLevelsAreSubtotals
+        {
+            get
+            {
+                return this.collapsedLevelsAreSubtotalsField;
+            }
+            set
+            {
+                this.collapsedLevelsAreSubtotalsField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public ST_Axis axis
+        {
+            get
+            {
+                return this.axisField;
+            }
+            set
+            {
+                this.axisField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool axisSpecified
+        {
+            get
+            {
+                return this.axisFieldSpecified;
+            }
+            set
+            {
+                this.axisFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public uint fieldPosition
+        {
+            get
+            {
+                return this.fieldPositionField;
+            }
+            set
+            {
+                this.fieldPositionField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool fieldPositionSpecified
+        {
+            get
+            {
+                return this.fieldPositionFieldSpecified;
+            }
+            set
+            {
+                this.fieldPositionFieldSpecified = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public partial class CT_PivotAreaReferences
+    {
+
+        private CT_PivotAreaReference[] referenceField;
+
+        private uint countField;
+
+        private bool countFieldSpecified;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("reference")]
+        public CT_PivotAreaReference[] reference
+        {
+            get
+            {
+                return this.referenceField;
+            }
+            set
+            {
+                this.referenceField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public uint count
+        {
+            get
+            {
+                return this.countField;
+            }
+            set
+            {
+                this.countField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool countSpecified
+        {
+            get
+            {
+                return this.countFieldSpecified;
+            }
+            set
+            {
+                this.countFieldSpecified = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public partial class CT_PivotAreaReference
+    {
+
+        private CT_Index[] xField;
+
+        private CT_ExtensionList extLstField;
+
+        private uint fieldField;
+
+        private bool fieldFieldSpecified;
+
+        private uint countField;
+
+        private bool countFieldSpecified;
+
+        private bool selectedField;
+
+        private bool byPositionField;
+
+        private bool relativeField;
+
+        private bool defaultSubtotalField;
+
+        private bool sumSubtotalField;
+
+        private bool countASubtotalField;
+
+        private bool avgSubtotalField;
+
+        private bool maxSubtotalField;
+
+        private bool minSubtotalField;
+
+        private bool productSubtotalField;
+
+        private bool countSubtotalField;
+
+        private bool stdDevSubtotalField;
+
+        private bool stdDevPSubtotalField;
+
+        private bool varSubtotalField;
+
+        private bool varPSubtotalField;
+
+        public CT_PivotAreaReference()
+        {
+            this.selectedField = true;
+            this.byPositionField = false;
+            this.relativeField = false;
+            this.defaultSubtotalField = false;
+            this.sumSubtotalField = false;
+            this.countASubtotalField = false;
+            this.avgSubtotalField = false;
+            this.maxSubtotalField = false;
+            this.minSubtotalField = false;
+            this.productSubtotalField = false;
+            this.countSubtotalField = false;
+            this.stdDevSubtotalField = false;
+            this.stdDevPSubtotalField = false;
+            this.varSubtotalField = false;
+            this.varPSubtotalField = false;
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("x")]
+        public CT_Index[] x
+        {
+            get
+            {
+                return this.xField;
+            }
+            set
+            {
+                this.xField = value;
+            }
+        }
+
+        /// <remarks/>
+        public CT_ExtensionList extLst
+        {
+            get
+            {
+                return this.extLstField;
+            }
+            set
+            {
+                this.extLstField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public uint field
+        {
+            get
+            {
+                return this.fieldField;
+            }
+            set
+            {
+                this.fieldField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool fieldSpecified
+        {
+            get
+            {
+                return this.fieldFieldSpecified;
+            }
+            set
+            {
+                this.fieldFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public uint count
+        {
+            get
+            {
+                return this.countField;
+            }
+            set
+            {
+                this.countField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool countSpecified
+        {
+            get
+            {
+                return this.countFieldSpecified;
+            }
+            set
+            {
+                this.countFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(true)]
+        public bool selected
+        {
+            get
+            {
+                return this.selectedField;
+            }
+            set
+            {
+                this.selectedField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool byPosition
+        {
+            get
+            {
+                return this.byPositionField;
+            }
+            set
+            {
+                this.byPositionField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool relative
+        {
+            get
+            {
+                return this.relativeField;
+            }
+            set
+            {
+                this.relativeField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool defaultSubtotal
+        {
+            get
+            {
+                return this.defaultSubtotalField;
+            }
+            set
+            {
+                this.defaultSubtotalField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool sumSubtotal
+        {
+            get
+            {
+                return this.sumSubtotalField;
+            }
+            set
+            {
+                this.sumSubtotalField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool countASubtotal
+        {
+            get
+            {
+                return this.countASubtotalField;
+            }
+            set
+            {
+                this.countASubtotalField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool avgSubtotal
+        {
+            get
+            {
+                return this.avgSubtotalField;
+            }
+            set
+            {
+                this.avgSubtotalField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool maxSubtotal
+        {
+            get
+            {
+                return this.maxSubtotalField;
+            }
+            set
+            {
+                this.maxSubtotalField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool minSubtotal
+        {
+            get
+            {
+                return this.minSubtotalField;
+            }
+            set
+            {
+                this.minSubtotalField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool productSubtotal
+        {
+            get
+            {
+                return this.productSubtotalField;
+            }
+            set
+            {
+                this.productSubtotalField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool countSubtotal
+        {
+            get
+            {
+                return this.countSubtotalField;
+            }
+            set
+            {
+                this.countSubtotalField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool stdDevSubtotal
+        {
+            get
+            {
+                return this.stdDevSubtotalField;
+            }
+            set
+            {
+                this.stdDevSubtotalField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool stdDevPSubtotal
+        {
+            get
+            {
+                return this.stdDevPSubtotalField;
+            }
+            set
+            {
+                this.stdDevPSubtotalField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool varSubtotal
+        {
+            get
+            {
+                return this.varSubtotalField;
+            }
+            set
+            {
+                this.varSubtotalField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool varPSubtotal
+        {
+            get
+            {
+                return this.varPSubtotalField;
+            }
+            set
+            {
+                this.varPSubtotalField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public enum ST_PivotAreaType
+    {
+
+        /// <remarks/>
+        none,
+
+        /// <remarks/>
+        normal,
+
+        /// <remarks/>
+        data,
+
+        /// <remarks/>
+        all,
+
+        /// <remarks/>
+        origin,
+
+        /// <remarks/>
+        button,
+
+        /// <remarks/>
+        topRight,
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public enum ST_Axis
+    {
+
+        /// <remarks/>
+        axisRow,
+
+        /// <remarks/>
+        axisCol,
+
+        /// <remarks/>
+        axisPage,
+
+        /// <remarks/>
+        axisValues,
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public partial class CT_Index
+    {
+
+        private uint vField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public uint v
+        {
+            get
+            {
+                return this.vField;
+            }
+            set
+            {
+                this.vField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public partial class CT_SheetFormatPr
+    {
+
+        private uint baseColWidthField;
+
+        private double defaultColWidthField;
+
+        private bool defaultColWidthFieldSpecified;
+
+        private double defaultRowHeightField;
+
+        private bool customHeightField;
+
+        private bool zeroHeightField;
+
+        private bool thickTopField;
+
+        private bool thickBottomField;
+
+        private byte outlineLevelRowField;
+
+        private byte outlineLevelColField;
+
+        public CT_SheetFormatPr()
+        {
+            this.baseColWidthField = ((uint)(8));
+            this.customHeightField = false;
+            this.zeroHeightField = false;
+            this.thickTopField = false;
+            this.thickBottomField = false;
+            this.outlineLevelRowField = ((byte)(0));
+            this.outlineLevelColField = ((byte)(0));
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "8")]
+        public uint baseColWidth
+        {
+            get
+            {
+                return this.baseColWidthField;
+            }
+            set
+            {
+                this.baseColWidthField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public double defaultColWidth
+        {
+            get
+            {
+                return this.defaultColWidthField;
+            }
+            set
+            {
+                this.defaultColWidthField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool defaultColWidthSpecified
+        {
+            get
+            {
+                return this.defaultColWidthFieldSpecified;
+            }
+            set
+            {
+                this.defaultColWidthFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public double defaultRowHeight
+        {
+            get
+            {
+                return this.defaultRowHeightField;
+            }
+            set
+            {
+                this.defaultRowHeightField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool customHeight
+        {
+            get
+            {
+                return this.customHeightField;
+            }
+            set
+            {
+                this.customHeightField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool zeroHeight
+        {
+            get
+            {
+                return this.zeroHeightField;
+            }
+            set
+            {
+                this.zeroHeightField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool thickTop
+        {
+            get
+            {
+                return this.thickTopField;
+            }
+            set
+            {
+                this.thickTopField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool thickBottom
+        {
+            get
+            {
+                return this.thickBottomField;
+            }
+            set
+            {
+                this.thickBottomField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(byte), "0")]
+        public byte outlineLevelRow
+        {
+            get
+            {
+                return this.outlineLevelRowField;
+            }
+            set
+            {
+                this.outlineLevelRowField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(byte), "0")]
+        public byte outlineLevelCol
+        {
+            get
+            {
+                return this.outlineLevelColField;
+            }
+            set
+            {
+                this.outlineLevelColField = value;
+            }
+        }
+    }
+    
 }

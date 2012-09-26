@@ -168,6 +168,20 @@ namespace Codaxy.Xlio.IO
             int[] width = new int[256];
             bool calcAutoFit = (Options & XlsxFileWriterOptions.AutoFit) != 0;
 
+
+            CT_SheetFormatPr sheetFormat = null;
+            if (sheet.DefaultRowHeight.HasValue)
+            {
+                sheetFormat = new CT_SheetFormatPr { defaultRowHeight = sheet.DefaultRowHeight.Value };
+            }
+
+            var sheetView = new CT_SheetView();
+
+            if (sheet.ActiveCell != null)
+                sheetView.selection = new[] { new CT_Selection { activeCell = sheet.ActiveCell.ToString(), sqref = new[] { sheet.ActiveCell.ToString() } } };
+
+            sheetView.showGridLines = sheetView.showGridLines;
+
             var rows = new List<CT_Row>();
             foreach (var row in sheet.Cells.Data.Data)
             {
@@ -263,17 +277,46 @@ namespace Codaxy.Xlio.IO
 
             var cols = new List<CT_Col>();
             if (calcAutoFit)
-            {                
+            {
                 for (uint i = 0; i < width.Length; i++)
                     if (width[i] > 0)
                     {
                         cols.Add(new CT_Col { min = i + 1, max = i + 1, bestFit = true, customWidth = true, width = width[i] + 1, widthSpecified = true });
                     }
             }
+            else
+            {
+                foreach (var node in sheet.Columns.data)
+                {
+                    var col = new CT_Col
+                    {
+                        min = (uint)(node.FirstColumn + 1),
+                        max = (uint)(node.LastColumn + 1),
+                        bestFit = node.Data.BestFit,
+                        hidden = node.Data.Hidden,
+                        outlineLevel = node.Data.OutlineLevel,
+                        phonetic = node.Data.Phonetic
+                    };
+
+                    if (node.Data.Width.HasValue)
+                    {
+                        col.width = node.Data.Width.Value;
+                        col.widthSpecified = col.customWidth = true;
+                    }
+
+                    if (node.Data.style != null)
+                        col.style = RegisterStyle(node.Data.style);
+
+                    cols.Add(col);
+                }
+            }
+
             var ws = new CT_Worksheet
             {
                 sheetData = rows.ToArray(),
-                cols = cols.Count > 0 ? cols.ToArray() : null
+                cols = cols.Count > 0 ? cols.ToArray() : null,
+                sheetFormatPr = sheetFormat,
+                sheetViews = new CT_SheetViews { sheetView = new[] { sheetView } }
             };
 
             if (!mergedCells.Empty)
