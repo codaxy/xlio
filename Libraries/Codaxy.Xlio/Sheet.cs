@@ -10,14 +10,14 @@ namespace Codaxy.Xlio
         public Sheet(String sheetName)
         {
             SheetName = sheetName;
-            cells = new Matrix<CellData>();
+            data = new SheetData();
             Columns = new SheetColumnCollection();
         }
         
         public string SheetName { get; internal set; }
 
-        Matrix<CellData> cells;
-        public Matrix<CellData> Cells { get { return cells; } }
+        SheetData data;
+        public SheetData Data { get { return data; } }
 
         public CellData this[String location]
         {
@@ -29,8 +29,8 @@ namespace Codaxy.Xlio
 
         public CellData this[Cell cell]
         {
-            get { return cells[cell.Row, cell.Col]; }
-            set { cells[cell.Row, cell.Col] = value; }
+            get { return data[cell.Row, cell.Col]; }
+            set { data[cell.Row, cell.Col] = value; }
         }
 
         public SheetRange this[Range range]
@@ -57,14 +57,14 @@ namespace Codaxy.Xlio
 
         public CellData this[int row, int col]
         {
-            get { return cells[row, col]; }
-            set { cells[row, col] = value; }
+            get { return data[row, col]; }
+            set { data[row, col] = value; }
         }
 
-        public Array<CellData> this[int row]
+        public SheetRow this[int row]
         {
-            get { return cells[row]; }
-            set { cells[row] = value; }
+            get { return data[row]; }
+            set { data[row] = value; }
         }
 
         public double? DefaultRowHeight { get; set; }

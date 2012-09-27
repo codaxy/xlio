@@ -172,7 +172,11 @@ namespace Codaxy.Xlio.IO
             CT_SheetFormatPr sheetFormat = null;
             if (sheet.DefaultRowHeight.HasValue)
             {
-                sheetFormat = new CT_SheetFormatPr { defaultRowHeight = sheet.DefaultRowHeight.Value };
+                sheetFormat = new CT_SheetFormatPr
+                {
+                    defaultRowHeight = sheet.DefaultRowHeight.Value,
+                    customHeight = true
+                };
             }
 
             var sheetView = new CT_SheetView();
@@ -180,14 +184,14 @@ namespace Codaxy.Xlio.IO
             if (sheet.ActiveCell != null)
                 sheetView.selection = new[] { new CT_Selection { activeCell = sheet.ActiveCell.ToString(), sqref = new[] { sheet.ActiveCell.ToString() } } };
 
-            sheetView.showGridLines = sheetView.showGridLines;
+            sheetView.showGridLines = sheet.ShowGridLines;
 
             var rows = new List<CT_Row>();
-            foreach (var row in sheet.Cells.Data.Data)
+            foreach (var row in sheet.Data)
             {
-                var cells = new List<CT_Cell>();               
+                var cells = new List<CT_Cell>();
 
-                foreach (var cd in row.Value.Data)
+                foreach (var cd in row.Value)
                 {
                     bool skipData = false;
                     var c = new Cell { Col = cd.Key, Row = row.Key };
@@ -199,14 +203,14 @@ namespace Codaxy.Xlio.IO
 
                     ST_CellType ct;
                     var data = cd.Value;
-                   
+
                     var cell = new CT_Cell
                     {
-                        r = c.ToString()             
+                        r = c.ToString()
                     };
 
                     if (!skipData)
-                    {                        
+                    {
                         if (data.Formula != null)
                         {
                             if (data.Formula.StartsWith("{"))
@@ -248,7 +252,7 @@ namespace Codaxy.Xlio.IO
                         {
                             String sv, format;
                             var v = WriteCellValue(data, out ct, out sv, out format);
-                            if (format != null && data.style!=null && data.style.format == null)
+                            if (format != null && data.style != null && data.style.format == null)
                                 data.Style.Format = format;
                             cell.v = v;
                             cell.t = ct;
@@ -261,17 +265,35 @@ namespace Codaxy.Xlio.IO
                         }
                     }
 
-                    if (data.style!=null)
-                        cell.s = RegisterStyle(data.style);                                            
+                    if (data.style != null)
+                        cell.s = RegisterStyle(data.style);
 
                     cells.Add(cell);
                 }
+                
                 var r = new CT_Row()
                 {
                     c = cells.ToArray(),
                     r = (uint)row.Key + 1,
                     rSpecified = true
-                };                
+                };
+
+                if (row.Value.Height.HasValue)
+                {
+                    r.ht = row.Value.Height.Value;
+                    r.htSpecified = true;
+                }
+
+                r.hidden = row.Value.Hidden;
+                r.collapsed = row.Value.Collapsed;
+                r.ph = row.Value.Phonetic;
+
+                if (row.Value.style != null)
+                {
+                    r.s = RegisterStyle(row.Value.style);
+                    r.customFormat = r.s > 0;
+                }
+
                 rows.Add(r);
             }
 
@@ -284,7 +306,7 @@ namespace Codaxy.Xlio.IO
                         cols.Add(new CT_Col { min = i + 1, max = i + 1, bestFit = true, customWidth = true, width = width[i] + 1, widthSpecified = true });
                     }
             }
-            else
+            else if (sheet.Columns.data.Count > 0)
             {
                 foreach (var node in sheet.Columns.data)
                 {

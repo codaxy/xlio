@@ -19,17 +19,19 @@ namespace Codaxy.Xlio.IO
 
                 if (xml.sheetFormatPr != null)
                 {
-                    sheet.DefaultRowHeight = xml.sheetFormatPr.defaultRowHeight;                    
+                    if (xml.sheetFormatPr.customHeight)
+                        sheet.DefaultRowHeight = xml.sheetFormatPr.defaultRowHeight;                    
                 }
 
                 if (xml.sheetViews!=null && xml.sheetViews.sheetView!=null)
-                    foreach (var sheetView in xml.sheetViews.sheetView)                        
-                    {
-                        sheet.ShowGridLines = sheetView.showGridLines;
+                    foreach (var sheetView in xml.sheetViews.sheetView)
+                        if (sheetView.workbookViewId == 0) //default view
+                        {
+                            sheet.ShowGridLines = sheetView.showGridLines;
 
-                        if (sheetView.selection != null && sheetView.selection.Length == 1)
-                            sheet.ActiveCell = Cell.Parse(sheetView.selection[0].activeCell);
-                    }
+                            if (sheetView.selection != null && sheetView.selection.Length == 1)
+                                sheet.ActiveCell = Cell.Parse(sheetView.selection[0].activeCell);
+                        }
 
                 if (xml.cols != null)
                 {
@@ -58,6 +60,17 @@ namespace Codaxy.Xlio.IO
                 foreach (var rd in xml.sheetData)
                 {
                     var row = sheet[(int)rd.r - 1];
+
+                    if (rd.customFormat)
+                        row.Style = GetStyle(rd.s);
+
+                    if (rd.customHeight && rd.htSpecified)
+                        row.Height = rd.ht;
+
+                    row.Phonetic = rd.ph;
+                    row.Collapsed = rd.collapsed;
+                    row.Hidden = rd.hidden;                    
+
                     if (rd.c!=null)
                         foreach (var c in rd.c)
                         {

@@ -49,7 +49,7 @@ namespace ConsoleTest
             f.Save("bool.xlsx");
 
             f = Workbook.ReadFile("bool.xlsx");
-            if (!(f.Sheets[0].Cells[0, 0].Value is bool))
+            if (!(f.Sheets[0][0, 0].Value is bool))
                 throw new InvalidOperationException();
                  
         }

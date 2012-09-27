@@ -100,6 +100,7 @@
     <Compile Include="SheetCollection.cs" />
     <Compile Include="ExceptionFactory.cs" />
     <Compile Include="SheetColumn.cs" />
+    <Compile Include="SheetRow.cs" />
     <Compile Include="Workbook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util.cs" />

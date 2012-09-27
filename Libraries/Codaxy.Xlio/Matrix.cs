@@ -33,6 +33,7 @@ namespace Codaxy.Xlio
         }
 
         public SortedDictionary<int, T> Data { get { return data; } }
+        public int Count { get { return Data.Count; } }
     }    
 
     public class Matrix<T> where T: new()

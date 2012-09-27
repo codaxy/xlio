@@ -21,7 +21,7 @@ namespace Codaxy.Xlio.Generic
                 t = TableInfo<T>.Build();
 
             var importColumns = new List<ImportedColumnInfo<T>>();
-            var firstRow = sheet[0].Data;
+            var firstRow = sheet[0];
             foreach (var cell in firstRow)
             {
                 var name = cell.Value.Value as String;
@@ -37,14 +37,14 @@ namespace Codaxy.Xlio.Generic
 
             List<T> result = new List<T>();
 
-            for (var i = 1; i < sheet.Cells.Data.Data.Count; i++)
+            for (var i = 1; i < sheet.Data.Count; i++)
             {
-                if (!skipEmptyRows || sheet.Cells[i].Data.Values.Any(a => a.Value != null))
+                if (!skipEmptyRows || sheet.Data[i].Cells.Data.Values.Any(a => a.Value != null))
                 {
                     var row = new T();
                     foreach (var ic in importColumns)
                     {
-                        var v = sheet.Cells[i, ic.Index].Value;
+                        var v = sheet.Data[i, ic.Index].Value;
                         if (ic.Column.ImportConverter != null)
                             v = ic.Column.ImportConverter(v);
 

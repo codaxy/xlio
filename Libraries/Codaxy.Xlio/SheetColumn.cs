@@ -10,7 +10,7 @@ namespace Codaxy.Xlio
         public double? Width { get; set; }
 
         internal CellStyle style;
-        public CellStyle Style
+        public CellStyle DefaultStyle
         {
             get { return style ?? (style = new CellStyle()); }
             set { style = value; }
