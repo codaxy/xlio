@@ -137,7 +137,17 @@ namespace Codaxy.Xlio
         public double tint { get; set; }
 
         public Color() { }
+        
         public Color(byte r, byte g, byte b) : this(255, r, g, b) { }
+
+        public Color(UInt32 argb)
+        {
+            a = (byte)((argb & 0xFF000000) >> 24);
+            r = (byte)((argb & 0x00FF0000) >> 16);
+            g = (byte)((argb & 0x0000FF00) >> 8);
+            b = (byte)((argb & 0x000000FF) >> 0);
+        }
+
         public Color(params byte[] argb)
         {
             if (argb.Length > 0)

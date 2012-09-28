@@ -9,14 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XsdDir", "Tools\XsdDir\XsdD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{FF25CE48-6BCC-4F51-B84A-A30D75820120}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{64C97DF5-95D0-4674-AC11-AC8D7C8ACDE4}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{0F8C47A7-6AAD-44EE-B14D-4B11E7A507CA}"
 	ProjectSection(SolutionItems) = preProject
 		NuGet\Codaxy.Xlio\Codaxy.Xlio.nuspec = NuGet\Codaxy.Xlio\Codaxy.Xlio.nuspec
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codaxy.Xlio.Generic.Tests", "Tests\Codaxy.Xlio.Generic.Tests\Codaxy.Xlio.Generic.Tests.csproj", "{4CB9462B-DDD7-487A-A23F-29F5828FC0EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codaxy.Xlio.Tests", "Tests\Codaxy.Xlio.Generic.Tests\Codaxy.Xlio.Tests.csproj", "{4CB9462B-DDD7-487A-A23F-29F5828FC0EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,8 +71,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{75101596-E55E-4A6B-8D95-DF9C8193A799} = {64C97DF5-95D0-4674-AC11-AC8D7C8ACDE4}
-		{4CB9462B-DDD7-487A-A23F-29F5828FC0EC} = {64C97DF5-95D0-4674-AC11-AC8D7C8ACDE4}
 		{1F33404D-3231-4317-8EE8-F66E591C5A3A} = {FF25CE48-6BCC-4F51-B84A-A30D75820120}
 	EndGlobalSection
 EndGlobal

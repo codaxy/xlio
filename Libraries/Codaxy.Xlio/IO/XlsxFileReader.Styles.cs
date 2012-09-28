@@ -53,8 +53,8 @@ namespace Codaxy.Xlio.IO
                     CellFill f = new CellFill();
                     if (Util.TryCast(fill.Item, out pf))
                     {
-                       f.Background = GetColor(pf.bgColor);
-                       f.Foreground = GetColor(pf.fgColor);
+                       f.Background = ConvertColor(pf.bgColor);
+                       f.Foreground = ConvertColor(pf.fgColor);
                        f.Pattern = (FillPattern)pf.patternType;
                     }
                     fills.Add(f);
@@ -63,9 +63,11 @@ namespace Codaxy.Xlio.IO
             fonts = new List<CellFont>();
             if (styles.fonts!=null && styles.fonts.font!=null)
                 foreach (var font in styles.fonts.font)
-                    if (font.ItemsElementName != null && font.Items!=null)
+                {
+                    CellFont f = null;
+                    if (font.ItemsElementName != null && font.Items != null)
                     {
-                        CellFont f = new CellFont();
+                        f = new CellFont();
                         for (int i = 0; i < font.ItemsElementName.Length; i++)
                         {
                             var item = font.Items[i];
@@ -115,12 +117,13 @@ namespace Codaxy.Xlio.IO
                                 case ItemsChoiceType3.color:
                                     CT_Color1 color;
                                     if (Util.TryCast(item, out color))
-                                        f.Color = GetColor(color);
+                                        f.Color = ConvertColor(color);
                                     break;
                             }
-                        }
-                        fonts.Add(f);
+                        }                        
                     }
+                    fonts.Add(f);
+                }
 
             numFmts = new Dictionary<uint, string>();
             if (styles.numFmts!=null && styles.numFmts.numFmt!=null)
@@ -149,13 +152,13 @@ namespace Codaxy.Xlio.IO
                         entry.Format = GetNumFmt(xf.numFmtId);
 
                     if (xf.applyAlignmentSpecified && xf.applyAlignment && xf.alignment != null)
-                        entry.Alignment = GetAlignment(xf.alignment);
+                        entry.Alignment = ConvertAlignment(xf.alignment);
 
                     xfs.Add(entry);
                 }
         }
 
-        private CellAlignment GetAlignment(CT_CellAlignment al)
+        private CellAlignment ConvertAlignment(CT_CellAlignment al)
         {
             CellAlignment a = new CellAlignment
             {
@@ -168,6 +171,65 @@ namespace Codaxy.Xlio.IO
                 JustifyLastLine = al.justifyLastLineSpecified ? al.justifyLastLine : false
             };
             return a;
+        }
+
+        private BorderEdge ConvertBorderEdge(CT_BorderPr e)
+        {
+            if (e == null)
+                return null;
+
+            BorderEdge edge = new BorderEdge
+            {
+                Style = (BorderStyle)e.style,
+                Color = ConvertColor(e.color)
+            };
+
+            return edge;
+        }
+
+        private Color ConvertColor(CT_Color1 c)
+        {
+            if (c == null)
+                return null;
+
+            Color res = new Color();
+            if (c.indexedSpecified)
+            {
+                if (c.indexed < indexedColors.Count)
+                    res = indexedColors[(int)c.indexed].Clone();
+
+                res = XlioUtil.GetDefaultIndexedColor(c.indexed);
+            }
+            else if (c.themeSpecified)
+            {
+                res = XlioUtil.GetDefaultThemeColor(c.theme);
+            }
+            else if (c.rgb != null)
+            {
+                res = new Color(c.rgb);
+            }            
+
+            if (res != null)
+                res.tint = c.tint;
+
+            return res;                
+        }
+
+        private CellStyle GetStyle(uint index)
+        {
+            //1 based
+            if (index < xfs.Count)
+                return xfs[(int)index];
+
+            return null;
+        }
+        
+
+        private CellBorder GetBorder(int borderId)
+        {
+            if (borderId < borders.Count)
+                return borders[borderId];
+            return null;
         }
 
         private string GetNumFmt(uint numFmtId)
@@ -191,61 +253,6 @@ namespace Codaxy.Xlio.IO
         {
             if (fillId < fills.Count)
                 return fills[fillId];
-            return null;
-        }
-
-        private Color GetColor(CT_Color1 c)
-        {
-            if (c == null)
-                return null;
-
-            Color res = new Color();
-            if (c.indexedSpecified)
-            {
-                if (c.indexed <= indexedColors.Count)
-                    return indexedColors[(int)c.indexed-1].Clone();
-                return null;
-            }
-            else
-            {
-                if (c.rgb != null)
-                    res = new Color(c.rgb);
-            }
-
-            if (res != null)
-                res.tint = c.tint;
-            return res;                
-        }
-
-        private CellBorder GetBorder(int borderId)
-        {
-            if (borderId < borders.Count)
-                return borders[borderId];
-            return null;
-        }
-
-        private BorderEdge ConvertBorderEdge(CT_BorderPr e)
-        {
-            if (e == null)
-                return null;
-            
-            BorderEdge edge = new BorderEdge
-            {
-                Style = (BorderStyle)e.style,
-                Color = GetColor(e.color)
-            };
-
-            return edge;
-        }
-
-        private CellStyle GetStyle(uint index)
-        {
-            if (index <= 0)
-                return null;
-
-            if (index < xfs.Count)
-                return xfs[(int)index];
-
             return null;
         }
     }
