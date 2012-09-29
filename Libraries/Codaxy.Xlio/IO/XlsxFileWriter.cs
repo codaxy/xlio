@@ -169,14 +169,17 @@ namespace Codaxy.Xlio.IO
             bool calcAutoFit = (Options & XlsxFileWriterOptions.AutoFit) != 0;
 
 
-            CT_SheetFormatPr sheetFormat = null;
+            var sheetFormat = new Lazy<CT_SheetFormatPr>();
             if (sheet.DefaultRowHeight.HasValue)
             {
-                sheetFormat = new CT_SheetFormatPr
-                {
-                    defaultRowHeight = sheet.DefaultRowHeight.Value,
-                    customHeight = true
-                };
+                sheetFormat.Value.defaultRowHeight = sheet.DefaultRowHeight.Value;
+                sheetFormat.Value.customHeight = true;
+            }
+
+            if (sheet.DefaultColumnWidth.HasValue)
+            {
+                sheetFormat.Value.defaultColWidth = sheet.DefaultColumnWidth.Value;
+                sheetFormat.Value.defaultColWidthSpecified = true;
             }
 
             var sheetView = new CT_SheetView();
@@ -317,14 +320,11 @@ namespace Codaxy.Xlio.IO
                         bestFit = node.Data.BestFit,
                         hidden = node.Data.Hidden,
                         outlineLevel = node.Data.OutlineLevel,
-                        phonetic = node.Data.Phonetic
-                    };
-
-                    if (node.Data.Width.HasValue)
-                    {
-                        col.width = node.Data.Width.Value;
-                        col.widthSpecified = col.customWidth = true;
-                    }
+                        phonetic = node.Data.Phonetic,
+                        width = node.Data.Width ?? 10,
+                        widthSpecified = true,
+                        customWidth = node.Data.Width.HasValue
+                    };                    
 
                     if (node.Data.style != null)
                         col.style = RegisterStyle(node.Data.style);
@@ -337,7 +337,7 @@ namespace Codaxy.Xlio.IO
             {
                 sheetData = rows.ToArray(),
                 cols = cols.Count > 0 ? cols.ToArray() : null,
-                sheetFormatPr = sheetFormat,
+                sheetFormatPr = sheetFormat.Data,
                 sheetViews = new CT_SheetViews { sheetView = new[] { sheetView } }
             };
 
@@ -426,6 +426,24 @@ namespace Codaxy.Xlio.IO
             this.output = null;
         }
 
-       
+        struct Lazy<T> where T: class, new()
+        {
+            T v;
+            
+            public T Value
+            {
+                get
+                {
+                    return v ?? (v = new T());
+                }
+            }
+
+            public T Data
+            {
+                get { return v; }
+            }
+        }
+
+        
     }
 }

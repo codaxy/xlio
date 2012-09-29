@@ -68,6 +68,7 @@ namespace Codaxy.Xlio
         }
 
         public double? DefaultRowHeight { get; set; }
+        public double? DefaultColumnWidth { get; set; }
         public bool ShowGridLines { get; set; }
         public Cell ActiveCell { get; set; }
 

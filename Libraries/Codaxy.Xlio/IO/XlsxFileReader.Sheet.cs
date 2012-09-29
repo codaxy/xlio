@@ -20,7 +20,10 @@ namespace Codaxy.Xlio.IO
                 if (xml.sheetFormatPr != null)
                 {
                     if (xml.sheetFormatPr.customHeight)
-                        sheet.DefaultRowHeight = xml.sheetFormatPr.defaultRowHeight;                    
+                        sheet.DefaultRowHeight = xml.sheetFormatPr.defaultRowHeight;
+
+                    if (xml.sheetFormatPr.defaultColWidthSpecified)
+                        sheet.DefaultColumnWidth = xml.sheetFormatPr.defaultColWidth;
                 }
 
                 if (xml.sheetViews!=null && xml.sheetViews.sheetView!=null)
