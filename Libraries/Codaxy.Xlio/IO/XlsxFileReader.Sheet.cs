@@ -33,7 +33,10 @@ namespace Codaxy.Xlio.IO
                             sheet.ShowGridLines = sheetView.showGridLines;
 
                             if (sheetView.selection != null && sheetView.selection.Length == 1)
-                                sheet.ActiveCell = Cell.Parse(sheetView.selection[0].activeCell);
+                            {
+                                if (sheetView.selection[0].activeCell != null)
+                                    sheet.ActiveCell = Cell.Parse(sheetView.selection[0].activeCell);
+                            }
                         }
 
                 if (xml.cols != null)
@@ -143,6 +146,7 @@ namespace Codaxy.Xlio.IO
             {                
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex.StackTrace);
+                throw;
             }
         }
         

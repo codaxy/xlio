@@ -9,7 +9,7 @@ namespace Codaxy.Xlio.Generic.Tests.Bugreports
     [TestFixture]
     public class CamplannerExportTests
     {
-        [Test(Active=true)]
+        [Test(Active=false)]
         public void WrongStyleLoadedTest()
         {
             Action<Sheet, String> test = (sheet, mode) =>
