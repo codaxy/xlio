@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Codaxy.Xlio
 {
+    /// <summary>
+    /// CellStyle class contains information about cell styling such as cell borders, fill, font, format, text alignment, etc.
+    /// </summary>
     public class CellStyle
     {
         internal CellBorder border;
@@ -13,41 +16,71 @@ namespace Codaxy.Xlio
         internal CellAlignment alignment;
         internal String format;
 
+
+        /// <summary>
+        /// Border
+        /// </summary>
         public CellBorder Border
         {
             get { return border ?? (border = new CellBorder()); }
             set { border = value; }
-        }
-        
+        }        
+
+        /// <summary>
+        /// Fill
+        /// </summary>
         public CellFill Fill
         {
             get { return fill ?? (fill = new CellFill()); }
             set { fill = value; }
         }
 
+        /// <summary>
+        /// Font
+        /// </summary>
         public CellFont Font
         {
             get { return font ?? (font = new CellFont()); }
             set { font = value; }
         }
 
+        /// <summary>
+        /// Alignment
+        /// </summary>
         public CellAlignment Alignment
         {
             get { return alignment ?? (alignment = new CellAlignment()); }
             set { alignment = value; }
         }
 
+        /// <summary>
+        /// Format
+        /// </summary>
         public String Format
         {
             get { return format ?? "General"; }
             set { format = value; }
-        }            
-        
+        }
+
+
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+        /// </returns>
         public override int GetHashCode()
         {
             return HashCodeHelper.CalculateHashCode(border, fill, font, alignment, format);
         }
 
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
+        /// </summary>
+        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+        /// </returns>
         public override bool Equals(object obj)
         {
             CellStyle o;
@@ -56,11 +89,24 @@ namespace Codaxy.Xlio
             return border == o.border && fill == o.fill && font == o.font && alignment == o.alignment && format == o.format; 
         }
 
+        /// <summary>
+        /// Operator ==
+        /// </summary>
+        /// <param name="c1"></param>
+        /// <param name="c2"></param>
+        /// <returns></returns>
         public static bool operator ==(CellStyle c1, CellStyle c2)
         {
             return Util.AreEqual(c1, c2);
         }
 
+
+        /// <summary>
+        /// Operator !=
+        /// </summary>
+        /// <param name="c1"></param>
+        /// <param name="c2"></param>
+        /// <returns></returns>
         public static bool operator !=(CellStyle c1, CellStyle c2)
         {
             return !(c1 == c2);
@@ -88,25 +134,59 @@ namespace Codaxy.Xlio
         Distributed,
     }
 
+    /// <summary>
+    /// CellAlignment class defines cell vertical and horizontal alignment, text indent and rotation, text wrapping and justification.
+    /// </summary>
     public class CellAlignment
     {
         public HorizontalAlignment? HAlign { get; set; }
         public VerticalAlignment? VAlign { get; set; }
 
         /// <summary>
-        /// 1 <=> 3 spaces
+        /// Indent
+        /// 1 &eq; 3 spaces
         /// </summary>
         public int Indent { get; set; }
+
+        /// <summary>
+        /// Set true to shrink text to fit cell.
+        /// </summary>
         public bool ShrinkToFit { get; set; }
+
+        /// <summary>
+        /// Text rotation in degrees.
+        /// </summary>
         public int TextRotation { get; set; }
+
+        /// <summary>
+        /// Set to true to wrap text in multiple lines.
+        /// </summary>
         public bool WrapText { get; set; }
+
+        /// <summary>
+        /// Set to true to justify last line. Works only if HAlign is set to Justify.
+        /// </summary>
         public bool JustifyLastLine { get; set; }
 
+
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+        /// </returns>
         public override int GetHashCode()
         {
             return HashCodeHelper.CalculateHashCode(HAlign, VAlign, Indent, ShrinkToFit, TextRotation, WrapText, JustifyLastLine);
         }
 
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
+        /// </summary>
+        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+        /// </returns>
         public override bool Equals(object obj)
         {
             CellAlignment o;
@@ -120,11 +200,23 @@ namespace Codaxy.Xlio
                 && JustifyLastLine == o.JustifyLastLine;
         }
 
+        /// <summary>
+        /// Operator ==
+        /// </summary>
+        /// <param name="c1"></param>
+        /// <param name="c2"></param>
+        /// <returns></returns>
         public static bool operator ==(CellAlignment c1, CellAlignment c2)
         {
             return Util.AreEqual(c1, c2);
         }
 
+        /// <summary>
+        /// Operator !=
+        /// </summary>
+        /// <param name="c1"></param>
+        /// <param name="c2"></param>
+        /// <returns></returns>
         public static bool operator !=(CellAlignment c1, CellAlignment c2)
         {
             return !(c1 == c2);
@@ -160,7 +252,7 @@ namespace Codaxy.Xlio
                 b = argb[3];
         }
 
-        internal Color Clone()
+        public Color Clone()
         {
             return new Color
             {
