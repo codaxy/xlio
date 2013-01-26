@@ -63,6 +63,12 @@ namespace Codaxy.Xlio
             return Cell1 == o.Cell1 && Cell2 == o.Cell2;
         }
 
+        /// <summary>
+        /// Operator !=
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         public static bool operator ==(Range a, Range b)
         {
             if (Range.ReferenceEquals(a, b))

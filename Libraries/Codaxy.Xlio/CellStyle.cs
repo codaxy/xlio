@@ -24,7 +24,7 @@ namespace Codaxy.Xlio
         {
             get { return border ?? (border = new CellBorder()); }
             set { border = value; }
-        }        
+        }
 
         /// <summary>
         /// Fill
@@ -86,7 +86,7 @@ namespace Codaxy.Xlio
             CellStyle o;
             if (!Util.TryCast(obj, out o))
                 return false;
-            return border == o.border && fill == o.fill && font == o.font && alignment == o.alignment && format == o.format; 
+            return border == o.border && fill == o.fill && font == o.font && alignment == o.alignment && format == o.format;
         }
 
         /// <summary>
@@ -100,7 +100,6 @@ namespace Codaxy.Xlio
             return Util.AreEqual(c1, c2);
         }
 
-
         /// <summary>
         /// Operator !=
         /// </summary>
@@ -113,24 +112,114 @@ namespace Codaxy.Xlio
         }
     }
 
+    /// <summary>
+    /// Defines horizontal alignment of text
+    /// </summary>
     public enum HorizontalAlignment
     {
+        /// <summary>
+        /// The horizontal alignment is general-aligned. Text data 
+        /// is left-aligned. Numbers, dates, and times are right-
+        /// aligned. Boolean types are centered. Changing the 
+        /// alignment does not change the type of data.  
+        /// </summary>
         General,
+
+        /// <summary>
+        /// The horizontal alignment is left-aligned, even in Right-to-Left mode. Aligns contents at the left edge of the 
+        /// cell. If an indent amount is specified, the contents of 
+        /// the cell is indented from the left by the specified 
+        /// number of character spaces. The character spaces are 
+        /// based on the default font and font size for the 
+        /// workbook.
+        /// </summary>
         Left,
+
+        /// <summary>
+        /// The horizontal alignment is centered, meaning the text is centered across the cell. 
+        /// </summary>
         Center,
+
+        /// <summary>
+        /// The horizontal alignment is right-aligned, meaning that 
+        /// cell contents are aligned at the right edge of the cell, 
+        /// even in Right-to-Left mode. 
+        /// </summary>
         Right,
+
+        /// <summary>
+        /// Indicates that the value of the cell should be filled 
+        /// across the entire width of the cell. If blank cells to the 
+        /// right also have the fill alignment, they are also filled 
+        /// with the value, using a convention similar to 
+        /// centerContinuous. 
+        /// </summary>
         Fill,
+
+        /// <summary>
+        /// The horizontal alignment is justified (flush left and 
+        /// right). For each line of text, aligns each line of the 
+        /// wrapped text in a cell to the right and left (except the 
+        /// last line). If no single line of text wraps in the cell, then 
+        /// the text is not justified. 
+        /// </summary>
         Justify,
+
+        /// <summary>
+        /// The horizontal alignment is centered across multiple 
+        /// cells. The information about how many cells to span is 
+        /// expressed in the Sheet Part, in the row of the cell in 
+        /// question. For each cell that is spanned in the 
+        /// alignment, a cell element needs to be written out, with 
+        /// the same style Id which references the 
+        /// centerContinuous alignment.  
+        /// </summary>
         CenterContinuous,
+
+        /// <summary>
+        /// I/ndicates that each 'word' in each line of text inside 
+        /// the cell is evenly distributed across the width of the 
+        /// cell, with flush right and left margins.
+        /// </summary>
         Distributed,
     }
 
+    /// <summary>
+    /// Defines vertical alignment of text inside a cell.
+    /// </summary>
     public enum VerticalAlignment
-    {  
+    {
+        /// <summary>
+        /// The vertical alignment is aligned-to-top.
+        /// </summary>
         Top,
+
+        /// <summary>
+        /// The vertical alignment is centered across the height of the cell. 
+        /// </summary>
         Center,
+
+        /// <summary>
+        /// The vertical alignment is aligned-to-bottom.
+        /// </summary>
         Bottom,
+
+        /// <summary>
+        /// When text direction is horizontal: the vertical 
+        /// alignment of lines of text is distributed vertically, 
+        /// where each line of text inside the cell is evenly 
+        /// distributed across the height of the cell, with flush top 
+        /// and bottom margins.
+        /// </summary>
         Justify,
+
+        /// <summary>
+        /// When text direction is horizontal: the vertical 
+        /// alignment of lines of text is distributed vertically, 
+        /// where each line of text inside the cell is evenly 
+        /// distributed across the height of the cell, with flush top 
+        /// and bottom margins.
+        /// </summary>
         Distributed,
     }
 
@@ -139,12 +228,25 @@ namespace Codaxy.Xlio
     /// </summary>
     public class CellAlignment
     {
+        /// <summary>
+        /// Gets or sets the horizontal alignment.
+        /// </summary>
+        /// <value>
+        /// The horizontal alignment.
+        /// </value>
         public HorizontalAlignment? HAlign { get; set; }
+
+        /// <summary>
+        /// Gets or sets the vertical alignment.
+        /// </summary>
+        /// <value>
+        /// The vertical alignment.
+        /// </value>
         public VerticalAlignment? VAlign { get; set; }
 
         /// <summary>
         /// Indent
-        /// 1 &eq; 3 spaces
+        /// 1 = 3 spaces
         /// </summary>
         public int Indent { get; set; }
 
@@ -223,15 +325,54 @@ namespace Codaxy.Xlio
         }
     }
 
+
+    /// <summary>
+    /// Color class is used to define colors (fill, border, etc.)
+    /// </summary>
     public class Color
     {
-        public byte a, r, g, b;
-        public double tint { get; set; }
+        /// <summary>
+        /// Alpha component (ARGB)
+        /// </summary>
+        public byte a;
 
+        /// <summary>
+        /// Red component (ARGB)
+        /// </summary>
+        public byte r;
+
+        /// <summary>
+        /// Green component (ARGB)
+        /// </summary>
+        public byte g;
+
+        /// <summary>
+        /// Blue component (ARGB)
+        /// </summary>
+        public byte b;
+
+        /// <summary>
+        /// Tint specifies a lighter version of its input color. A 10% tint is 10% of the input color combined with 90% white.
+        /// </summary>
+        public double tint;
+
+        /// <summary>
+        /// Black
+        /// </summary>
         public Color() { }
-        
+
+        /// <summary>
+        /// RGB color
+        /// </summary>
+        /// <param name="r"></param>
+        /// <param name="g"></param>
+        /// <param name="b"></param>
         public Color(byte r, byte g, byte b) : this(255, r, g, b) { }
 
+        /// <summary>
+        /// ARGB
+        /// </summary>
+        /// <param name="argb"></param>
         public Color(UInt32 argb)
         {
             a = (byte)((argb & 0xFF000000) >> 24);
@@ -240,6 +381,10 @@ namespace Codaxy.Xlio
             b = (byte)((argb & 0x000000FF) >> 0);
         }
 
+        /// <summary>
+        /// ARGB
+        /// </summary>
+        /// <param name="argb"></param>
         public Color(params byte[] argb)
         {
             if (argb.Length > 0)
@@ -252,6 +397,10 @@ namespace Codaxy.Xlio
                 b = argb[3];
         }
 
+        /// <summary>
+        /// Clone color
+        /// </summary>
+        /// <returns></returns>
         public Color Clone()
         {
             return new Color
@@ -264,11 +413,24 @@ namespace Codaxy.Xlio
             };
         }
 
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+        /// </returns>
         public override int GetHashCode()
         {
             return HashCodeHelper.CalculateHashCode(a, r, g, b, tint);
         }
 
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
+        /// </summary>
+        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+        /// </returns>
         public override bool Equals(object obj)
         {
             Color o;
@@ -277,16 +439,31 @@ namespace Codaxy.Xlio
             return a == o.a && r == o.r && b == o.b && g == o.g && tint == o.tint;
         }
 
+        /// <summary>
+        /// operator ==
+        /// </summary>
+        /// <param name="c1"></param>
+        /// <param name="c2"></param>
+        /// <returns></returns>
         public static bool operator ==(Color c1, Color c2)
         {
             return Util.AreEqual(c1, c2);
         }
 
+        /// <summary>
+        /// operator !=
+        /// </summary>
+        /// <param name="c1"></param>
+        /// <param name="c2"></param>
+        /// <returns></returns>
         public static bool operator !=(Color c1, Color c2)
         {
             return !(c1 == c2);
         }
 
+        /// <summary>
+        /// Instance of black color.
+        /// </summary>
         public static Color Black { get { return new Color(255, 0, 0, 0); } }
     }
 
@@ -332,11 +509,23 @@ namespace Codaxy.Xlio
             return Background == o.Background && Foreground == o.Foreground && Pattern == o.Pattern;
         }
 
+        /// <summary>
+        /// Operator ==
+        /// </summary>
+        /// <param name="c1"></param>
+        /// <param name="c2"></param>
+        /// <returns></returns>
         public static bool operator ==(CellFill c1, CellFill c2)
         {
             return Util.AreEqual(c1, c2);
         }
 
+        /// <summary>
+        /// Operator !=
+        /// </summary>
+        /// <param name="c1"></param>
+        /// <param name="c2"></param>
+        /// <returns></returns>
         public static bool operator !=(CellFill c1, CellFill c2)
         {
             return !(c1 == c2);
@@ -414,11 +603,23 @@ namespace Codaxy.Xlio
                 && Outline == o.Outline;
         }
 
+        /// <summary>
+        /// Operator ==
+        /// </summary>
+        /// <param name="c1"></param>
+        /// <param name="c2"></param>
+        /// <returns></returns>
         public static bool operator ==(CellBorder c1, CellBorder c2)
         {
             return Util.AreEqual(c1, c2);
         }
 
+        /// <summary>
+        /// Operator !=
+        /// </summary>
+        /// <param name="c1"></param>
+        /// <param name="c2"></param>
+        /// <returns></returns>
         public static bool operator !=(CellBorder c1, CellBorder c2)
         {
             return !(c1 == c2);
@@ -427,19 +628,117 @@ namespace Codaxy.Xlio
 
     public enum BorderStyle
     {
-        None, Thin, Medium, Dashed, Dotted, Thick, Double, Hair, MediumDashed, DashDot, MediumDashDot, DashDotDot, MediumDashDotDot, SlantDashDot,
+        /// <summary>
+        /// The line style of a border is none (no border visible).
+        /// </summary>
+        None,
+
+        /// <summary>
+        /// The line style of a border is thin.  
+        /// </summary>
+        Thin,
+
+        /// <summary>
+        /// The line style of a border is medium. 
+        /// </summary>
+        Medium,
+
+        /// <summary>
+        /// The line style of a border is dashed.
+        /// </summary>
+        Dashed,
+
+        /// <summary>
+        /// The line style of a border is dotted.
+        /// </summary>
+        Dotted,
+
+        /// <summary>
+        /// The line style of a border is 'thick'.
+        /// </summary>
+        Thick,
+
+        /// <summary>
+        /// The line style of a border is double line.
+        /// </summary>
+        Double,
+
+        /// <summary>
+        /// The line style of a border is hairline. 
+        /// </summary>
+        Hair,
+
+        /// <summary>
+        /// The line style of a border is medium dashed. 
+        /// </summary>
+        MediumDashed,
+
+        /// <summary>
+        /// The line style of a border is dash-dot. 
+        /// </summary>
+        DashDot,
+
+        /// <summary>
+        /// The line style of a border is medium dash-dot.
+        /// </summary>
+        MediumDashDot,
+
+        /// <summary>
+        /// The line style of a border is dash-dot-dot. 
+        /// </summary>
+        DashDotDot,
+
+        /// <summary>
+        /// The line style of a border is medium dash-dot-dot.
+        /// </summary>
+        MediumDashDotDot,
+
+        /// <summary>
+        /// The line style of a border is slant-dash-dot. 
+        /// </summary>
+        SlantDashDot,
     }
 
+    /// <summary>
+    /// BorderEdge contains complete information about border styling
+    /// </summary>
     public class BorderEdge
     {
+        /// <summary>
+        /// Gets or sets the border style.
+        /// </summary>
+        /// <value>
+        /// The style.
+        /// </value>
         public BorderStyle Style { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets the border color.
+        /// </summary>
+        /// <value>
+        /// The color.
+        /// </value>
         public Color Color { get; set; }
 
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+        /// </returns>
         public override int GetHashCode()
         {
             return HashCodeHelper.CalculateHashCode(Style, Color);
         }
 
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
+        /// </summary>
+        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+        /// </returns>
         public override bool Equals(object obj)
         {
             BorderEdge o;
@@ -448,29 +747,51 @@ namespace Codaxy.Xlio
             return Style == o.Style && Color == o.Color;
         }
 
+        /// <summary>
+        /// Operator ==
+        /// </summary>
+        /// <param name="c1"></param>
+        /// <param name="c2"></param>
+        /// <returns></returns>
         public static bool operator ==(BorderEdge c1, BorderEdge c2)
         {
             return Util.AreEqual(c1, c2);
         }
 
+        /// <summary>
+        /// Operator !=
+        /// </summary>
+        /// <param name="c1"></param>
+        /// <param name="c2"></param>
+        /// <returns></returns>
         public static bool operator !=(BorderEdge c1, BorderEdge c2)
         {
             return !(c1 == c2);
         }
 
+        /// <summary>
+        /// Construct black hair border edge
+        /// </summary>
+        /// <returns></returns>
         public static BorderEdge Hair()
         {
             return new BorderEdge { Color = Color.Black, Style = BorderStyle.Hair };
         }
-        
+
+        /// <summary>
+        /// Constructs border edge of given color and hair width.
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
         public static BorderEdge Hair(Color c)
         {
             return new BorderEdge { Color = c, Style = BorderStyle.Hair };
         }
     }
 
-    public enum FontScript { 
-        Baseline,        
+    public enum FontScript
+    {
+        Baseline,
         Superscript,
         Subscript,
     }
@@ -484,6 +805,9 @@ namespace Codaxy.Xlio
         None,
     }
 
+    /// <summary>
+    /// Defines cell font.
+    /// </summary>
     public class CellFont
     {
         public String Name { get; set; }
@@ -491,19 +815,35 @@ namespace Codaxy.Xlio
         public bool Bold { get; set; }
         public bool Italic { get; set; }
         public bool Strike { get; set; }
-        public FontUnderline? Underline { get; set; }        
+        public FontUnderline? Underline { get; set; }
         public bool Outline { get; set; }
         public bool Shadow { get; set; }
         public Color Color { get; set; }
         public FontScript? Script { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CellFont"/> class.
+        /// </summary>
         public CellFont() { Underline = FontUnderline.None; }
 
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+        /// </returns>
         public override int GetHashCode()
         {
             return HashCodeHelper.CalculateHashCode(Name, Size, Bold, Italic, Strike, Underline, Outline, Shadow, Color, Script);
         }
 
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
+        /// </summary>
+        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+        /// </returns>
         public override bool Equals(object obj)
         {
             CellFont o;
@@ -514,18 +854,30 @@ namespace Codaxy.Xlio
                 && Bold == o.Bold
                 && Italic == o.Italic
                 && Strike == o.Strike
-                && Underline == o.Underline               
+                && Underline == o.Underline
                 && Outline == o.Outline
                 && Shadow == o.Shadow
                 && Color == o.Color
                 && Script == o.Script;
         }
 
+        /// <summary>
+        /// operator ==
+        /// </summary>
+        /// <param name="c1"></param>
+        /// <param name="c2"></param>
+        /// <returns></returns>
         public static bool operator ==(CellFont c1, CellFont c2)
         {
             return Util.AreEqual(c1, c2);
         }
 
+        /// <summary>
+        /// Operator !=
+        /// </summary>
+        /// <param name="c1"></param>
+        /// <param name="c2"></param>
+        /// <returns></returns>
         public static bool operator !=(CellFont c1, CellFont c2)
         {
             return !(c1 == c2);

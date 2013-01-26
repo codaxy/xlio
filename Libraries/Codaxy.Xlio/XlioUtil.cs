@@ -31,7 +31,7 @@ namespace Codaxy.Xlio
         /// <summary>
         /// Returns the Excel name of the zero indexed column number 0->A, 1->B
         /// </summary>
-        /// <param name="column">Zero indexed column number.</param>
+        /// <param name="col">Zero indexed column number.</param>
         /// <returns></returns>
         public static string GetColumnName(int col)
         {
