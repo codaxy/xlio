@@ -62,6 +62,26 @@ namespace Codaxy.Xlio
             set { format = value; }
         }
 
+        public CellStyle Apply(CellStyle style)
+        {
+            if (style.alignment != null)
+                alignment = style.alignment;
+
+            if (style.border != null)
+                border = style.border;
+
+            if (style.fill != null)
+                fill = style.fill;
+
+            if (style.font != null)
+                font = style.font;
+
+            if (style.format != null)
+                format = style.format;
+
+            return this;
+        }
+
 
         /// <summary>
         /// Returns a hash code for this instance.
@@ -109,6 +129,19 @@ namespace Codaxy.Xlio
         public static bool operator !=(CellStyle c1, CellStyle c2)
         {
             return !(c1 == c2);
+        }
+
+        public CellStyle Clone()
+        {
+            return new CellStyle
+            {
+                border = border,
+                format = format,
+                font = font,
+                fill = fill,
+                alignment = alignment
+            };
+
         }
     }
 

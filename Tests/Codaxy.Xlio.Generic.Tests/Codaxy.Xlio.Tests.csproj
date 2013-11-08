@@ -49,6 +49,7 @@
     <Compile Include="Assert.cs" />
     <Compile Include="Bugreports\CamplannerExportTests.cs" />
     <Compile Include="CellTests.cs" />
+    <Compile Include="GenerationTests.cs" />
     <Compile Include="ImportExportTests.cs" />
     <Compile Include="PetaTest.cs" />
     <Compile Include="Program.cs" />

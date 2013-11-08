@@ -31,6 +31,11 @@ namespace Codaxy.Xlio
             return Parse(reference, 0, reference.Length);
         }
 
+        public Cell Offset(int rows, int cols)
+        {
+            return new Cell { Row = Row + rows, Col = Col + cols };
+        }
+
         /// <summary>
         /// Parse cell from the part of the string
         /// </summary>

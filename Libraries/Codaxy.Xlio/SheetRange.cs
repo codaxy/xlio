@@ -16,7 +16,7 @@ namespace Codaxy.Xlio
             Range = range;
         }
 
-        public void Merge()
+        public CellData Merge()
         {
             for (var row = Range.Cell1.Row; row <= Range.Cell2.Row; row++)
             {
@@ -24,9 +24,11 @@ namespace Codaxy.Xlio
                 for (var col = Range.Cell1.Col; col <= Range.Cell2.Col; col++)
                     rowRange[col].MergedRange = Range;
             }
+
+            return this[0];
         }
 
-        public void UnMerge()
+        public SheetRange UnMerge()
         {
             for (var row = Range.Cell1.Row; row <= Range.Cell2.Row; row++)
             {
@@ -40,9 +42,11 @@ namespace Codaxy.Xlio
                                 Sheet[col1, row1].MergedRange = null;
                     }
             }
+
+            return this;
         }
 
-        public void SetOutsideBorder(BorderEdge style)
+        public SheetRange SetOutsideBorder(BorderEdge style)
         {
             for (var row = Range.Cell1.Row; row <= Range.Cell2.Row; row++)
             {
@@ -55,9 +59,32 @@ namespace Codaxy.Xlio
                 Sheet[Range.Cell1.Row, col].Style.Border.Top = style;
                 Sheet[Range.Cell2.Row, col].Style.Border.Bottom = style;
             }
+
+            return this;
         }
 
-        public void ClearData()
+        public SheetRange SetInsideBorder(BorderEdge style)
+        {
+            for (var row = Range.Cell1.Row; row <= Range.Cell2.Row; row++)
+                for (var col = Range.Cell1.Col; col <= Range.Cell2.Col; col++)
+                {
+                    if (col > Range.Cell1.Col)
+                        Sheet[row, col].Style.Border.Left = style;
+
+                    if (col < Range.Cell2.Col)
+                        Sheet[row, col].Style.Border.Right = style;
+
+                    if (row > Range.Cell1.Row)
+                        Sheet[row, col].Style.Border.Top = style;
+
+                    if (row < Range.Cell2.Row)
+                        Sheet[row, col].Style.Border.Bottom = style;
+                }
+
+            return this;
+        }
+
+        public SheetRange ClearData()
         {
             for (var row = Range.Cell1.Row; row <= Range.Cell2.Row; row++)
             {
@@ -70,9 +97,11 @@ namespace Codaxy.Xlio
                     cell.SharedFormula = null;
                 }
             }
+
+            return this;
         }
 
-        public void ClearFormatting()
+        public SheetRange ClearFormatting()
         {
             for (var row = Range.Cell1.Row; row <= Range.Cell2.Row; row++)
             {
@@ -83,9 +112,11 @@ namespace Codaxy.Xlio
                     cell.Style = null;
                 }
             }
+
+            return this;
         }
 
-        public void SetBorder(BorderEdge style)
+        public SheetRange SetBorder(BorderEdge style)
         {
             for (var row = Range.Cell1.Row; row <= Range.Cell2.Row; row++)
             {
@@ -99,6 +130,32 @@ namespace Codaxy.Xlio
                     border.Bottom = style;
                 }
             }
+
+            return this;
+        }
+
+        public IEnumerable<CellData> EnumerateCells()
+        {
+            for (var row = Range.Cell1.Row; row <= Range.Cell2.Row; row++)
+            {
+                var rowRange = Sheet[row];
+                for (var col = Range.Cell1.Col; col <= Range.Cell2.Col; col++)
+                    yield return rowRange[col];
+            }
+        }
+
+        public SheetRange SetStyle(CellStyle style)
+        {
+            foreach (var cell in EnumerateCells())
+                cell.Style = style;
+            return this;
+        }
+
+        public SheetRange ApplyStyle(CellStyle style)
+        {
+            foreach (var cell in EnumerateCells())
+                cell.Style.Apply(style);
+            return this;
         }
 
         public CellData this[int relativeRow, int relativeCol]
@@ -107,19 +164,29 @@ namespace Codaxy.Xlio
             set { Sheet[Range.Cell1.Row + relativeRow, Range.Cell1.Col + relativeCol] = value; }
         }
 
-        public CellData this[int index]
+        public SheetRange this[int relativeRow1, int relativeCol1, int relativeRow2, int relativeCol2]
         {
-            get { return Sheet[GetCell(index)]; }
-            set { Sheet[GetCell(index)] = value; }
+            get { return Sheet[Range.Cell1.Offset(relativeRow1, relativeCol1), Range.Cell1.Offset(relativeRow2, relativeCol2)]; }
         }
 
-        public Cell GetCell(int index)
+        public CellData this[int index]
         {
-            return new Cell
-            {
-                Row = Range.Cell1.Row + index / Range.Width,
-                Col = Range.Cell1.Col + index % Range.Width
-            };
+            get { return Sheet[Range.GetCell(index)]; }
+            set { Sheet[Range.GetCell(index)] = value; }
         }
+
+        public SheetRange GetRow(int index)
+        {
+            return Sheet[Range.GetRow(index)];
+        }
+
+        public SheetRange GetColumn(int index)
+        {
+            return Sheet[Range.GetColumn(index)];
+        }
+
+        
+
+
     }
 }

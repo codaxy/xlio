@@ -4047,7 +4047,7 @@ namespace Codaxy.Xlio.Model.Oxml
 
         //private CT_WorkbookProtection workbookProtectionField;
 
-        //private CT_BookView[] bookViewsField;
+        private CT_BookView[] bookViewsField;
 
         private CT_Sheet[] sheetsField;
 
@@ -4116,17 +4116,16 @@ namespace Codaxy.Xlio.Model.Oxml
         //        this.workbookProtectionField = value;
         //    }
         //}
-
-        /// <remarks/>
-        //[System.Xml.Serialization.XmlArrayItemAttribute("workbookView", IsNullable=false)]
-        //public CT_BookView[] bookViews {
-        //    get {
-        //        return this.bookViewsField;
-        //    }
-        //    set {
-        //        this.bookViewsField = value;
-        //    }
-        //}
+        
+        [System.Xml.Serialization.XmlArrayItemAttribute("workbookView", IsNullable=false)]
+        public CT_BookView[] bookViews {
+            get {
+                return this.bookViewsField;
+            }
+            set {
+                this.bookViewsField = value;
+            }
+        }
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("sheet", IsNullable = false)]
@@ -4193,8 +4192,8 @@ namespace Codaxy.Xlio.Model.Oxml
         //        this.oleSizeField = value;
         //    }
         //}
-
-        /// <remarks/>
+       
+        /////<remarks/>
         //[System.Xml.Serialization.XmlArrayItemAttribute("customWorkbookView", IsNullable=false)]
         //public CT_CustomWorkbookView[] customWorkbookViews {
         //    get {
@@ -4205,7 +4204,7 @@ namespace Codaxy.Xlio.Model.Oxml
         //    }
         //}
 
-        /// <remarks/>
+        ///// <remarks/>
         //[System.Xml.Serialization.XmlArrayItemAttribute("pivotCache", IsNullable=false)]
         //public CT_PivotCache[] pivotCaches {
         //    get {
@@ -7952,6 +7951,340 @@ namespace Codaxy.Xlio.Model.Oxml
                 this.outlineLevelColField = value;
             }
         }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public partial class CT_BookView
+    {
+
+        private CT_ExtensionList extLstField;
+
+        private ST_Visibility visibilityField;
+
+        private bool minimizedField;
+
+        private bool showHorizontalScrollField;
+
+        private bool showVerticalScrollField;
+
+        private bool showSheetTabsField;
+
+        private int xWindowField;
+
+        private bool xWindowFieldSpecified;
+
+        private int yWindowField;
+
+        private bool yWindowFieldSpecified;
+
+        private uint windowWidthField;
+
+        private bool windowWidthFieldSpecified;
+
+        private uint windowHeightField;
+
+        private bool windowHeightFieldSpecified;
+
+        private uint tabRatioField;
+
+        private uint firstSheetField;
+
+        private uint activeTabField;
+
+        private bool autoFilterDateGroupingField;
+
+        public CT_BookView()
+        {
+            this.visibilityField = ST_Visibility.visible;
+            this.minimizedField = false;
+            this.showHorizontalScrollField = true;
+            this.showVerticalScrollField = true;
+            this.showSheetTabsField = true;
+            this.tabRatioField = ((uint)(600));
+            this.firstSheetField = ((uint)(0));
+            this.activeTabField = ((uint)(0));
+            this.autoFilterDateGroupingField = true;
+        }
+
+        /// <remarks/>
+        public CT_ExtensionList extLst
+        {
+            get
+            {
+                return this.extLstField;
+            }
+            set
+            {
+                this.extLstField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(ST_Visibility.visible)]
+        public ST_Visibility visibility
+        {
+            get
+            {
+                return this.visibilityField;
+            }
+            set
+            {
+                this.visibilityField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool minimized
+        {
+            get
+            {
+                return this.minimizedField;
+            }
+            set
+            {
+                this.minimizedField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(true)]
+        public bool showHorizontalScroll
+        {
+            get
+            {
+                return this.showHorizontalScrollField;
+            }
+            set
+            {
+                this.showHorizontalScrollField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(true)]
+        public bool showVerticalScroll
+        {
+            get
+            {
+                return this.showVerticalScrollField;
+            }
+            set
+            {
+                this.showVerticalScrollField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(true)]
+        public bool showSheetTabs
+        {
+            get
+            {
+                return this.showSheetTabsField;
+            }
+            set
+            {
+                this.showSheetTabsField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public int xWindow
+        {
+            get
+            {
+                return this.xWindowField;
+            }
+            set
+            {
+                this.xWindowField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool xWindowSpecified
+        {
+            get
+            {
+                return this.xWindowFieldSpecified;
+            }
+            set
+            {
+                this.xWindowFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public int yWindow
+        {
+            get
+            {
+                return this.yWindowField;
+            }
+            set
+            {
+                this.yWindowField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool yWindowSpecified
+        {
+            get
+            {
+                return this.yWindowFieldSpecified;
+            }
+            set
+            {
+                this.yWindowFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public uint windowWidth
+        {
+            get
+            {
+                return this.windowWidthField;
+            }
+            set
+            {
+                this.windowWidthField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool windowWidthSpecified
+        {
+            get
+            {
+                return this.windowWidthFieldSpecified;
+            }
+            set
+            {
+                this.windowWidthFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public uint windowHeight
+        {
+            get
+            {
+                return this.windowHeightField;
+            }
+            set
+            {
+                this.windowHeightField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool windowHeightSpecified
+        {
+            get
+            {
+                return this.windowHeightFieldSpecified;
+            }
+            set
+            {
+                this.windowHeightFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "600")]
+        public uint tabRatio
+        {
+            get
+            {
+                return this.tabRatioField;
+            }
+            set
+            {
+                this.tabRatioField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
+        public uint firstSheet
+        {
+            get
+            {
+                return this.firstSheetField;
+            }
+            set
+            {
+                this.firstSheetField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
+        public uint activeTab
+        {
+            get
+            {
+                return this.activeTabField;
+            }
+            set
+            {
+                this.activeTabField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(true)]
+        public bool autoFilterDateGrouping
+        {
+            get
+            {
+                return this.autoFilterDateGroupingField;
+            }
+            set
+            {
+                this.autoFilterDateGroupingField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public enum ST_Visibility
+    {
+
+        /// <remarks/>
+        visible,
+
+        /// <remarks/>
+        hidden,
+
+        /// <remarks/>
+        veryHidden,
     }
     
 }

@@ -36,8 +36,10 @@ namespace Codaxy.Xlio
             throw ExceptionFactory.Argument("Sheet '{0}' not found.", sheetName);
         }
 
-        public void AddSheet(Sheet newSheet) {
+        public Sheet AddSheet(Sheet newSheet)
+        {
             InsertSheet(sheets.Count, newSheet);
+            return newSheet;
         }
 
         public void InsertSheet(int index, Sheet newSheet)

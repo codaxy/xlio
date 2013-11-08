@@ -38,6 +38,11 @@ namespace Codaxy.Xlio
             get { return new SheetRange(this, range); }
         }
 
+        public SheetRange this[Cell c1, Cell c2]
+        {
+            get { return new SheetRange(this, new Range { Cell1 = c1, Cell2 = c2 }); }
+        }
+
         public SheetRange this[String c1, String c2]
         {
             get { return new SheetRange(this, new Range { Cell1 = Cell.Parse(c1), Cell2 = Cell.Parse(c2) }); }

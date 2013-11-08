@@ -98,7 +98,11 @@ namespace Codaxy.Xlio.IO
                 sheetIndex++;
             }
 
-            var wb = new CT_Workbook() { sheets = sheets.ToArray() };
+            var wb = new CT_Workbook() { 
+                sheets = sheets.ToArray(),
+                bookViews = new[] { new CT_BookView() }
+            };
+
             WriteFile("xl/workbook.xml", wb, SpreadsheetNs(true));           
 
             if (sharedStrings.Count>0)
@@ -188,6 +192,7 @@ namespace Codaxy.Xlio.IO
                 sheetView.selection = new[] { new CT_Selection { activeCell = sheet.ActiveCell.ToString(), sqref = new[] { sheet.ActiveCell.ToString() } } };
 
             sheetView.showGridLines = sheet.ShowGridLines;
+            
 
             var rows = new List<CT_Row>();
             foreach (var row in sheet.Data)

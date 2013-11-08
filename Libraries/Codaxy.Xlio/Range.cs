@@ -20,6 +20,25 @@ namespace Codaxy.Xlio
             return Cell1.Col <= col && col <= Cell2.Col && Cell1.Row <= row && row <= Cell2.Row;
         }
 
+        public Cell GetCell(int index)
+        {
+            return new Cell
+            {
+                Row = Cell1.Row + index / Width,
+                Col = Cell1.Col + index % Width
+            };
+        }
+
+        public Range GetRow(int index)
+        {
+            return new Range { Cell1 = new Cell { Col = Cell1.Col, Row = Cell1.Row + index }, Cell2 = new Cell { Col = Cell2.Col, Row = Cell1.Row + index } };
+        }
+
+        public Range GetColumn(int index)
+        {
+            return new Range { Cell1 = new Cell { Col = Cell1.Col + index, Row = Cell1.Row }, Cell2 = new Cell { Col = Cell1.Col + index, Row = Cell2.Row } };
+        }
+
         public bool Contains(Cell cell) { return Contains(cell.Row, cell.Col); }
 
         public static Range Parse(string range)
