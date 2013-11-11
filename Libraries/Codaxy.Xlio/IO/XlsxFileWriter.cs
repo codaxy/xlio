@@ -290,6 +290,7 @@ namespace Codaxy.Xlio.IO
                 {
                     r.ht = row.Value.Height.Value;
                     r.htSpecified = true;
+                    r.customHeight = true;
                 }
 
                 r.hidden = row.Value.Hidden;

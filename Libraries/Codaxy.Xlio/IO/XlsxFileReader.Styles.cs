@@ -125,6 +125,9 @@ namespace Codaxy.Xlio.IO
                     fonts.Add(f);
                 }
 
+            if (fonts.Count > 0)
+                workbook.DefaultFont = fonts[0];
+
             numFmts = new Dictionary<uint, string>();
             if (styles.numFmts!=null && styles.numFmts.numFmt!=null)
                 foreach (var nfmt in styles.numFmts.numFmt)

@@ -74,7 +74,10 @@ namespace Codaxy.Xlio.IO
             fills.Add(new CT_Fill { Item = new CT_PatternFill { patternType = ST_PatternType.none, patternTypeSpecified = true } });
             fills.Add(new CT_Fill { Item = new CT_PatternFill { patternType = ST_PatternType.gray125, patternTypeSpecified = true } });
             fonts = new Mapper<CellFont, CT_Font>(ConvertFont);
-            fonts.Add(new CT_Font { });
+            if (workbook.DefaultFont!=null)
+                fonts.Add(ConvertFont(workbook.DefaultFont));
+            else
+                fonts.Add(new CT_Font { });
             colors = new Mapper<Color, CT_Color1>(ConvertColor);
             numFormats = new Mapper<string, CT_NumFmt>(ConvertNumFormat);
             numFormatId = 164;

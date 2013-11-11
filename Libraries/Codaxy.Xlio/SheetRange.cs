@@ -185,8 +185,14 @@ namespace Codaxy.Xlio
             return Sheet[Range.GetColumn(index)];
         }
 
-        
+        public SheetRange GetRows(int firstRow, int lastRow)
+        {
+            return Sheet[Range.GetRows(firstRow, lastRow)];
+        }
 
-
+        public SheetRange GetColumns(int firstCol, int lastCol)
+        {
+            return Sheet[Range.GetColumns(firstCol, lastCol)];
+        }
     }
 }

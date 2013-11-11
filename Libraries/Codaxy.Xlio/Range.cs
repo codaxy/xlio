@@ -34,9 +34,19 @@ namespace Codaxy.Xlio
             return new Range { Cell1 = new Cell { Col = Cell1.Col, Row = Cell1.Row + index }, Cell2 = new Cell { Col = Cell2.Col, Row = Cell1.Row + index } };
         }
 
+        public Range GetRows(int firstRow, int lastRow)
+        {
+            return new Range { Cell1 = new Cell { Col = Cell1.Col, Row = Cell1.Row + firstRow }, Cell2 = new Cell { Col = Cell2.Col, Row = Cell1.Row + lastRow } };
+        }
+
         public Range GetColumn(int index)
         {
             return new Range { Cell1 = new Cell { Col = Cell1.Col + index, Row = Cell1.Row }, Cell2 = new Cell { Col = Cell1.Col + index, Row = Cell2.Row } };
+        }
+
+        public Range GetColumns(int firstCol, int lastCol)
+        {
+            return new Range { Cell1 = new Cell { Col = Cell1.Col + firstCol, Row = Cell1.Row }, Cell2 = new Cell { Col = Cell1.Col + lastCol, Row = Cell2.Row } };
         }
 
         public bool Contains(Cell cell) { return Contains(cell.Row, cell.Col); }

@@ -12,6 +12,7 @@ namespace Codaxy.Xlio
             Sheets = new SheetCollection();
         }
 
-        public SheetCollection Sheets { get; private set; }        
+        public SheetCollection Sheets { get; private set; }
+        public CellFont DefaultFont { get; set; }
     }
 }

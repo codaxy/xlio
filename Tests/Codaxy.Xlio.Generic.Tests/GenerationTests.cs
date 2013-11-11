@@ -39,6 +39,34 @@ namespace Codaxy.Xlio.Generic.Tests
                  wb.SaveToStream(f);
          }
 
+         [Test(Active=false)]
+         public void RowHeightTest()
+         {
+             var wb = new Workbook();
+             var sheet1 = wb.Sheets.AddSheet(new Sheet("Sheet 1") { ShowGridLines = true });
+
+             sheet1[0].Height = 200;
+
+             using (var f = File.Open("RowHeightTest.xlsx", FileMode.Create))
+                 wb.SaveToStream(f);
+         }
+
+         [Test(Active = true)]
+         public void DefaultFont()
+         {
+             var wb = new Workbook();
+             wb.DefaultFont = new CellFont { Name = "Arial", Size = 20 };
+
+             var sheet1 = wb.Sheets.AddSheet(new Sheet("Sheet 1") { ShowGridLines = true });
+
+             sheet1["A1"].Value = "Arial 20";
+             sheet1["A2"].Value = "Bold Arial 20";
+             sheet1["A2"].Style.Font.Bold = true;
+
+             using (var f = File.Open("DefaultFont.xlsx", FileMode.Create))
+                 wb.SaveToStream(f);
+         }
+
         [Test]
          public void ProblematicTest()
          {
