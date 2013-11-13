@@ -12,6 +12,9 @@ namespace Codaxy.Xlio
             SheetName = sheetName;
             data = new SheetData();
             Columns = new SheetColumnCollection();
+            RowBreaks = new List<int>();
+            ColumnBreaks = new List<int>();
+            Page = new PageSetup();
         }
         
         public string SheetName { get; internal set; }
@@ -78,5 +81,37 @@ namespace Codaxy.Xlio
         public Cell ActiveCell { get; set; }
 
         public SheetColumnCollection Columns { get; private set; }
+        public List<int> RowBreaks { get;private set; }
+        public List<int> ColumnBreaks { get; private set; }
+
+        public PageSetup Page { get; private set; }
+
     }
+
+    public enum PageOrientation { Portrait, Landscape }
+
+    public class PageSetup
+    {
+        public PageSetup()
+        {
+            Scale = 100;
+            Orientation = PageOrientation.Portrait;
+        }
+
+        public PageOrientation Orientation { get; set; }
+        public PageMargins Margins { get; set; }
+        public int Scale { get; set; }
+    }
+
+    public class PageMargins
+    {
+        public double Left { get; set; }
+        public double Right { get; set; }
+        public double Top { get; set; }
+        public double Bottom { get; set; }
+        public double Header { get; set; }
+        public double Footer { get; set; }
+    }
+
+    
 }

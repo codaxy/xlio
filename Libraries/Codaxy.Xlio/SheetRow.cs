@@ -25,7 +25,7 @@ namespace Codaxy.Xlio
 
         public int LastCol { get { return cells.Data.Count == 0 ? 0 : cells.Data.Last().Key; } }
         public int FirstCol { get { return cells.Data.Count == 0 ? 0 : cells.Data.First().Key; } }
-        public int Count { get { return cells.Data.Count; } }
+        public int Count { get { return cells.Data.Count; } }        
 
         public CellData this[int index]
         {

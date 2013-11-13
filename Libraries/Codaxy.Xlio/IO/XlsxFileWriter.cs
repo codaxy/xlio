@@ -344,11 +344,67 @@ namespace Codaxy.Xlio.IO
                 sheetData = rows.ToArray(),
                 cols = cols.Count > 0 ? cols.ToArray() : null,
                 sheetFormatPr = sheetFormat.Data,
-                sheetViews = new CT_SheetViews { sheetView = new[] { sheetView } }
+                sheetViews = new CT_SheetViews { sheetView = new[] { sheetView } },
+                pageSetup = new CT_PageSetup() { scale = (uint)sheet.Page.Scale }
             };
+
+            switch (sheet.Page.Orientation)
+            {
+                case PageOrientation.Landscape:
+                    ws.pageSetup.orientation = ST_Orientation.landscape;
+                    break;
+                case PageOrientation.Portrait:
+                    ws.pageSetup.orientation = ST_Orientation.portrait;
+                    break;
+            }
+
+            if (sheet.Page.Margins != null)
+            {
+                ws.pageMargins = new CT_PageMargins
+                {
+                    bottom = sheet.Page.Margins.Bottom,
+                    footer = sheet.Page.Margins.Footer,
+                    header = sheet.Page.Margins.Header,
+                    left = sheet.Page.Margins.Left,
+                    right = sheet.Page.Margins.Right,
+                    top = sheet.Page.Margins.Top
+                };
+            }
+
+            if (sheet.ColumnBreaks != null && sheet.ColumnBreaks.Count > 0)
+            {
+                ws.colBreaks = new CT_PageBreak
+                {
+                    count = (uint)sheet.ColumnBreaks.Count,
+                    manualBreakCount = (uint)sheet.ColumnBreaks.Count,
+                    brk = sheet.ColumnBreaks.Select(id => new CT_Break
+                    {
+                        id = (uint)id + 1,
+                        man = true,
+                        //max = (uint)sheet.Data.LastRow + 1
+                    }).ToArray()
+                };
+            }
+
+            if (sheet.RowBreaks != null && sheet.RowBreaks.Count > 0)
+            {
+                ws.rowBreaks = new CT_PageBreak
+                {
+                    count = (uint)sheet.RowBreaks.Count,
+                    manualBreakCount = (uint)sheet.RowBreaks.Count,
+                    brk = sheet.RowBreaks.Select(id => new CT_Break
+                    {
+                        id = (uint)id + 1,
+                        man = true,
+                        //max = 1048575U
+                    }).ToArray()
+                };
+            }
 
             if (!mergedCells.Empty)
                 ws.mergeCells = new CT_MergeCells { mergeCell = mergedCells.ToArray() };
+
+            
 
             
 

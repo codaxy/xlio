@@ -105,5 +105,22 @@ namespace Codaxy.Xlio.Generic.Tests
                  wb.SaveToStream(f);
 
          }
+
+        [Test(Active=true)]
+        public void PageBreakTests()
+        {
+            
+            var wb = new Workbook();
+            var sheet = wb.Sheets.AddSheet(new Sheet("Sheet") { ShowGridLines = true });
+
+            sheet.RowBreaks.AddRange(new[] { 1, 5, 13 });
+            sheet.ColumnBreaks.AddRange(new[] { 1, 5, 13 });
+
+            sheet[10, 10].Value = 100;
+            
+            using (var f = File.Open("PageBreak.xlsx", FileMode.Create))
+                wb.SaveToStream(f);
+
+        }
     }
 }

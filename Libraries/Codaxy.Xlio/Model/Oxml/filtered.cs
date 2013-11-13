@@ -5193,15 +5193,15 @@ namespace Codaxy.Xlio.Model.Oxml
 
         //private CT_PrintOptions printOptionsField;
 
-        //private CT_PageMargins pageMarginsField;
+        private CT_PageMargins pageMarginsField;
 
-        //private CT_PageSetup pageSetupField;
+        private CT_PageSetup pageSetupField;
 
         //private CT_HeaderFooter headerFooterField;
 
-        //private CT_PageBreak rowBreaksField;
+        private CT_PageBreak rowBreaksField;
 
-        //private CT_PageBreak colBreaksField;
+        private CT_PageBreak colBreaksField;
 
         //private CT_CustomProperty[] customPropertiesField;
 
@@ -5450,25 +5450,31 @@ namespace Codaxy.Xlio.Model.Oxml
         //    }
         //}
 
-        ///// <remarks/>
-        //public CT_PageMargins pageMargins {
-        //    get {
-        //        return this.pageMarginsField;
-        //    }
-        //    set {
-        //        this.pageMarginsField = value;
-        //    }
-        //}
+        /// <remarks/>
+        public CT_PageMargins pageMargins
+        {
+            get
+            {
+                return this.pageMarginsField;
+            }
+            set
+            {
+                this.pageMarginsField = value;
+            }
+        }
 
-        ///// <remarks/>
-        //public CT_PageSetup pageSetup {
-        //    get {
-        //        return this.pageSetupField;
-        //    }
-        //    set {
-        //        this.pageSetupField = value;
-        //    }
-        //}
+        /// <remarks/>
+        public CT_PageSetup pageSetup
+        {
+            get
+            {
+                return this.pageSetupField;
+            }
+            set
+            {
+                this.pageSetupField = value;
+            }
+        }
 
         ///// <remarks/>
         //public CT_HeaderFooter headerFooter {
@@ -5480,25 +5486,31 @@ namespace Codaxy.Xlio.Model.Oxml
         //    }
         //}
 
-        ///// <remarks/>
-        //public CT_PageBreak rowBreaks {
-        //    get {
-        //        return this.rowBreaksField;
-        //    }
-        //    set {
-        //        this.rowBreaksField = value;
-        //    }
-        //}
+        /// <remarks/>
+        public CT_PageBreak rowBreaks
+        {
+            get
+            {
+                return this.rowBreaksField;
+            }
+            set
+            {
+                this.rowBreaksField = value;
+            }
+        }
 
-        ///// <remarks/>
-        //public CT_PageBreak colBreaks {
-        //    get {
-        //        return this.colBreaksField;
-        //    }
-        //    set {
-        //        this.colBreaksField = value;
-        //    }
-        //}
+        /// <remarks/>
+        public CT_PageBreak colBreaks
+        {
+            get
+            {
+                return this.colBreaksField;
+            }
+            set
+            {
+                this.colBreaksField = value;
+            }
+        }
 
         ///// <remarks/>
         //[System.Xml.Serialization.XmlArrayItemAttribute("customPr", IsNullable=false)]
@@ -8285,6 +8297,660 @@ namespace Codaxy.Xlio.Model.Oxml
 
         /// <remarks/>
         veryHidden,
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public partial class CT_PageBreak
+    {
+
+        private CT_Break[] brkField;
+
+        private uint countField;
+
+        private uint manualBreakCountField;
+
+        public CT_PageBreak()
+        {
+            this.countField = ((uint)(0));
+            this.manualBreakCountField = ((uint)(0));
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("brk")]
+        public CT_Break[] brk
+        {
+            get
+            {
+                return this.brkField;
+            }
+            set
+            {
+                this.brkField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
+        public uint count
+        {
+            get
+            {
+                return this.countField;
+            }
+            set
+            {
+                this.countField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
+        public uint manualBreakCount
+        {
+            get
+            {
+                return this.manualBreakCountField;
+            }
+            set
+            {
+                this.manualBreakCountField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public partial class CT_Break
+    {
+
+        private uint idField;
+
+        private uint minField;
+
+        private uint maxField;
+
+        private bool manField;
+
+        private bool ptField;
+
+        public CT_Break()
+        {
+            this.idField = ((uint)(0));
+            this.minField = ((uint)(0));
+            this.maxField = ((uint)(0));
+            this.manField = false;
+            this.ptField = false;
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
+        public uint id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
+        public uint min
+        {
+            get
+            {
+                return this.minField;
+            }
+            set
+            {
+                this.minField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "0")]
+        public uint max
+        {
+            get
+            {
+                return this.maxField;
+            }
+            set
+            {
+                this.maxField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool man
+        {
+            get
+            {
+                return this.manField;
+            }
+            set
+            {
+                this.manField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool pt
+        {
+            get
+            {
+                return this.ptField;
+            }
+            set
+            {
+                this.ptField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public partial class CT_PageSetup
+    {
+
+        private uint paperSizeField;
+
+        private uint scaleField;
+
+        private uint firstPageNumberField;
+
+        private uint fitToWidthField;
+
+        private uint fitToHeightField;
+
+        private ST_PageOrder pageOrderField;
+
+        private ST_Orientation orientationField;
+
+        private bool usePrinterDefaultsField;
+
+        private bool blackAndWhiteField;
+
+        private bool draftField;
+
+        private ST_CellComments cellCommentsField;
+
+        private bool useFirstPageNumberField;
+
+        private ST_PrintError errorsField;
+
+        private uint horizontalDpiField;
+
+        private uint verticalDpiField;
+
+        private uint copiesField;
+
+        private string idField;
+
+        public CT_PageSetup()
+        {
+            this.paperSizeField = ((uint)(1));
+            this.scaleField = ((uint)(100));
+            this.firstPageNumberField = ((uint)(1));
+            this.fitToWidthField = ((uint)(1));
+            this.fitToHeightField = ((uint)(1));
+            this.pageOrderField = ST_PageOrder.downThenOver;
+            this.orientationField = ST_Orientation.@default;
+            this.usePrinterDefaultsField = true;
+            this.blackAndWhiteField = false;
+            this.draftField = false;
+            this.cellCommentsField = ST_CellComments.none;
+            this.useFirstPageNumberField = false;
+            this.errorsField = ST_PrintError.displayed;
+            this.horizontalDpiField = ((uint)(600));
+            this.verticalDpiField = ((uint)(600));
+            this.copiesField = ((uint)(1));
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "1")]
+        public uint paperSize
+        {
+            get
+            {
+                return this.paperSizeField;
+            }
+            set
+            {
+                this.paperSizeField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "100")]
+        public uint scale
+        {
+            get
+            {
+                return this.scaleField;
+            }
+            set
+            {
+                this.scaleField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "1")]
+        public uint firstPageNumber
+        {
+            get
+            {
+                return this.firstPageNumberField;
+            }
+            set
+            {
+                this.firstPageNumberField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "1")]
+        public uint fitToWidth
+        {
+            get
+            {
+                return this.fitToWidthField;
+            }
+            set
+            {
+                this.fitToWidthField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "1")]
+        public uint fitToHeight
+        {
+            get
+            {
+                return this.fitToHeightField;
+            }
+            set
+            {
+                this.fitToHeightField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(ST_PageOrder.downThenOver)]
+        public ST_PageOrder pageOrder
+        {
+            get
+            {
+                return this.pageOrderField;
+            }
+            set
+            {
+                this.pageOrderField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(ST_Orientation.@default)]
+        public ST_Orientation orientation
+        {
+            get
+            {
+                return this.orientationField;
+            }
+            set
+            {
+                this.orientationField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(true)]
+        public bool usePrinterDefaults
+        {
+            get
+            {
+                return this.usePrinterDefaultsField;
+            }
+            set
+            {
+                this.usePrinterDefaultsField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool blackAndWhite
+        {
+            get
+            {
+                return this.blackAndWhiteField;
+            }
+            set
+            {
+                this.blackAndWhiteField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool draft
+        {
+            get
+            {
+                return this.draftField;
+            }
+            set
+            {
+                this.draftField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(ST_CellComments.none)]
+        public ST_CellComments cellComments
+        {
+            get
+            {
+                return this.cellCommentsField;
+            }
+            set
+            {
+                this.cellCommentsField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool useFirstPageNumber
+        {
+            get
+            {
+                return this.useFirstPageNumberField;
+            }
+            set
+            {
+                this.useFirstPageNumberField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(ST_PrintError.displayed)]
+        public ST_PrintError errors
+        {
+            get
+            {
+                return this.errorsField;
+            }
+            set
+            {
+                this.errorsField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "600")]
+        public uint horizontalDpi
+        {
+            get
+            {
+                return this.horizontalDpiField;
+            }
+            set
+            {
+                this.horizontalDpiField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "600")]
+        public uint verticalDpi
+        {
+            get
+            {
+                return this.verticalDpiField;
+            }
+            set
+            {
+                this.verticalDpiField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "1")]
+        public uint copies
+        {
+            get
+            {
+                return this.copiesField;
+            }
+            set
+            {
+                this.copiesField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute(Form = System.Xml.Schema.XmlSchemaForm.Qualified, Namespace = "http://schemas.openxmlformats.org/officeDocument/2006/relationships")]
+        public string id
+        {
+            get
+            {
+                return this.idField;
+            }
+            set
+            {
+                this.idField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public enum ST_PageOrder
+    {
+
+        /// <remarks/>
+        downThenOver,
+
+        /// <remarks/>
+        overThenDown,
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public enum ST_Orientation
+    {
+
+        /// <remarks/>
+        @default,
+
+        /// <remarks/>
+        portrait,
+
+        /// <remarks/>
+        landscape,
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public enum ST_CellComments
+    {
+
+        /// <remarks/>
+        none,
+
+        /// <remarks/>
+        asDisplayed,
+
+        /// <remarks/>
+        atEnd,
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public enum ST_PrintError
+    {
+
+        /// <remarks/>
+        displayed,
+
+        /// <remarks/>
+        blank,
+
+        /// <remarks/>
+        dash,
+
+        /// <remarks/>
+        NA,
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public partial class CT_PageMargins
+    {
+
+        private double leftField;
+
+        private double rightField;
+
+        private double topField;
+
+        private double bottomField;
+
+        private double headerField;
+
+        private double footerField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public double left
+        {
+            get
+            {
+                return this.leftField;
+            }
+            set
+            {
+                this.leftField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public double right
+        {
+            get
+            {
+                return this.rightField;
+            }
+            set
+            {
+                this.rightField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public double top
+        {
+            get
+            {
+                return this.topField;
+            }
+            set
+            {
+                this.topField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public double bottom
+        {
+            get
+            {
+                return this.bottomField;
+            }
+            set
+            {
+                this.bottomField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public double header
+        {
+            get
+            {
+                return this.headerField;
+            }
+            set
+            {
+                this.headerField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public double footer
+        {
+            get
+            {
+                return this.footerField;
+            }
+            set
+            {
+                this.footerField = value;
+            }
+        }
     }
     
 }
