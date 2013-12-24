@@ -5,13 +5,13 @@ using System.Text;
 using Codaxy.Xlio;
 using Codaxy.Xlio.IO;
 
-namespace ConsoleTest
+namespace Codaxy.Xlio.Samples
 {
     class Demo1
     {
         public static void Run()
         {
-            var workbook = Workbook.ReadFile(@"C:\Work\Test.xlsx");
+            var workbook = Workbook.Load(@"C:\Work\Test.xlsx");
             var sheet = workbook.Sheets[0];
             sheet["A1"].Value = "Hello";
             sheet["A1"].Style.Fill = new CellFill

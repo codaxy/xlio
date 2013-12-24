@@ -9,13 +9,25 @@ namespace Codaxy.Xlio
 {
     public partial class Workbook
     {
+        [Obsolete("ReadFile method is deprecated. Use Load method instead.", true)]
         public static Workbook ReadFile(String path)
         {
+            return Load(path);
+        }
+        
+        public static Workbook Load(String path)
+        {
             using (var fs = File.OpenRead(path))
-                return ReadStream(fs);
+                return LoadFromStream(fs);
         }
 
+        [Obsolete("ReadStream method is deprecated. Use LoadFromStream method instead.", true)]
         public static Workbook ReadStream(Stream fs)
+        {
+            return LoadFromStream(fs);
+        }
+
+        public static Workbook LoadFromStream(Stream fs)
         {
             using (var fr = new XlsxFileReader(fs))
             {

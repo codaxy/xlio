@@ -59,13 +59,13 @@ namespace Codaxy.Xlio.Generic
 
         public static List<T> Import<T>(String filePath, TableInfo<T> t = null, bool skipEmptyRows = true) where T : new()
         {
-            var wb = Xlio.Workbook.ReadFile(filePath);
+            var wb = Xlio.Workbook.Load(filePath);
             return Import(wb, t, skipEmptyRows);
         }
 
         public static List<T> Import<T>(Stream stream, TableInfo<T> t = null, bool skipEmptyRows = true) where T : new()
         {
-            var wb = Xlio.Workbook.ReadStream(stream);
+            var wb = Xlio.Workbook.LoadFromStream(stream);
             return Import(wb, t, skipEmptyRows);
         }
 

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codaxy.Xlio", "Libraries\Codaxy.Xlio\Codaxy.Xlio.csproj", "{11F82973-690A-48A9-8CB8-BD97E0024E2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTest", "Tests\ConsoleTest\ConsoleTest.csproj", "{75101596-E55E-4A6B-8D95-DF9C8193A799}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codaxy.Xlio.Samples", "Tests\ConsoleTest\Codaxy.Xlio.Samples.csproj", "{75101596-E55E-4A6B-8D95-DF9C8193A799}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XsdDir", "Tools\XsdDir\XsdDir.csproj", "{1F33404D-3231-4317-8EE8-F66E591C5A3A}"
 EndProject

@@ -15,6 +15,7 @@ namespace Codaxy.Xlio
             RowBreaks = new List<int>();
             ColumnBreaks = new List<int>();
             Page = new PageSetup();
+            ShowGridLines = true;
         }
         
         public string SheetName { get; internal set; }

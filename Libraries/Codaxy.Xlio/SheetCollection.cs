@@ -42,6 +42,11 @@ namespace Codaxy.Xlio
             return newSheet;
         }
 
+        public Sheet AddSheet(String sheetName)
+        {
+            return AddSheet(new Sheet(sheetName));
+        }
+
         public void InsertSheet(int index, Sheet newSheet)
         {
             if (sheetNameIndex.ContainsKey(newSheet.SheetName))

@@ -6,12 +6,13 @@ using Codaxy.Xlio;
 using System.Diagnostics;
 using System.Threading;
 
-namespace ConsoleTest
+namespace Codaxy.Xlio.Samples
 {
     class Program
     {
         static void Main(string[] args)
-        {            
+        {
+            Basics.CellsAndRanges();
             Stopwatch stopwatch = Stopwatch.StartNew();
             System.IO.Directory.CreateDirectory(".\\write");
             foreach (var f in System.IO.Directory.GetFileSystemEntries(".", "read\\*.xlsx").OrderBy(a=>a))
@@ -20,7 +21,7 @@ namespace ConsoleTest
                 {
                     Console.Write("Reading file '{0}'...", f);
                     stopwatch.Reset(); stopwatch.Start();
-                    Workbook wb = Workbook.ReadFile(f);
+                    Workbook wb = Workbook.Load(f);
                     Console.WriteLine("{0:0.00 ms}", stopwatch.Elapsed.TotalMilliseconds);
                     stopwatch.Reset(); stopwatch.Start();
                     var of = f.Replace("\\read\\", "\\write\\");
@@ -48,7 +49,7 @@ namespace ConsoleTest
             sheet[0, 0].Value = true;
             f.Save("bool.xlsx");
 
-            f = Workbook.ReadFile("bool.xlsx");
+            f = Workbook.Load("bool.xlsx");
             if (!(f.Sheets[0][0, 0].Value is bool))
                 throw new InvalidOperationException();
                  
