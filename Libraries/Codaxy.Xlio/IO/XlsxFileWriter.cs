@@ -260,7 +260,7 @@ namespace Codaxy.Xlio.IO
                         {
                             String sv, format;
                             var v = WriteCellValue(data, out ct, out sv, out format);
-                            if (format != null && data.style != null && data.style.format == null)
+                            if (format != null && (data.style == null || data.style.format == null))
                                 data.Style.Format = format;
                             cell.v = v;
                             cell.t = ct;

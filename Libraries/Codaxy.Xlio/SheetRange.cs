@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Codaxy.Xlio
 {
-    public class SheetRange
+    public class SheetRange : IEnumerable<CellDataPair>
     {
         public Range Range { get; private set; }
         public Sheet Sheet { get; private set; }
@@ -116,6 +116,14 @@ namespace Codaxy.Xlio
             return this;
         }
 
+        public SharedFormula SetFormula(string formula)
+        {
+            var sharedFormula = new SharedFormula(formula, Range, Range.Cell1);
+            foreach (var cell in EnumerateCells())
+                cell.SharedFormula = sharedFormula;
+            return sharedFormula;
+        }
+
         public SheetRange SetBorder(BorderEdge style)
         {
             for (var row = Range.Cell1.Row; row <= Range.Cell2.Row; row++)
@@ -141,6 +149,16 @@ namespace Codaxy.Xlio
                 var rowRange = Sheet[row];
                 for (var col = Range.Cell1.Col; col <= Range.Cell2.Col; col++)
                     yield return rowRange[col];
+            }
+        }
+
+        public IEnumerable<CellDataPair> Enumerate()
+        {
+            for (var row = Range.Cell1.Row; row <= Range.Cell2.Row; row++)
+            {
+                var rowRange = Sheet[row];
+                for (var col = Range.Cell1.Col; col <= Range.Cell2.Col; col++)
+                    yield return new CellDataPair(new Cell { Col = col, Row = row }, rowRange[col]);
             }
         }
 
@@ -193,6 +211,16 @@ namespace Codaxy.Xlio
         public SheetRange GetColumns(int firstCol, int lastCol)
         {
             return Sheet[Range.GetColumns(firstCol, lastCol)];
+        }
+
+        public IEnumerator<CellDataPair> GetEnumerator()
+        {
+            return Enumerate().GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return Enumerate().GetEnumerator();
         }
     }
 }

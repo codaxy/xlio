@@ -12,7 +12,7 @@ namespace Codaxy.Xlio.Samples
     {
         static void Main(string[] args)
         {
-            Basics.CellsAndRanges();
+            Usage.Formulas.Demo();
             Stopwatch stopwatch = Stopwatch.StartNew();
             System.IO.Directory.CreateDirectory(".\\write");
             foreach (var f in System.IO.Directory.GetFileSystemEntries(".", "read\\*.xlsx").OrderBy(a=>a))

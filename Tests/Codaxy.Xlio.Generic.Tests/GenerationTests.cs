@@ -51,7 +51,7 @@ namespace Codaxy.Xlio.Generic.Tests
                  wb.SaveToStream(f);
          }
 
-         [Test(Active = true)]
+         [Test(Active = false)]
          public void DefaultFont()
          {
              var wb = new Workbook();
@@ -106,10 +106,10 @@ namespace Codaxy.Xlio.Generic.Tests
 
          }
 
-        [Test(Active=true)]
+        [Test(Active = false)]
         public void PageBreakTests()
         {
-            
+
             var wb = new Workbook();
             var sheet = wb.Sheets.AddSheet(new Sheet("Sheet") { ShowGridLines = true });
 
@@ -117,7 +117,7 @@ namespace Codaxy.Xlio.Generic.Tests
             sheet.ColumnBreaks.AddRange(new[] { 1, 5, 13 });
 
             sheet[10, 10].Value = 100;
-            
+
             using (var f = File.Open("PageBreak.xlsx", FileMode.Create))
                 wb.SaveToStream(f);
 

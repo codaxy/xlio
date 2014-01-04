@@ -17,10 +17,5 @@ namespace Codaxy.Xlio
             this.Range = range;
             this.Origin = origin;
         }
-
-        public String GetCellFormula(Cell cell)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

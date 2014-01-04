@@ -10,6 +10,7 @@ namespace Codaxy.Xlio
         public Workbook()
         {
             Sheets = new SheetCollection();
+            DefaultFont = new CellFont();
         }
 
         public SheetCollection Sheets { get; private set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -270,12 +271,37 @@ namespace Codaxy.Xlio
         public HorizontalAlignment? HAlign { get; set; }
 
         /// <summary>
+        /// Gets or sets the horizontal alignment.
+        /// </summary>
+        /// <value>
+        /// The horizontal alignment.
+        /// </value>
+        public HorizontalAlignment? Horizontal
+        {
+            get { return HAlign; }
+            set { HAlign = value; } 
+        }
+
+        /// <summary>
         /// Gets or sets the vertical alignment.
         /// </summary>
         /// <value>
         /// The vertical alignment.
         /// </value>
         public VerticalAlignment? VAlign { get; set; }
+
+        /// <summary>
+        /// Gets or sets the vertical alignment.
+        /// </summary>
+        /// <value>
+        /// The vertical alignment.
+        /// </value>
+        public VerticalAlignment? Vertical
+        {
+            get { return VAlign; }
+            set { VAlign = value; }
+        }
+            
 
         /// <summary>
         /// Indent
@@ -401,6 +427,34 @@ namespace Codaxy.Xlio
         /// <param name="g"></param>
         /// <param name="b"></param>
         public Color(byte r, byte g, byte b) : this(255, r, g, b) { }
+
+        /// <summary>
+        /// Web color
+        /// </summary>
+        /// <param name="sharpHex">The web.</param>
+        public Color(String sharpHex)
+        {
+            var l = sharpHex.Length;
+            int offset = 0;
+            if (sharpHex.StartsWith("#"))
+                offset += 1;
+            a = 255;
+            switch (l - offset)
+            {
+                case 3:
+                    r = byte.Parse(sharpHex[offset + 0].ToString() + sharpHex[offset + 0].ToString(), NumberStyles.HexNumber);
+                    g = byte.Parse(sharpHex[offset + 1].ToString() + sharpHex[offset + 1].ToString(), NumberStyles.HexNumber);
+                    b = byte.Parse(sharpHex[offset + 2].ToString() + sharpHex[offset + 2].ToString(), NumberStyles.HexNumber);
+                    break;
+                case 6:
+                    r = byte.Parse(sharpHex.Substring(offset + 0, 2), NumberStyles.HexNumber);
+                    g = byte.Parse(sharpHex.Substring(offset + 2, 2), NumberStyles.HexNumber);
+                    b = byte.Parse(sharpHex.Substring(offset + 4, 2), NumberStyles.HexNumber);
+                    break;
+                default:
+                    throw new InvalidOperationException(String.Format("Invalid color string provided: '{0}'", sharpHex));
+            }
+        }
 
         /// <summary>
         /// ARGB
@@ -613,6 +667,14 @@ namespace Codaxy.Xlio
         public bool? DiagonalUp { get; set; }
         public bool? DiagonalDown { get; set; }
         public bool Outline { get; set; }
+
+        public BorderEdge All
+        {
+            set
+            {
+                left = right = top = bottom = value;
+            }
+        }
 
         public override int GetHashCode()
         {

@@ -71,6 +71,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Usage\Basics.cs" />
+    <Compile Include="Usage\Formulas.cs" />
+    <Compile Include="Usage\Styles.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

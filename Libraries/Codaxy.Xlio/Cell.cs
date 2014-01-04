@@ -10,6 +10,14 @@ namespace Codaxy.Xlio
     /// </summary>
     public class Cell 
     {
+        public Cell() { }
+
+        public Cell(int row, int col)
+        {
+            Row = row;
+            Col = col;
+        }
+
         /// <summary>
         /// Zero indexed row number
         /// </summary>

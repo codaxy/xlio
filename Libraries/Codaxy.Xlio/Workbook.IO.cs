@@ -38,6 +38,9 @@ namespace Codaxy.Xlio
         public void Save(String path) { Save(path, XlsxFileWriterOptions.None); }
         public void Save(String path, XlsxFileWriterOptions options)
         {
+            if (!Path.HasExtension(path))
+                path = Path.ChangeExtension(path, ".xlsx");
+
             using (var fs = File.Create(path))
                 SaveToStream(fs, options);
         }

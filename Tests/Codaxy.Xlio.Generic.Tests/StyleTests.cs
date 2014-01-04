@@ -10,6 +10,14 @@ namespace Codaxy.Xlio.Generic.Tests
     class StyleTests
     {
         [Test]
+        public void WebColorParseTest()
+        {
+            Assert.AreEqual(Color.Black, new Color("#000"));
+            Assert.AreEqual(new Color(0xffff0000), new Color("#f00"));
+            Assert.AreEqual(new Color(0xff123456), new Color("#123456"));
+        }
+
+        [Test]
         public void TwoInstancesOfCellStyleAreEqual()
         {
             Assert.AreEqualAndHaveSameHash(new CellStyle(), new CellStyle());

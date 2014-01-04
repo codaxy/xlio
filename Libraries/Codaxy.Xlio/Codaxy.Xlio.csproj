@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Cell.cs" />
     <Compile Include="CellData.cs" />
+    <Compile Include="CellDataPair.cs" />
     <Compile Include="CellStyle.cs" />
     <Compile Include="Generic\ColumnInfo.cs" />
     <Compile Include="Generic\TableInfo.cs" />

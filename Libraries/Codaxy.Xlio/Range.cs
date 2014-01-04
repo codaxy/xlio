@@ -11,6 +11,23 @@ namespace Codaxy.Xlio
         public Cell Cell2 { get; set; }
 
         public Range() { Cell1 = new Cell(); Cell2 = new Cell(); }
+        public Range(Cell cell1, Cell cell2)
+        {
+            Cell1 = cell1;
+            Cell2 = cell2;
+        }
+
+        public Range(String cell1, String cell2)
+        {
+            Cell1 = Cell.Parse(cell1);
+            Cell2 = Cell.Parse(cell2);
+        }
+
+        public Range(int r1, int c1, int r2, int c2)
+        {
+            Cell1 = new Cell(r1, c1);
+            Cell2 = new Cell(r2, c2);
+        }
 
         public int Width { get { return Cell2.Col - Cell1.Col + 1; } }
         public int Height { get { return Cell2.Row - Cell1.Row + 1; } }
@@ -110,6 +127,28 @@ namespace Codaxy.Xlio
         public static bool operator !=(Range a, Range b)
         {
             return !(a == b);
+        }
+
+        public int Area { get { return Width * Height; } }
+
+        public static string Format(Range range)
+        {
+            return range.ToString();
+        }
+
+        public static string Format(Cell cell1, Cell cell2)
+        {
+            return cell1.ToString() + ":" + cell1.ToString();
+        }
+
+        public static string Format(String cell1, String cell2)
+        {
+            return cell1 + ":" + cell2;
+        }
+
+        public static string Format(int r1, int c1, int r2, int c2)
+        {
+            return Format(new Cell(r1, c1), new Cell(r2, c2));
         }
     }
 }
