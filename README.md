@@ -37,3 +37,5 @@ Check the following example to see how typical Xlio code looks like.
 	}
 
 	workbook.Save(@"C:\Work\Xlio.xlsx", XlsxFileWriterOptions.AutoFit);
+	
+More information available at the official [Xlio page](http://dox.codaxy.com/xlio/).
