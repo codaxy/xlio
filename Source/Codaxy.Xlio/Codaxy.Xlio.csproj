@@ -59,7 +59,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -76,6 +76,8 @@
     <Compile Include="CellData.cs" />
     <Compile Include="CellDataPair.cs" />
     <Compile Include="CellStyle.cs" />
+    <Compile Include="DefinedName.cs" />
+    <Compile Include="DefinedNameCollection.cs" />
     <Compile Include="Generic\ColumnInfo.cs" />
     <Compile Include="Generic\TableInfo.cs" />
     <Compile Include="Generic\XlioExporter.cs" />

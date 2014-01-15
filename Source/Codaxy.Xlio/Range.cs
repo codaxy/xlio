@@ -131,8 +131,16 @@ namespace Codaxy.Xlio
 
         public int Area { get { return Width * Height; } }
 
-        public static string Format(Range range)
+        public static string Format(Range range, bool absolute = false)
         {
+            if (absolute)
+            {
+                var cell1 = range.Cell1;
+                var cell2 = range.Cell2;
+                var cell1Str = Cell.Format(cell1.Row, cell1.Col, true, true);
+                var cell2Str = Cell.Format(cell2.Row, cell2.Col, true, true);
+                return cell1Str + ":" + cell2Str;
+            }
             return range.ToString();
         }
 

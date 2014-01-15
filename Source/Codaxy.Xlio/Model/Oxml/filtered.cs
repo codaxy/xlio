@@ -4055,7 +4055,7 @@ namespace Codaxy.Xlio.Model.Oxml
 
         //private CT_ExternalReference[] externalReferencesField;
 
-        //private CT_DefinedName[] definedNamesField;
+        private CT_DefinedName[] definedNamesField;
 
         //private CT_CalcPr calcPrField;
 
@@ -4163,15 +4163,18 @@ namespace Codaxy.Xlio.Model.Oxml
         //}
 
         /// <remarks/>
-        //[System.Xml.Serialization.XmlArrayItemAttribute("definedName", IsNullable=false)]
-        //public CT_DefinedName[] definedNames {
-        //    get {
-        //        return this.definedNamesField;
-        //    }
-        //    set {
-        //        this.definedNamesField = value;
-        //    }
-        //}
+        [System.Xml.Serialization.XmlArrayItemAttribute("definedName", IsNullable = false)]
+        public CT_DefinedName[] definedNames
+        {
+            get
+            {
+                return this.definedNamesField;
+            }
+            set
+            {
+                this.definedNamesField = value;
+            }
+        }
 
         /// <remarks/>
         //public CT_CalcPr calcPr {
@@ -6868,6 +6871,319 @@ namespace Codaxy.Xlio.Model.Oxml
             set
             {
                 this.idField = value;
+            }
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public partial class CT_DefinedName
+    {
+
+        private string nameField;
+
+        private string commentField;
+
+        private string customMenuField;
+
+        private string descriptionField;
+
+        private string helpField;
+
+        private string statusBarField;
+
+        private uint localSheetIdField;
+
+        private bool localSheetIdFieldSpecified;
+
+        private bool hiddenField;
+
+        private bool functionField;
+
+        private bool vbProcedureField;
+
+        private bool xlmField;
+
+        private uint functionGroupIdField;
+
+        private bool functionGroupIdFieldSpecified;
+
+        private string shortcutKeyField;
+
+        private bool publishToServerField;
+
+        private bool workbookParameterField;
+
+        private string valueField;
+
+        public CT_DefinedName()
+        {
+            this.hiddenField = false;
+            this.functionField = false;
+            this.vbProcedureField = false;
+            this.xlmField = false;
+            this.publishToServerField = false;
+            this.workbookParameterField = false;
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string name
+        {
+            get
+            {
+                return this.nameField;
+            }
+            set
+            {
+                this.nameField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string comment
+        {
+            get
+            {
+                return this.commentField;
+            }
+            set
+            {
+                this.commentField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string customMenu
+        {
+            get
+            {
+                return this.customMenuField;
+            }
+            set
+            {
+                this.customMenuField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string description
+        {
+            get
+            {
+                return this.descriptionField;
+            }
+            set
+            {
+                this.descriptionField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string help
+        {
+            get
+            {
+                return this.helpField;
+            }
+            set
+            {
+                this.helpField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string statusBar
+        {
+            get
+            {
+                return this.statusBarField;
+            }
+            set
+            {
+                this.statusBarField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public uint localSheetId
+        {
+            get
+            {
+                return this.localSheetIdField;
+            }
+            set
+            {
+                this.localSheetIdField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool localSheetIdSpecified
+        {
+            get
+            {
+                return this.localSheetIdFieldSpecified;
+            }
+            set
+            {
+                this.localSheetIdFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool hidden
+        {
+            get
+            {
+                return this.hiddenField;
+            }
+            set
+            {
+                this.hiddenField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool function
+        {
+            get
+            {
+                return this.functionField;
+            }
+            set
+            {
+                this.functionField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool vbProcedure
+        {
+            get
+            {
+                return this.vbProcedureField;
+            }
+            set
+            {
+                this.vbProcedureField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool xlm
+        {
+            get
+            {
+                return this.xlmField;
+            }
+            set
+            {
+                this.xlmField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public uint functionGroupId
+        {
+            get
+            {
+                return this.functionGroupIdField;
+            }
+            set
+            {
+                this.functionGroupIdField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool functionGroupIdSpecified
+        {
+            get
+            {
+                return this.functionGroupIdFieldSpecified;
+            }
+            set
+            {
+                this.functionGroupIdFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string shortcutKey
+        {
+            get
+            {
+                return this.shortcutKeyField;
+            }
+            set
+            {
+                this.shortcutKeyField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool publishToServer
+        {
+            get
+            {
+                return this.publishToServerField;
+            }
+            set
+            {
+                this.publishToServerField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool workbookParameter
+        {
+            get
+            {
+                return this.workbookParameterField;
+            }
+            set
+            {
+                this.workbookParameterField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlTextAttribute()]
+        public string Value
+        {
+            get
+            {
+                return this.valueField;
+            }
+            set
+            {
+                this.valueField = value;
             }
         }
     }
