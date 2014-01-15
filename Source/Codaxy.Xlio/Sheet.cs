@@ -16,7 +16,10 @@ namespace Codaxy.Xlio
             ColumnBreaks = new List<int>();
             Page = new PageSetup();
             ShowGridLines = true;
+            ConditionalFormatting = new List<ConditionalFormatting>();
         }
+
+        public List<ConditionalFormatting> ConditionalFormatting { get; set; }
         
         public string SheetName { get; internal set; }
 

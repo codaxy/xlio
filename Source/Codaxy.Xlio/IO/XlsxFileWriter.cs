@@ -20,17 +20,17 @@ namespace Codaxy.Xlio.IO
 
     public partial class XlsxFileWriter : IDisposable
     {
-        ZipOutputStream output;		
+        ZipOutputStream output;
         Workbook workbook;
         public XlsxFileWriterOptions Options { get; set; }
         public XlsxFileWriter(Stream output)
         {
-            this.output = new ZipOutputStream(output) { UseZip64 = UseZip64.Off };			
+            this.output = new ZipOutputStream(output) { UseZip64 = UseZip64.Off };
         }
 
         SharedStrings sharedStrings;
-        Relationships rels, workbookRelationships;        
-        List<object> contentTypes;        
+        Relationships rels, workbookRelationships;
+        List<object> contentTypes;
 
         public void Write(Workbook workbook)
         {
@@ -110,22 +110,23 @@ namespace Codaxy.Xlio.IO
                     definedNames.Add(dn);
                 }
 
-            var wb = new CT_Workbook() { 
+            var wb = new CT_Workbook()
+            {
                 sheets = sheets.ToArray(),
                 bookViews = new[] { new CT_BookView() },
                 definedNames = definedNames.ToArray()
             };
 
-            WriteFile("xl/workbook.xml", wb, SpreadsheetNs(true));           
+            WriteFile("xl/workbook.xml", wb, SpreadsheetNs(true));
 
-            if (sharedStrings.Count>0)
+            if (sharedStrings.Count > 0)
                 WriteSharedStrings();
 
             if (!styles.Empty)
-            {                
+            {
                 OverrideContentType("xl/styles.xml", ContentTypes.Styles);
                 workbookRelationships.Add(new CT_Relationship { Target = "styles.xml", Type = Relationships.Styles });
-                WriteStyles("xl/styles.xml");                
+                WriteStyles("xl/styles.xml");
             }
 
             WriteRelationsips("xl/_rels/workbook.xml.rels", workbookRelationships);
@@ -205,7 +206,7 @@ namespace Codaxy.Xlio.IO
                 sheetView.selection = new[] { new CT_Selection { activeCell = sheet.ActiveCell.ToString(), sqref = new[] { sheet.ActiveCell.ToString() } } };
 
             sheetView.showGridLines = sheet.ShowGridLines;
-            
+
 
             var rows = new List<CT_Row>();
             foreach (var row in sheet.Data)
@@ -291,7 +292,7 @@ namespace Codaxy.Xlio.IO
 
                     cells.Add(cell);
                 }
-                
+
                 var r = new CT_Row()
                 {
                     c = cells.ToArray(),
@@ -343,7 +344,7 @@ namespace Codaxy.Xlio.IO
                         width = node.Data.Width ?? 10,
                         widthSpecified = true,
                         customWidth = node.Data.Width.HasValue
-                    };                    
+                    };
 
                     if (node.Data.style != null)
                         col.style = RegisterStyle(node.Data.style);
@@ -417,12 +418,160 @@ namespace Codaxy.Xlio.IO
             if (!mergedCells.Empty)
                 ws.mergeCells = new CT_MergeCells { mergeCell = mergedCells.ToArray() };
 
-            
+            //conditional formatting
+            CT_ConditionalFormatting[] cf = null;
+            WriteConditionalFormatting(sheet, out cf);
+            ws.conditionalFormatting = cf;
 
-            
 
-            WriteFile(sheetPath, ws, SpreadsheetNs(false));            
+            WriteFile(sheetPath, ws, SpreadsheetNs(false));
         }
+
+        public void WriteConditionalFormatting(Sheet sheet, out CT_ConditionalFormatting[] cf)
+        {
+            List<CT_ConditionalFormatting> cflist = new List<CT_ConditionalFormatting>();
+            foreach (var cfobj in sheet.ConditionalFormatting)
+            {
+                List<CT_CfRule> ct_cfrule_list = new List<CT_CfRule>();
+                foreach (var ruleobj in cfobj.Rules)
+                {
+                    CT_CfRule cfRule = null;
+                    WriteConditionalFormattingRule(ruleobj, out cfRule);
+                    ct_cfrule_list.Add(cfRule);
+                }
+                var tempCf = new CT_ConditionalFormatting
+                {
+                    cfRule = ct_cfrule_list.ToArray(),
+                    sqref = cfobj.SequenceOfReferences.ToArray()
+                };
+                cflist.Add(tempCf);
+            }
+            cf = cflist.ToArray();
+        }
+
+        public void WriteConditionalFormattingType(ConditionalFormattingType type, out ST_CfType st_cftype)
+        {
+            st_cftype = ST_CfType.cellIs;
+            switch (type)
+            {
+                case ConditionalFormattingType.colorScale:
+                    st_cftype = ST_CfType.colorScale;
+                    break;
+                case ConditionalFormattingType.dataBar:
+                    st_cftype = ST_CfType.dataBar;
+                    break;
+                case ConditionalFormattingType.iconSet:
+                    st_cftype = ST_CfType.iconSet;
+                    break;
+                default:
+                    st_cftype = ST_CfType.cellIs;
+                    break;
+            }
+        }
+
+        public void WriteConditionalFormattingRule(ConditionalFormattingRule rule, out CT_CfRule cfRule)
+        {
+            ST_CfType st_cftype = ST_CfType.cellIs;
+            WriteConditionalFormattingType(rule.Type, out st_cftype);
+            CT_ColorScale ct_colorscale = null;
+            CT_DataBar ct_databar = null;
+            CT_IconSet ct_iconset = null;
+            WriteConditionalFormattingColorScale(rule.ColorScale, out ct_colorscale);//ColorScale
+            WriteConditionalFormattingDataBar(rule.DataBar, out ct_databar);//DataBar
+            WriteConditionalFormattingIconSet(rule.IconSet, out ct_iconset);//IconSet
+            cfRule = new CT_CfRule
+            {
+                formula = rule.Formulas.ToArray(),
+                typeSpecified = true,
+                type = st_cftype,
+                @operator = (ST_ConditionalFormattingOperator)rule.Operator, //1-1
+                colorScale = ct_colorscale,
+                dataBar = ct_databar,
+                iconSet = ct_iconset,
+                priority = 1 // MOZDA TREBA DODATI I PRIORITY
+            };
+
+        }
+
+        public void WriteConditionalFormattingColorScale(ConditionalFormattingColorScale colorScale, out CT_ColorScale cfColorScale)
+        {
+            if (colorScale == null)
+            {
+                cfColorScale = null;
+                return;
+            }
+            List<CT_Cfvo> ct_cfvo_list = new List<CT_Cfvo>();
+            foreach (var ct_cfvo in colorScale.CFVOList)
+            {
+                ct_cfvo_list.Add(new CT_Cfvo
+                {
+                    val = ct_cfvo.Value,
+                    type = (ST_CfvoType)ct_cfvo.Type //1-1
+                });
+            }
+
+            List<CT_Color1> ct_color1_list = new List<CT_Color1>();
+            foreach (var color in colorScale.Colors)
+            {
+                ct_color1_list.Add(ConvertColor(color));
+            }
+
+            cfColorScale = new CT_ColorScale
+            {
+                cfvo = ct_cfvo_list.ToArray(),
+                color = ct_color1_list.ToArray()
+            };
+        }
+
+        public void WriteConditionalFormattingDataBar(ConditionalFormattingDataBar dataBar, out CT_DataBar cfDataBar)
+        {
+            if (dataBar == null)
+            {
+                cfDataBar = null;
+                return;
+            }
+            List<CT_Cfvo> ct_cfvo_list = new List<CT_Cfvo>();
+            foreach (var ct_cfvo in dataBar.CFVOList)
+            {
+                ct_cfvo_list.Add(new CT_Cfvo
+                {
+                    val = ct_cfvo.Value,
+                    type = (ST_CfvoType)ct_cfvo.Type //1-1
+                });
+            }
+            cfDataBar = new CT_DataBar
+            {
+                cfvo = ct_cfvo_list.ToArray(),
+                color = ConvertColor(dataBar.Color)
+            };
+        }
+
+        public void WriteConditionalFormattingIconSet(ConditionalFormattingIconSet iconSet, out CT_IconSet cfIconSet)
+        {
+            if (iconSet == null)
+            {
+                cfIconSet = null;
+                return;
+            }
+            List<CT_Cfvo> ct_cfvo_list = new List<CT_Cfvo>();
+            foreach (var ct_cfvo in iconSet.CFVOList)
+            {
+                ct_cfvo_list.Add(new CT_Cfvo
+                {
+                    val = ct_cfvo.Value,
+                    type = (ST_CfvoType)ct_cfvo.Type //1-1
+                });
+            }
+
+            cfIconSet = new CT_IconSet
+            {
+                cfvo = ct_cfvo_list.ToArray(),
+                iconSet = (ST_IconSetType)iconSet.IconSetType,//1-1
+                showValue = iconSet.ShowValue
+            };
+        }
+
+
 
         private string WriteCellValue(CellData data, out ST_CellType ct, out String value, out String format)
         {
@@ -437,7 +586,7 @@ namespace Codaxy.Xlio.IO
             var type = data.Value.GetType();
             if (TypeInfo.IsNumericType(type))
             {
-                ct = ST_CellType.n;                
+                ct = ST_CellType.n;
                 return value = String.Format(CultureInfo.InvariantCulture, "{0}", data.Value);
             }
             if (type == typeof(DateTime))
@@ -459,7 +608,7 @@ namespace Codaxy.Xlio.IO
                 return value = (bool)data.Value == true ? "1" : "0";
             }
 
-            ct = ST_CellType.inlineStr;           
+            ct = ST_CellType.inlineStr;
             return value = String.Format(CultureInfo.InvariantCulture, "{0}", data.Value);
         }
 
@@ -468,13 +617,13 @@ namespace Codaxy.Xlio.IO
             XmlSerializerNamespaces res = new XmlSerializerNamespaces();
             res.Add("", XmlNs.SpreadsheetML);
             if (relsNs)
-                res.Add("r", XmlNs.Relationships);            
+                res.Add("r", XmlNs.Relationships);
             return res;
         }
 
         XmlSerializerNamespaces RelsNs()
         {
-            XmlSerializerNamespaces res = new XmlSerializerNamespaces();            
+            XmlSerializerNamespaces res = new XmlSerializerNamespaces();
             res.Add("", XmlNs.Package.Relationships);
             return res;
         }
@@ -486,25 +635,25 @@ namespace Codaxy.Xlio.IO
             return res;
         }
 
-		private void WriteFile<T>(string filePath, T data, XmlSerializerNamespaces ns)
-		{
-			var entry = new ZipEntry(filePath);
-			output.PutNextEntry(entry);
-			var xs = new XmlSerializer(typeof(T));
-			var writer = new StreamWriter(output, Encoding.UTF8);
-			xs.Serialize(writer, data, ns);
-		}
+        private void WriteFile<T>(string filePath, T data, XmlSerializerNamespaces ns)
+        {
+            var entry = new ZipEntry(filePath);
+            output.PutNextEntry(entry);
+            var xs = new XmlSerializer(typeof(T));
+            var writer = new StreamWriter(output, Encoding.UTF8);
+            xs.Serialize(writer, data, ns);
+        }
 
         public void Dispose()
-        {			
-            this.output.Dispose();			
+        {
+            this.output.Dispose();
             this.output = null;
         }
 
-        struct Lazy<T> where T: class, new()
+        struct Lazy<T> where T : class, new()
         {
             T v;
-            
+
             public T Value
             {
                 get
@@ -519,6 +668,6 @@ namespace Codaxy.Xlio.IO
             }
         }
 
-        
+
     }
 }

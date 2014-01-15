@@ -76,6 +76,8 @@
     <Compile Include="CellData.cs" />
     <Compile Include="CellDataPair.cs" />
     <Compile Include="CellStyle.cs" />
+    <Compile Include="ConditionalFormatting.cs" />
+    <Compile Include="ConditionalFormattingRule.cs" />
     <Compile Include="DefinedName.cs" />
     <Compile Include="DefinedNameCollection.cs" />
     <Compile Include="Generic\ColumnInfo.cs" />

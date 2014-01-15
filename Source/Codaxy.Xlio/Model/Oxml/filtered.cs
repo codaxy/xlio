@@ -4116,13 +4116,16 @@ namespace Codaxy.Xlio.Model.Oxml
         //        this.workbookProtectionField = value;
         //    }
         //}
-        
-        [System.Xml.Serialization.XmlArrayItemAttribute("workbookView", IsNullable=false)]
-        public CT_BookView[] bookViews {
-            get {
+
+        [System.Xml.Serialization.XmlArrayItemAttribute("workbookView", IsNullable = false)]
+        public CT_BookView[] bookViews
+        {
+            get
+            {
                 return this.bookViewsField;
             }
-            set {
+            set
+            {
                 this.bookViewsField = value;
             }
         }
@@ -4195,7 +4198,7 @@ namespace Codaxy.Xlio.Model.Oxml
         //        this.oleSizeField = value;
         //    }
         //}
-       
+
         /////<remarks/>
         //[System.Xml.Serialization.XmlArrayItemAttribute("customWorkbookView", IsNullable=false)]
         //public CT_CustomWorkbookView[] customWorkbookViews {
@@ -4423,7 +4426,7 @@ namespace Codaxy.Xlio.Model.Oxml
         /// <remarks/>
         inlineStr,
     }
-    
+
 
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
@@ -5188,7 +5191,7 @@ namespace Codaxy.Xlio.Model.Oxml
 
         //private CT_PhoneticPr phoneticPrField;
 
-        //private CT_ConditionalFormatting[] conditionalFormattingField;
+        private CT_ConditionalFormatting[] conditionalFormattingField;
 
         //private CT_DataValidations dataValidationsField;
 
@@ -5411,16 +5414,19 @@ namespace Codaxy.Xlio.Model.Oxml
         //    }
         //}
 
-        ///// <remarks/>
-        //[System.Xml.Serialization.XmlElementAttribute("conditionalFormatting")]
-        //public CT_ConditionalFormatting[] conditionalFormatting {
-        //    get {
-        //        return this.conditionalFormattingField;
-        //    }
-        //    set {
-        //        this.conditionalFormattingField = value;
-        //    }
-        //}
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("conditionalFormatting")]
+        public CT_ConditionalFormatting[] conditionalFormatting
+        {
+            get
+            {
+                return this.conditionalFormattingField;
+            }
+            set
+            {
+                this.conditionalFormattingField = value;
+            }
+        }
 
         ///// <remarks/>
         //public CT_DataValidations dataValidations {
@@ -9268,5 +9274,1046 @@ namespace Codaxy.Xlio.Model.Oxml
             }
         }
     }
-    
+
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public partial class CT_ConditionalFormatting
+    {
+
+        private CT_CfRule[] cfRuleField;
+
+        private CT_ExtensionList extLstField;
+
+        private bool pivotField;
+
+        private string[] sqrefField;
+
+        public CT_ConditionalFormatting()
+        {
+            this.pivotField = false;
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("cfRule")]
+        public CT_CfRule[] cfRule
+        {
+            get
+            {
+                return this.cfRuleField;
+            }
+            set
+            {
+                this.cfRuleField = value;
+            }
+        }
+
+        /// <remarks/>
+        public CT_ExtensionList extLst
+        {
+            get
+            {
+                return this.extLstField;
+            }
+            set
+            {
+                this.extLstField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool pivot
+        {
+            get
+            {
+                return this.pivotField;
+            }
+            set
+            {
+                this.pivotField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string[] sqref
+        {
+            get
+            {
+                return this.sqrefField;
+            }
+            set
+            {
+                this.sqrefField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public partial class CT_CfRule
+    {
+
+        private string[] formulaField;
+
+        private CT_ColorScale colorScaleField;
+
+        private CT_DataBar dataBarField;
+
+        private CT_IconSet iconSetField;
+
+        private CT_ExtensionList extLstField;
+
+        private ST_CfType typeField;
+
+        private bool typeFieldSpecified;
+
+        private uint dxfIdField;
+
+        private bool dxfIdFieldSpecified;
+
+        private int priorityField;
+
+        private bool stopIfTrueField;
+
+        private bool aboveAverageField;
+
+        private bool percentField;
+
+        private bool bottomField;
+
+        private ST_ConditionalFormattingOperator operatorField;
+
+        private bool operatorFieldSpecified;
+
+        private string textField;
+
+        private ST_TimePeriod timePeriodField;
+
+        private bool timePeriodFieldSpecified;
+
+        private uint rankField;
+
+        private bool rankFieldSpecified;
+
+        private int stdDevField;
+
+        private bool stdDevFieldSpecified;
+
+        private bool equalAverageField;
+
+        public CT_CfRule()
+        {
+            this.stopIfTrueField = false;
+            this.aboveAverageField = true;
+            this.percentField = false;
+            this.bottomField = false;
+            this.equalAverageField = false;
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("formula")]
+        public string[] formula
+        {
+            get
+            {
+                return this.formulaField;
+            }
+            set
+            {
+                this.formulaField = value;
+            }
+        }
+
+        /// <remarks/>
+        public CT_ColorScale colorScale
+        {
+            get
+            {
+                return this.colorScaleField;
+            }
+            set
+            {
+                this.colorScaleField = value;
+            }
+        }
+
+        /// <remarks/>
+        public CT_DataBar dataBar
+        {
+            get
+            {
+                return this.dataBarField;
+            }
+            set
+            {
+                this.dataBarField = value;
+            }
+        }
+
+        /// <remarks/>
+        public CT_IconSet iconSet
+        {
+            get
+            {
+                return this.iconSetField;
+            }
+            set
+            {
+                this.iconSetField = value;
+            }
+        }
+
+        /// <remarks/>
+        public CT_ExtensionList extLst
+        {
+            get
+            {
+                return this.extLstField;
+            }
+            set
+            {
+                this.extLstField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public ST_CfType type
+        {
+            get
+            {
+                return this.typeField;
+            }
+            set
+            {
+                this.typeField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool typeSpecified
+        {
+            get
+            {
+                return this.typeFieldSpecified;
+            }
+            set
+            {
+                this.typeFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public uint dxfId
+        {
+            get
+            {
+                return this.dxfIdField;
+            }
+            set
+            {
+                this.dxfIdField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool dxfIdSpecified
+        {
+            get
+            {
+                return this.dxfIdFieldSpecified;
+            }
+            set
+            {
+                this.dxfIdFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public int priority
+        {
+            get
+            {
+                return this.priorityField;
+            }
+            set
+            {
+                this.priorityField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool stopIfTrue
+        {
+            get
+            {
+                return this.stopIfTrueField;
+            }
+            set
+            {
+                this.stopIfTrueField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(true)]
+        public bool aboveAverage
+        {
+            get
+            {
+                return this.aboveAverageField;
+            }
+            set
+            {
+                this.aboveAverageField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool percent
+        {
+            get
+            {
+                return this.percentField;
+            }
+            set
+            {
+                this.percentField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool bottom
+        {
+            get
+            {
+                return this.bottomField;
+            }
+            set
+            {
+                this.bottomField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public ST_ConditionalFormattingOperator @operator
+        {
+            get
+            {
+                return this.operatorField;
+            }
+            set
+            {
+                this.operatorField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool operatorSpecified
+        {
+            get
+            {
+                return this.operatorFieldSpecified;
+            }
+            set
+            {
+                this.operatorFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string text
+        {
+            get
+            {
+                return this.textField;
+            }
+            set
+            {
+                this.textField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public ST_TimePeriod timePeriod
+        {
+            get
+            {
+                return this.timePeriodField;
+            }
+            set
+            {
+                this.timePeriodField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool timePeriodSpecified
+        {
+            get
+            {
+                return this.timePeriodFieldSpecified;
+            }
+            set
+            {
+                this.timePeriodFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public uint rank
+        {
+            get
+            {
+                return this.rankField;
+            }
+            set
+            {
+                this.rankField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool rankSpecified
+        {
+            get
+            {
+                return this.rankFieldSpecified;
+            }
+            set
+            {
+                this.rankFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public int stdDev
+        {
+            get
+            {
+                return this.stdDevField;
+            }
+            set
+            {
+                this.stdDevField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool stdDevSpecified
+        {
+            get
+            {
+                return this.stdDevFieldSpecified;
+            }
+            set
+            {
+                this.stdDevFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool equalAverage
+        {
+            get
+            {
+                return this.equalAverageField;
+            }
+            set
+            {
+                this.equalAverageField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public partial class CT_ColorScale
+    {
+
+        private CT_Cfvo[] cfvoField;
+
+        private CT_Color1[] colorField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("cfvo")]
+        public CT_Cfvo[] cfvo
+        {
+            get
+            {
+                return this.cfvoField;
+            }
+            set
+            {
+                this.cfvoField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("color")]
+        public CT_Color1[] color
+        {
+            get
+            {
+                return this.colorField;
+            }
+            set
+            {
+                this.colorField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public partial class CT_Cfvo
+    {
+
+        private CT_ExtensionList extLstField;
+
+        private ST_CfvoType typeField;
+
+        private string valField;
+
+        private bool gteField;
+
+        public CT_Cfvo()
+        {
+            this.gteField = true;
+        }
+
+        /// <remarks/>
+        public CT_ExtensionList extLst
+        {
+            get
+            {
+                return this.extLstField;
+            }
+            set
+            {
+                this.extLstField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public ST_CfvoType type
+        {
+            get
+            {
+                return this.typeField;
+            }
+            set
+            {
+                this.typeField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string val
+        {
+            get
+            {
+                return this.valField;
+            }
+            set
+            {
+                this.valField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(true)]
+        public bool gte
+        {
+            get
+            {
+                return this.gteField;
+            }
+            set
+            {
+                this.gteField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public enum ST_CfvoType
+    {
+
+        /// <remarks/>
+        num,
+
+        /// <remarks/>
+        percent,
+
+        /// <remarks/>
+        max,
+
+        /// <remarks/>
+        min,
+
+        /// <remarks/>
+        formula,
+
+        /// <remarks/>
+        percentile,
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public partial class CT_DataBar
+    {
+
+        private CT_Cfvo[] cfvoField;
+
+        private CT_Color1 colorField;
+
+        private uint minLengthField;
+
+        private uint maxLengthField;
+
+        private bool showValueField;
+
+        public CT_DataBar()
+        {
+            this.minLengthField = ((uint)(10));
+            this.maxLengthField = ((uint)(90));
+            this.showValueField = true;
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("cfvo")]
+        public CT_Cfvo[] cfvo
+        {
+            get
+            {
+                return this.cfvoField;
+            }
+            set
+            {
+                this.cfvoField = value;
+            }
+        }
+
+        /// <remarks/>
+        public CT_Color1 color
+        {
+            get
+            {
+                return this.colorField;
+            }
+            set
+            {
+                this.colorField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "10")]
+        public uint minLength
+        {
+            get
+            {
+                return this.minLengthField;
+            }
+            set
+            {
+                this.minLengthField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(typeof(uint), "90")]
+        public uint maxLength
+        {
+            get
+            {
+                return this.maxLengthField;
+            }
+            set
+            {
+                this.maxLengthField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(true)]
+        public bool showValue
+        {
+            get
+            {
+                return this.showValueField;
+            }
+            set
+            {
+                this.showValueField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public partial class CT_IconSet
+    {
+
+        private CT_Cfvo[] cfvoField;
+
+        private ST_IconSetType iconSetField;
+
+        private bool showValueField;
+
+        private bool percentField;
+
+        private bool reverseField;
+
+        public CT_IconSet()
+        {
+            this.iconSetField = ST_IconSetType.Item3TrafficLights1;
+            this.showValueField = true;
+            this.percentField = true;
+            this.reverseField = false;
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("cfvo")]
+        public CT_Cfvo[] cfvo
+        {
+            get
+            {
+                return this.cfvoField;
+            }
+            set
+            {
+                this.cfvoField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(ST_IconSetType.Item3TrafficLights1)]
+        public ST_IconSetType iconSet
+        {
+            get
+            {
+                return this.iconSetField;
+            }
+            set
+            {
+                this.iconSetField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(true)]
+        public bool showValue
+        {
+            get
+            {
+                return this.showValueField;
+            }
+            set
+            {
+                this.showValueField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(true)]
+        public bool percent
+        {
+            get
+            {
+                return this.percentField;
+            }
+            set
+            {
+                this.percentField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        [System.ComponentModel.DefaultValueAttribute(false)]
+        public bool reverse
+        {
+            get
+            {
+                return this.reverseField;
+            }
+            set
+            {
+                this.reverseField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public enum ST_CfType
+    {
+
+        /// <remarks/>
+        expression,
+
+        /// <remarks/>
+        cellIs,
+
+        /// <remarks/>
+        colorScale,
+
+        /// <remarks/>
+        dataBar,
+
+        /// <remarks/>
+        iconSet,
+
+        /// <remarks/>
+        top10,
+
+        /// <remarks/>
+        uniqueValues,
+
+        /// <remarks/>
+        duplicateValues,
+
+        /// <remarks/>
+        containsText,
+
+        /// <remarks/>
+        notContainsText,
+
+        /// <remarks/>
+        beginsWith,
+
+        /// <remarks/>
+        endsWith,
+
+        /// <remarks/>
+        containsBlanks,
+
+        /// <remarks/>
+        notContainsBlanks,
+
+        /// <remarks/>
+        containsErrors,
+
+        /// <remarks/>
+        notContainsErrors,
+
+        /// <remarks/>
+        timePeriod,
+
+        /// <remarks/>
+        aboveAverage,
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public enum ST_ConditionalFormattingOperator
+    {
+
+        /// <remarks/>
+        lessThan,
+
+        /// <remarks/>
+        lessThanOrEqual,
+
+        /// <remarks/>
+        equal,
+
+        /// <remarks/>
+        notEqual,
+
+        /// <remarks/>
+        greaterThanOrEqual,
+
+        /// <remarks/>
+        greaterThan,
+
+        /// <remarks/>
+        between,
+
+        /// <remarks/>
+        notBetween,
+
+        /// <remarks/>
+        containsText,
+
+        /// <remarks/>
+        notContains,
+
+        /// <remarks/>
+        beginsWith,
+
+        /// <remarks/>
+        endsWith,
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public enum ST_TimePeriod
+    {
+
+        /// <remarks/>
+        today,
+
+        /// <remarks/>
+        yesterday,
+
+        /// <remarks/>
+        tomorrow,
+
+        /// <remarks/>
+        last7Days,
+
+        /// <remarks/>
+        thisMonth,
+
+        /// <remarks/>
+        lastMonth,
+
+        /// <remarks/>
+        nextMonth,
+
+        /// <remarks/>
+        thisWeek,
+
+        /// <remarks/>
+        lastWeek,
+
+        /// <remarks/>
+        nextWeek,
+    }
+
+    /// <remarks/>
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://schemas.openxmlformats.org/spreadsheetml/2006/main")]
+    public enum ST_IconSetType
+    {
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlEnumAttribute("3Arrows")]
+        Item3Arrows,
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlEnumAttribute("3ArrowsGray")]
+        Item3ArrowsGray,
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlEnumAttribute("3Flags")]
+        Item3Flags,
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlEnumAttribute("3TrafficLights1")]
+        Item3TrafficLights1,
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlEnumAttribute("3TrafficLights2")]
+        Item3TrafficLights2,
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlEnumAttribute("3Signs")]
+        Item3Signs,
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlEnumAttribute("3Symbols")]
+        Item3Symbols,
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlEnumAttribute("3Symbols2")]
+        Item3Symbols2,
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlEnumAttribute("4Arrows")]
+        Item4Arrows,
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlEnumAttribute("4ArrowsGray")]
+        Item4ArrowsGray,
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlEnumAttribute("4RedToBlack")]
+        Item4RedToBlack,
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlEnumAttribute("4Rating")]
+        Item4Rating,
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlEnumAttribute("4TrafficLights")]
+        Item4TrafficLights,
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlEnumAttribute("5Arrows")]
+        Item5Arrows,
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlEnumAttribute("5ArrowsGray")]
+        Item5ArrowsGray,
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlEnumAttribute("5Rating")]
+        Item5Rating,
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlEnumAttribute("5Quarters")]
+        Item5Quarters,
+    }
+
 }
