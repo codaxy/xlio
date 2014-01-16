@@ -136,6 +136,17 @@ namespace Codaxy.Xlio.IO
                 }
                 workbook.Sheets.AddSheet(sheet);
             }
+
+            foreach (var dn in wb.definedNames)
+            {
+                DefinedName definedName = new DefinedName
+                {
+                    Name = dn.name,
+                    Value = dn.Value
+                };
+                workbook.DefinedNames.AddDefinedName(definedName);
+            }
+
         }
 
 

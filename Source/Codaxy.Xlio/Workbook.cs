@@ -11,9 +11,11 @@ namespace Codaxy.Xlio
         {
             Sheets = new SheetCollection();
             DefaultFont = new CellFont();
+            DefinedNames = new DefinedNameCollection();
         }
 
         public SheetCollection Sheets { get; private set; }
         public CellFont DefaultFont { get; set; }
+        public DefinedNameCollection DefinedNames { get; set; }
     }
 }
