@@ -98,8 +98,16 @@ namespace Codaxy.Xlio.IO
                 sheetIndex++;
             }
 
-            var definedNames = new List<CT_DefinedName>();
-            if (workbook.DefinedNames.Count() != 0)
+            var wb = new CT_Workbook()
+            {
+                sheets = sheets.ToArray(),
+                bookViews = new[] { new CT_BookView() }
+            };
+
+
+            if (workbook.DefinedNames.Count != 0)
+            {
+                var definedNames = new List<CT_DefinedName>();
                 foreach (var definedName in workbook.DefinedNames)
                 {
                     var dn = new CT_DefinedName
@@ -109,12 +117,9 @@ namespace Codaxy.Xlio.IO
                     };
                     definedNames.Add(dn);
                 }
-
-            var wb = new CT_Workbook() { 
-                sheets = sheets.ToArray(),
-                bookViews = new[] { new CT_BookView() },
-                definedNames = definedNames.ToArray()
-            };
+                
+                wb.definedNames = definedNames.ToArray();
+            }
 
             WriteFile("xl/workbook.xml", wb, SpreadsheetNs(true));           
 

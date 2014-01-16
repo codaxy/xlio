@@ -83,7 +83,7 @@ namespace Codaxy.Xlio
         /// <param name="row"></param>
         /// <param name="col"></param>
         /// <returns></returns>
-        public static string Format(int row, int col, bool absColumn = false, bool absRow = false)
+        public static string Format(int row, int col, bool absCol = false, bool absRow = false)
         {
             /*
             Stack<char> stack = new Stack<char>();
@@ -101,7 +101,7 @@ namespace Codaxy.Xlio
                 col = col / 26 - 1;
             } while (col >= 0);
             var column = new String(stack.ToArray());
-            return (absColumn ? "$" : "") + column + (absRow ? "$" : "") + (row + 1).ToString();
+            return (absCol ? "$" : "") + column + (absRow ? "$" : "") + (row + 1).ToString();
         }
 
         /// <summary>

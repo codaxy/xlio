@@ -137,14 +137,17 @@ namespace Codaxy.Xlio.IO
                 workbook.Sheets.AddSheet(sheet);
             }
 
-            foreach (var dn in wb.definedNames)
+            if (wb.definedNames != null)
             {
-                DefinedName definedName = new DefinedName
+                foreach (var dn in wb.definedNames)
                 {
-                    Name = dn.name,
-                    Value = dn.Value
-                };
-                workbook.DefinedNames.AddDefinedName(definedName);
+                    DefinedName definedName = new DefinedName
+                    {
+                        Name = dn.name,
+                        Value = dn.Value
+                    };
+                    workbook.DefinedNames.AddDefinedName(definedName);
+                }
             }
 
         }

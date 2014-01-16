@@ -7,7 +7,7 @@ namespace Codaxy.Xlio
 {
     public class DefinedNameCollection : IEnumerable<DefinedName>
     {
-        private Dictionary<string, DefinedName> definedNames;
+        private readonly Dictionary<string, DefinedName> definedNames;
 
         public DefinedNameCollection()
         {
@@ -22,11 +22,10 @@ namespace Codaxy.Xlio
 
         public DefinedName AddCell(String name, Cell cell, Sheet sheet)
         {
-
             DefinedName dn = new DefinedName
             {
                 Name = name,
-                Value = GetSheetName(sheet) + "!" + Cell.Format(cell.Row, cell.Col, true, true)
+                Value = QuoteSheetName(sheet) + "!" + Cell.Format(cell.Row, cell.Col, true, true)
             };
             definedNames.Add(name, dn);
             return dn;
@@ -34,11 +33,10 @@ namespace Codaxy.Xlio
 
         public DefinedName AddRange(String name, Range range, Sheet sheet)
         {
-
             DefinedName dn = new DefinedName
             {
                 Name = name,
-                Value = GetSheetName(sheet) + "!" + Range.Format(range, true)
+                Value = QuoteSheetName(sheet) + "!" + Range.Format(range, true)
             };
             definedNames.Add(name, dn);
             return dn;
@@ -72,7 +70,7 @@ namespace Codaxy.Xlio
             }
         }
 
-        int Count { get { return definedNames.Count; } }
+        public int Count { get { return definedNames.Count; } }
 
         public IEnumerator<DefinedName> GetEnumerator()
         {
@@ -83,7 +81,8 @@ namespace Codaxy.Xlio
         {
             return definedNames.Values.GetEnumerator();
         }
-        private String GetSheetName(Sheet sheet)
+
+        private String QuoteSheetName(Sheet sheet)
         {
             if (sheet.SheetName.Contains(" "))
                 return "'" + sheet.SheetName + "'";
