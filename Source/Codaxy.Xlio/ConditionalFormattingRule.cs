@@ -5,11 +5,12 @@ using System.Text;
 
 namespace Codaxy.Xlio
 {
-    public class ConditionalFormattingRule
+    public abstract class ConditionalFormattingRule
     {
         public ConditionalFormattingRule()
         {
-            Formulas = new List<string>();
+            Priority = 1;
+            Type = ConditionalFormattingType.CellIs;
         }
         /*
         private string[] formulaField;
@@ -26,6 +27,8 @@ namespace Codaxy.Xlio
          
         private ST_ConditionalFormattingOperator operatorField;
         */
+
+        /*
         public List<string> Formulas { get; set; }
 
         public ConditionalFormattingColorScale ColorScale { get; set; }
@@ -34,43 +37,49 @@ namespace Codaxy.Xlio
 
         public ConditionalFormattingIconSet IconSet { get; set; }
 
-        public ConditionalFormattingType Type { get; set; }
-
         public ConditionalFormattingOperator Operator { get; set; }
+         
+        */
+        public ConditionalFormattingType Type { get; set; }
+        public int Priority { get; set; }
     }
 
     public enum ConditionalFormattingType
     {
-        cellIs,
-        colorScale,
-        dataBar,
-        iconSet
+        CellIs,
+        ColorScale,
+        DataBar,
+        IconSet,
+        BeginsWith //ADDED AFTEER
     }
 
     public enum ConditionalFormattingOperator
     {
-        lessThan,
-        lessThanOrEqual,
-        equal,
-        notEqual,
-        greaterThanOrEqual,
-        greaterThan,
-        between,
-        notBetween,
-        containsText,
-        notContains,
-        beginsWith,
-        endsWith
+        LessThan,
+        LessThanOrEqual,
+        Equal,
+        NotEqual,
+        GreaterThanOrEqual,
+        GreaterThan,
+
+        Between,
+        NotBetween,
+
+        ContainsText,
+        NotContains,
+
+        BeginsWith,
+        EndsWith
     }
 
     public enum CFVOType
     {
-        num,
-        percent,
-        max,
-        min,
-        formula,
-        percentile,
+        Num,
+        Percent,
+        Max,
+        Min,
+        Formula,
+        Percentile,
     }
 
 }
