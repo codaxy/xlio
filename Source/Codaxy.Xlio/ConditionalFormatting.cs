@@ -18,6 +18,18 @@ namespace Codaxy.Xlio
 
         public List<ConditionalFormattingRule> Rules { get; set; }
 
+        public string GetFirstCellStringValue() 
+        {
+            if (Ranges.Count == 0)
+                return null;
+            string firstRange = Ranges[0];
+            if (!firstRange.Contains(":"))
+                return firstRange;
+            int position = firstRange.IndexOf(":");
+            string firstCell = firstRange.Substring(0, position);
+            return firstCell;
+        }
+
         public List<string> Ranges { get; set; }
 
         public void AddRange(Range range) 
@@ -204,7 +216,7 @@ namespace Codaxy.Xlio
         private bool percentField
         private bool reverseField
         */
-        public IconSet(ConditionalFormattingTypeIconSetType iconSetType = ConditionalFormattingTypeIconSetType.Item3Arrows, bool showValue = true) : base()
+        public IconSet(ConditionalFormattingIconSetType iconSetType = ConditionalFormattingIconSetType.Item3Arrows, bool showValue = true) : base()
         {
             base.Type = ConditionalFormattingType.IconSet;
             IconSetType = iconSetType;
@@ -213,7 +225,7 @@ namespace Codaxy.Xlio
         }
 
         public List<ConditionalFormattingValueObject> CFVOList { get; set; }
-        public ConditionalFormattingTypeIconSetType IconSetType { get; set; }
+        public ConditionalFormattingIconSetType IconSetType { get; set; }
         public bool ShowValue { get; set; }
 
         private List<ConditionalFormattingValueObject> GenerateCFVOs() 
@@ -236,18 +248,18 @@ namespace Codaxy.Xlio
 
         private int GetNumberOfIcons() 
         {
-            ConditionalFormattingTypeIconSetType[] fourIcons = { 
-                ConditionalFormattingTypeIconSetType.Item4Arrows,
-                ConditionalFormattingTypeIconSetType.Item4ArrowsGray,
-                ConditionalFormattingTypeIconSetType.Item4RedToBlack,
-                ConditionalFormattingTypeIconSetType.Item4Rating,
-                ConditionalFormattingTypeIconSetType.Item4TrafficLights
+            ConditionalFormattingIconSetType[] fourIcons = { 
+                ConditionalFormattingIconSetType.Item4Arrows,
+                ConditionalFormattingIconSetType.Item4ArrowsGray,
+                ConditionalFormattingIconSetType.Item4RedToBlack,
+                ConditionalFormattingIconSetType.Item4Rating,
+                ConditionalFormattingIconSetType.Item4TrafficLights
             };
-            ConditionalFormattingTypeIconSetType[] fiveIcons = { 
-                ConditionalFormattingTypeIconSetType.Item5Arrows,
-                ConditionalFormattingTypeIconSetType.Item5ArrowsGray,
-                ConditionalFormattingTypeIconSetType.Item5Rating,
-                ConditionalFormattingTypeIconSetType.Item5Quarters
+            ConditionalFormattingIconSetType[] fiveIcons = { 
+                ConditionalFormattingIconSetType.Item5Arrows,
+                ConditionalFormattingIconSetType.Item5ArrowsGray,
+                ConditionalFormattingIconSetType.Item5Rating,
+                ConditionalFormattingIconSetType.Item5Quarters
             };
             if (fourIcons.Contains(IconSetType))
                 return 4;
@@ -257,7 +269,7 @@ namespace Codaxy.Xlio
         }
     }
 
-    public enum ConditionalFormattingTypeIconSetType
+    public enum ConditionalFormattingIconSetType
     {
         Item3Arrows,
         Item3ArrowsGray,
@@ -292,8 +304,23 @@ namespace Codaxy.Xlio
             Formula1 = formula1;
             Formula2 = formula2;
             Formula3 = formula3;
+            IsBottom = false;
+            Rank = 10;
+            IsPercent = false;
+            StdDev = 0;
+            IsAboveAverage = true;
+            IsEqualAverage = false;
+            IsStdDev = false;
         }
         public uint dxfId { get; set; }
+        public uint Rank { get; set; }
+        public bool IsBottom { get; set; }
+        public bool IsPercent { get; set; }
+        public bool IsAboveAverage { get; set; }
+        public bool IsEqualAverage { get; set; }
+        public bool IsStdDev { get; set; }
+        public int StdDev { get; set; }
+        public string Text { get; set; }
         public CellStyle Style { get; set; }
         public ConditionalFormattingOperator Operator { get; set; }
         public string Formula1
@@ -326,12 +353,10 @@ namespace Codaxy.Xlio
         {
             return new ConditionalFormattingCondition(style, @operator, value);
         }
-
         private static ConditionalFormattingCondition GetConditionForTwoValues(string startValue, string endValue, CellStyle style, ConditionalFormattingOperator @operator)
         {
             return new ConditionalFormattingCondition(style, @operator, startValue, endValue);
         }
-
         public static ConditionalFormattingCondition LessThan(string value, CellStyle style)
         {
             return GetConditionForOneValue(value, style, ConditionalFormattingOperator.LessThan);
@@ -372,27 +397,116 @@ namespace Codaxy.Xlio
             return GetConditionForTwoValues(startValue, endValue, style, ConditionalFormattingOperator.NotBetween);
         }
 
-        public static ConditionalFormattingCondition ContainsText(string value, CellStyle style)
+        //tekst operacije za sada ne rade, jer koriste formule
+        /*
+        public static ConditionalFormattingCondition Contains(string value, CellStyle style)
         {
-            return GetConditionForOneValue(value, style, ConditionalFormattingOperator.ContainsText);
+            ConditionalFormattingCondition cfc = GetConditionForOneValue(value, style, ConditionalFormattingOperator.ContainsText);
+            cfc.Type = ConditionalFormattingType.ContainsText;
+            return cfc;
         }
 
         public static ConditionalFormattingCondition NotContains(string value, CellStyle style)
         {
-            return GetConditionForOneValue(value, style, ConditionalFormattingOperator.NotContains);
+            ConditionalFormattingCondition cfc = GetConditionForOneValue(value, style, ConditionalFormattingOperator.NotContains);
+            cfc.Type = ConditionalFormattingType.NotContainsText;
+            return cfc;
         }
 
         public static ConditionalFormattingCondition BeginsWith(string value, CellStyle style)
         {
-            //return GetConditionForOneValue(value, style, ConditionalFormattingOperator.BeginsWith);
-            ConditionalFormattingCondition c = GetConditionForOneValue(value, style, ConditionalFormattingOperator.BeginsWith);
-            c.Type = ConditionalFormattingType.BeginsWith;
-            return c;
+            ConditionalFormattingCondition cfc = GetConditionForOneValue(value, style, ConditionalFormattingOperator.BeginsWith);
+            cfc.Type = ConditionalFormattingType.BeginsWith;
+            return cfc;
         }
 
         public static ConditionalFormattingCondition EndsWith(string value, CellStyle style)
         {
-            return GetConditionForOneValue(value, style, ConditionalFormattingOperator.EndsWith);
+            ConditionalFormattingCondition cfc = GetConditionForOneValue(value, style, ConditionalFormattingOperator.EndsWith);
+            cfc.Type = ConditionalFormattingType.EndsWith;
+            return cfc;
+        }
+         * */
+        public static ConditionalFormattingCondition Top(uint rank, CellStyle style, bool percent = false)
+        {
+            ConditionalFormattingCondition cfc = new ConditionalFormattingCondition(); 
+            cfc.Type = ConditionalFormattingType.Top10;
+            cfc.Rank = rank;
+            cfc.IsPercent = percent;
+            cfc.Style = style;
+            return cfc;
+        }
+        public static ConditionalFormattingCondition Bottom(uint rank, CellStyle style, bool percent = false)
+        {
+            ConditionalFormattingCondition cfc = new ConditionalFormattingCondition();
+            cfc.Type = ConditionalFormattingType.Top10;
+            cfc.Rank = rank;
+            cfc.IsBottom = true;
+            cfc.IsPercent = percent;
+            cfc.Style = style;
+            return cfc;
+        }
+        public static ConditionalFormattingCondition AboveAverage(CellStyle style, bool equal = false)
+        {
+            ConditionalFormattingCondition cfc = new ConditionalFormattingCondition();
+            cfc.Type = ConditionalFormattingType.AboveAverage;
+            cfc.Style = style;
+            cfc.IsAboveAverage = true;
+            cfc.IsEqualAverage = equal;
+            return cfc;
+        }
+        public static ConditionalFormattingCondition BelowAverage(CellStyle style, bool equal = false)
+        {
+            ConditionalFormattingCondition cfc = new ConditionalFormattingCondition();
+            cfc.Type = ConditionalFormattingType.AboveAverage;
+            cfc.Style = style;
+            cfc.IsAboveAverage = false;
+            cfc.IsEqualAverage = equal;
+            return cfc;
+        }
+        public static ConditionalFormattingCondition StandardDeviationAbove(CellStyle style, int stdDev = 1)
+        {
+            ConditionalFormattingCondition cfc = new ConditionalFormattingCondition();
+            cfc.Type = ConditionalFormattingType.AboveAverage;
+            cfc.Style = style;
+            cfc.IsAboveAverage = true;
+            cfc.IsEqualAverage = false;
+            cfc.IsStdDev = true;
+            cfc.StdDev = stdDev;
+            return cfc;
+        }
+        public static ConditionalFormattingCondition StandardDeviationBelow(CellStyle style, int stdDev = 1)
+        {
+            ConditionalFormattingCondition cfc = new ConditionalFormattingCondition();
+            cfc.Type = ConditionalFormattingType.AboveAverage;
+            cfc.Style = style;
+            cfc.IsAboveAverage = false;
+            cfc.IsEqualAverage = false;
+            cfc.IsStdDev = true;
+            cfc.StdDev = stdDev;
+            return cfc;
+        }
+        public static ConditionalFormattingCondition UniqueValues(CellStyle style)
+        {
+            ConditionalFormattingCondition cfc = new ConditionalFormattingCondition();
+            cfc.Type = ConditionalFormattingType.UniqueValues;
+            cfc.Style = style;
+            return cfc;
+        }
+        public static ConditionalFormattingCondition DuplicateValues(CellStyle style)
+        {
+            ConditionalFormattingCondition cfc = new ConditionalFormattingCondition();
+            cfc.Type = ConditionalFormattingType.DuplicateValues;
+            cfc.Style = style;
+            return cfc;
+        }
+        public static ConditionalFormattingCondition Expression(string formula, CellStyle style)
+        {
+            ConditionalFormattingCondition cfc = new ConditionalFormattingCondition();
+            cfc.Type = ConditionalFormattingType.Expression;
+            cfc.Formula1 = formula;
+            cfc.Style = style;
+            return cfc;
         }
     }
 }

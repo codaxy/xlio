@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Codaxy.Xlio.Model.Oxml;
+using System.Diagnostics;
 
 namespace Codaxy.Xlio.IO
 {
@@ -10,6 +11,7 @@ namespace Codaxy.Xlio.IO
     {
         List<CellBorder> borders;
         List<CellStyle> xfs;
+        List<CellStyle> dxfs;
         List<CellFill> fills;
         List<Color> indexedColors;
         List<CellFont> fonts;
@@ -159,6 +161,143 @@ namespace Codaxy.Xlio.IO
 
                     xfs.Add(entry);
                 }
+           
+            dxfs = new List<CellStyle>();
+            if (styles.dxfs != null && styles.dxfs.dxf != null)
+            {
+                foreach (CT_Dxf dxf in styles.dxfs.dxf)
+                {
+                    var entry = new CellStyle();
+
+                    if (dxf.font != null)
+                        entry.Font = ConvertDxfFont(dxf.font);
+
+                    if (dxf.numFmt != null)
+                        entry.format = GetNumFmt(dxf.numFmt.numFmtId);
+
+                    if (dxf.fill != null)
+                        entry.fill = ConvertDxfCellFill(dxf.fill);
+
+                    if (dxf.alignment != null)
+                        entry.alignment = ConvertAlignment(dxf.alignment);
+
+                    if (dxf.border != null)
+                        entry.border = ConvertDxfBorder(dxf.border);
+
+                    dxfs.Add(entry);
+                }
+            }
+         
+
+        }
+
+        private CellFont ConvertDxfFont(CT_Font font)
+        {
+            var cellFont = new CellFont();
+            List<object> items = font.Items.ToList();
+            List<ItemsChoiceType3> name = new List<ItemsChoiceType3>();
+            int counter = 0;
+            foreach (var item in items)
+            {
+
+                if (font.ItemsElementName[counter] == ItemsChoiceType3.name)
+                {
+                    var fontName = item as CT_FontName;
+                    if (fontName != null)
+                        cellFont.Name = fontName.val;
+                }
+                if (font.ItemsElementName[counter] == ItemsChoiceType3.sz)
+                {
+                    var fontSize = item as CT_FontSize;
+                    if (fontSize != null)
+                        cellFont.Size = fontSize.val;
+                }
+                if (font.ItemsElementName[counter] == ItemsChoiceType3.b)
+                {
+                    var boldItem = item as CT_BooleanProperty;
+                    if (boldItem != null)
+                        cellFont.Bold = boldItem.val;
+                }
+                if (font.ItemsElementName[counter] == ItemsChoiceType3.i)
+                {
+                    var italicItem = item as CT_BooleanProperty;
+                    if (italicItem != null)
+                        cellFont.Italic = italicItem.val;
+                }
+                if (font.ItemsElementName[counter] == ItemsChoiceType3.shadow)
+                {
+                    var shadowItem = item as CT_BooleanProperty;
+                    if (shadowItem != null)
+                        cellFont.Shadow = shadowItem.val;
+                }
+                if (font.ItemsElementName[counter] == ItemsChoiceType3.outline)
+                {
+                    var outlineItem = item as CT_BooleanProperty;
+                    if (outlineItem != null)
+                        cellFont.Outline = outlineItem.val;
+                }
+                if (font.ItemsElementName[counter] == ItemsChoiceType3.strike)
+                {
+                    var strikeItem = item as CT_BooleanProperty;
+                    if (strikeItem != null)
+                        cellFont.Strike = strikeItem.val;
+                }
+                if (font.ItemsElementName[counter] == ItemsChoiceType3.u)
+                {
+                    var underlineItem = item as CT_UnderlineProperty;
+                    if (underlineItem != null && underlineItem.val != null)
+                        cellFont.Underline = (FontUnderline)underlineItem.val;
+                }
+                if (font.ItemsElementName[counter] == ItemsChoiceType3.vertAlign)
+                {
+                    var vertAlignItem = item as CT_VerticalAlignFontProperty;
+                    if (vertAlignItem != null)
+                        cellFont.Script = (FontScript)vertAlignItem.val;
+                }
+                if (font.ItemsElementName[counter] == ItemsChoiceType3.color)
+                {
+                    var colorItem = item as CT_Color1;
+                    if (colorItem != null)
+                        cellFont.Color = ConvertColor(colorItem);
+                }
+                counter++;
+            }
+
+            return cellFont;
+        }
+
+        private CellFill ConvertDxfCellFill(CT_Fill ct_fill)
+        {
+            CT_PatternFill pf;
+            var cellFill = new CellFill();
+            if (Util.TryCast(ct_fill.Item, out pf))
+            {
+                cellFill.Background = ConvertColor(pf.bgColor);
+                cellFill.Foreground = ConvertColor(pf.fgColor);
+                if (pf.patternType == ST_PatternType.none)
+                    pf.patternType = ST_PatternType.solid;
+                cellFill.Pattern = (FillPattern)pf.patternType;
+            }
+            return cellFill;
+        }
+
+        private CellBorder ConvertDxfBorder(CT_Border border)
+        {
+            CellBorder b = new CellBorder
+            {
+                Bottom = ConvertBorderEdge(border.bottom),
+                Right = ConvertBorderEdge(border.right),
+                Left = ConvertBorderEdge(border.left),
+                Top = ConvertBorderEdge(border.top),
+                Diagonal = ConvertBorderEdge(border.diagonal),
+                DiagonalDown = border.diagonalDown,
+                DiagonalUp = border.diagonalUp,
+                Vertical = ConvertBorderEdge(border.vertical),
+                Horizontal = ConvertBorderEdge(border.horizontal),
+                Outline = border.outline
+            };
+            
+            return b;
         }
 
         private CellAlignment ConvertAlignment(CT_CellAlignment al)
@@ -223,6 +362,15 @@ namespace Codaxy.Xlio.IO
             //1 based
             if (index < xfs.Count)
                 return xfs[(int)index];
+
+            return null;
+        }
+
+        private CellStyle GetDxfStyle(uint index)
+        {
+            //1 based
+            if (index < dxfs.Count)
+                return dxfs[(int)index];
 
             return null;
         }

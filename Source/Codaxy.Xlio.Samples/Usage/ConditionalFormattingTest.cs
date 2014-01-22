@@ -10,6 +10,13 @@ namespace Codaxy.Xlio.Samples.Usage
     [TestFixture]
     class ConditionalFormattingTest
     {
+        [Test(Active=true)]
+        public void ReadWriteTest() 
+        {
+            var workbook = Workbook.Load(@"ConditionalFormatting.xlsx");
+            workbook.Save(@"ConditionalFormatting1.xlsx");
+        }
+
         [Test]
         public static void CreateConditionalFormatting()
         {
@@ -19,44 +26,45 @@ namespace Codaxy.Xlio.Samples.Usage
              s[Range.Parse("A1:B2")].SetStyle(new CellStyle()); 
             */
 
-
             var workbook = new Workbook();
             var sheet = new Sheet("Sheet1");
             workbook.Sheets.AddSheet(sheet);
-            
+
             sheet["A1"].Value = 4;
             sheet["A2"].Value = 1;
             sheet["B1"].Value = 5;
             sheet["B2"].Value = 2;
 
-            sheet["D1"].Value = 6;//test
-            sheet["D2"].Value = 1;//test
-            sheet["E1"].Value = 2;//test
-            sheet["E2"].Value = 3;//test
+            sheet["D1"].Value = 4;//test
+            sheet["D2"].Value = 2;//test
+            sheet["E1"].Value = 5;//test
+            sheet["E2"].Value = 8;//test
 
-            sheet["E4"].Value = 4;//test
+            //sheet["E4"].Value = 4;//test
 
-            sheet["A11"].Value = 6.1;//test
-            sheet["A10"].Value = 2.2;//test
-            sheet["B10"].Value = 3.8;//test
-            sheet["B11"].Value = 4.4;//test
+            //sheet["A11"].Value = 6.1;//test
+            //sheet["A10"].Value = 2.2;//test
+            //sheet["B10"].Value = 3.8;//test
+            //sheet["B11"].Value = 4.4;//test
 
-            sheet["A12"].Value = "simo";//test
-            sheet["A13"].Value = "vaso";//test
-            sheet["B12"].Value = "vidoje";//test
-            sheet["B13"].Value = "gavro";//test
+            //sheet["A12"].Value = "simo";//test
+            //sheet["A13"].Value = "vaso";//test
+            //sheet["B12"].Value = "vidoje";//test
+            //sheet["B13"].Value = "gavro";//test
 
             ConditionalFormatting rules = new ConditionalFormatting();
-            rules.AddRange(Range.Parse("A1:B2"));
+            rules.AddRange(Range.Parse("D1:E2"));
 
             CellStyle cs = new CellStyle();
             CellFill cfill = new CellFill();
+            cfill.Pattern = FillPattern.Solid;
             cfill.Background = Color.Yellow;
             cs.Fill = cfill;
             cs.Font.Color = Color.Red;
 
-            ConditionalFormattingCondition condition = ConditionalFormattingCondition.GreaterThanOrEqual("3", cs);
+            ConditionalFormattingCondition condition = ConditionalFormattingCondition.Expression("D1=2",cs);
             rules.AddRule(condition);
+
             sheet.ConditionalFormatting.Add(rules);
 
             /*
@@ -155,5 +163,84 @@ namespace Codaxy.Xlio.Samples.Usage
             workbook.Save(@"ConditionalFormatting.xlsx");
         }
 
+        [Test]
+        public static void ReadConditionalFormatting()
+        {
+            var workbook = Workbook.Load(@"ConditionalFormatting.xlsx");
+            if (workbook.Sheets[0].ConditionalFormatting != null)
+            foreach (var cf in workbook.Sheets[0].ConditionalFormatting[0])
+            {
+                if (cf is ConditionalFormattingCondition)
+                {
+                    Console.WriteLine("ConditionalFormattingCondition");
+                    ConditionalFormattingCondition cond = cf as ConditionalFormattingCondition;
+                    Console.WriteLine("TYPE : "+cond.Type);
+                    Console.WriteLine("formula1 : " + cond.Formula1);
+                    //Console.WriteLine("formula2 : " + cond.Formula2);
+                    //Console.WriteLine("formula3 : " + cond.Formula3);
+                    Console.WriteLine("font name : " + cond.Style.Font.Name);
+                    Console.WriteLine("dxfId : " + cond.dxfId);
+                    Console.WriteLine("Priority : " + cond.Priority);
+                    Console.WriteLine("Bold : " + cond.Style.Font.Bold);
+                    Console.WriteLine("Underline : " + cond.Style.Font.Underline.Value);
+                    var red = cond.Style.Fill.Background.r;
+                    var green = cond.Style.Fill.Background.g;
+                    var blue = cond.Style.Fill.Background.b;
+                    Console.WriteLine("color back : " + red + ", " + green + ", " + blue);
+                    Console.WriteLine("Border : " + cond.Style.Border);
+                    Console.WriteLine("format : " + cond.Style.Format);
+                    Console.WriteLine("rank : " + cond.Rank);
+                    Console.WriteLine("Percent (shown) : " + cond.IsPercent+" -> for top 10");
+                    Console.WriteLine("IsBottom (shown) : " + cond.IsBottom + " -> for top 10");
+                    Console.WriteLine("IsAboveAverage : " + cond.IsAboveAverage + " -> for above average");
+                    Console.WriteLine("IsEqualAverage : " + cond.IsEqualAverage + " -> for above average");
+                    Console.WriteLine("IsStdDev : " + cond.IsStdDev + " -> for above average");
+                    Console.WriteLine("StdDev : " + cond.StdDev + " -> for above average");
+                }
+
+                if (cf is IconSet)
+                {
+                    IconSet iconSet = cf as IconSet;
+                    Console.WriteLine("IconSet");
+                    Console.WriteLine("icon set type : "+iconSet.IconSetType);
+                    Console.WriteLine("cfvo list : ");
+                    foreach (var item in iconSet.CFVOList)
+                    {
+                        Console.WriteLine("cfvo : "+item.Type+" -> "+item.Value);
+                    }
+                }
+                if (cf is ColorScale)
+                {
+                    ColorScale cs = cf as ColorScale;
+                    Console.WriteLine("ColorScale");
+                    Console.WriteLine("Priority : " + cs.Priority);
+                    Console.WriteLine("cfvo list : ");
+                    foreach (var item in cs.CFVOList)
+                    {
+                        Console.WriteLine("cfvo : " + item.Type + " -> " + item.Value);
+                    }
+                    Console.WriteLine("color list : ");
+                    foreach (var item in cs.Colors)
+                    {
+                        Console.WriteLine("color : " + item.r+", "+item.g+", "+item.b);
+                    }
+                }
+                if (cf is DataBar)
+                {
+                    DataBar db = cf as DataBar;
+                    Console.WriteLine("DataBar");
+                    Console.WriteLine("cf type : " + db.Type);
+                    Console.WriteLine("cfvo list : ");
+                    foreach (var item in db.CFVOList)
+                    {
+                        Console.WriteLine("cfvo : " + item.Type + " -> " + item.Value);
+                    }
+                    Color c = db.Color;
+                    Console.WriteLine("color : " + c.r + ", " + c.g + ", " + c.b);
+                }
+
+            }
+            Console.ReadKey();
+        }
     }
 }

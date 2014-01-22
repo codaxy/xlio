@@ -134,9 +134,54 @@ namespace Codaxy.Xlio.IO
                     var partPath = PathUtil.CombinePaths(filePath, rel.Target);
                     ReadSheet(partPath, sheet);
                 }
+
+                //mapping Conditional Formatting Rules with Styles --- NOVO
+                /*
+                var listaCfc = new List<ConditionalFormattingCondition>();
+                foreach (var cf in sheet.ConditionalFormatting)
+                    foreach (var rule in cf.Rules)
+                        if (rule is ConditionalFormattingCondition)
+                        {
+                            var cfc = rule as ConditionalFormattingCondition;
+                            listaCfc.Add(cfc);
+                        }
+                var indeksi = from k in listaCfc
+                              select k.dxfId;
+                */
+                var dxfsTemp = new List<CellStyle>();
+                uint counter = 0;
+                foreach (var cf in sheet.ConditionalFormatting)
+                {
+                    foreach (var rule in cf.Rules)
+                        if (rule is ConditionalFormattingCondition)
+                        {
+                            var cfc = rule as ConditionalFormattingCondition;
+                            var style = dxfs[(int)cfc.dxfId];
+                            dxfsTemp.Add(style);
+                            cfc.Style = style;
+                            cfc.dxfId = counter++;
+                            //uint indeks = (uint)(dxfsTemp.Count - 1); -- moze i ovako bez brojaca
+                        }
+                }
+                dxfs = dxfsTemp;
+                /*        
+                foreach (var cf in sheet.ConditionalFormatting)
+                {
+                    foreach (var rule in cf.Rules)
+                        if (rule is ConditionalFormattingCondition)
+                        {
+                            var cfc = rule as ConditionalFormattingCondition;
+                            Debug.WriteLine("POVEZIVANJE STILOVA : cfc.dxfId : " + cfc.dxfId);
+                            cfc.Style = dxfs[(int)cfc.dxfId]; //PROBLEM SA INDEKSIMA
+                        }
+                }
+                */
                 workbook.Sheets.AddSheet(sheet);
             }
 
+            
+
+            if(wb.definedNames!=null)
             foreach (var dn in wb.definedNames)
             {
                 DefinedName definedName = new DefinedName

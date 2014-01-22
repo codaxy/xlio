@@ -8,6 +8,7 @@ using Codaxy.Xlio.Model.Oxml;
 using Codaxy.Xlio.Model.Opc;
 using System.Xml.Serialization;
 using System.Globalization;
+using System.Diagnostics;
 
 namespace Codaxy.Xlio.IO
 {
@@ -422,19 +423,17 @@ namespace Codaxy.Xlio.IO
             CT_ConditionalFormatting[] cf = null;
             WriteConditionalFormatting(sheet, out cf);
             ws.conditionalFormatting = cf;
-
-            List<CT_Dxf> dxfList = new List<CT_Dxf>();
+            
             foreach (ConditionalFormatting conditionalFormatting in sheet.ConditionalFormatting)
             {
                 foreach (ConditionalFormattingRule rule in conditionalFormatting.Rules)
-                    if (rule.Type == ConditionalFormattingType.CellIs)
+                    if (rule is ConditionalFormattingCondition)
                     {
                         var conditionRule = rule as ConditionalFormattingCondition;
                         uint dxfId = RegisterDxfStyle(conditionRule.Style);
                         conditionRule.dxfId = dxfId;
                     }
             }
-
 
             WriteFile(sheetPath, ws, SpreadsheetNs(false));
         }
@@ -445,13 +444,16 @@ namespace Codaxy.Xlio.IO
         {
 
             List<CT_ConditionalFormatting> cflist = new List<CT_ConditionalFormatting>();
+            //Debug.WriteLine("sheet.ConditionalFormatting.Count : " + sheet.ConditionalFormatting.Count); //DEBUG
             foreach (var cfrCollection in sheet.ConditionalFormatting)
             {
+                //Debug.WriteLine("cfrCollection.Count : " + cfrCollection.Count()); //DEBUG
                 List<CT_CfRule> ct_cfrule_list = new List<CT_CfRule>();
                 foreach (var ruleobj in cfrCollection)
                 {
                     CT_CfRule cfRule = null;
-                    WriteConditionalFormattingRule(ruleobj, out cfRule);
+                    //Debug.WriteLine("ruleobj.Type : " + ruleobj.Type); //DEBUG
+                    WriteConditionalFormattingRule(ruleobj, cfrCollection.GetFirstCellStringValue(), out cfRule);
                     ct_cfrule_list.Add(cfRule);
                 }
                 var tempCf = new CT_ConditionalFormatting
@@ -464,34 +466,22 @@ namespace Codaxy.Xlio.IO
             cf = cflist.ToArray();
         }
 
-        public void WriteConditionalFormattingType(ConditionalFormattingType type, out ST_CfType st_cftype)
+        public string ConvertFormulaForTextOperations(string value, ConditionalFormattingType type, string firstCell) 
         {
-            st_cftype = ST_CfType.cellIs;
-            switch (type)
-            {
-                case ConditionalFormattingType.ColorScale:
-                    st_cftype = ST_CfType.colorScale;
-                    break;
-                case ConditionalFormattingType.DataBar:
-                    st_cftype = ST_CfType.dataBar;
-                    break;
-                case ConditionalFormattingType.IconSet:
-                    st_cftype = ST_CfType.iconSet;
-                    break;
-                case ConditionalFormattingType.BeginsWith://ADDED AFTEER
-                    st_cftype = ST_CfType.beginsWith;
-                    break;
-                default:
-                    st_cftype = ST_CfType.cellIs;
-                    break;
-            }
+            if (type == ConditionalFormattingType.ContainsText)
+                return "NOT(ISERROR(SEARCH(\"" + value + "\"," +firstCell + ")))";
+            if (type == ConditionalFormattingType.NotContainsText)
+                return "ISERROR(SEARCH(\"" + value + "\"," + firstCell + "))";
+            if (type == ConditionalFormattingType.BeginsWith)
+                return "LEFT(" + firstCell + ",LEN(\"" + value + "\"))=\"" + value + "\"";
+            if (type == ConditionalFormattingType.EndsWith)
+                return "RIGHT(" + firstCell + ",LEN(\"" + value + "\"))=\"" + value + "\"";
+            return value;
         }
 
-        public void WriteConditionalFormattingRule(ConditionalFormattingRule rule, out CT_CfRule cfRule)
+        public void WriteConditionalFormattingRule(ConditionalFormattingRule rule, string firstCell, out CT_CfRule cfRule)
         {
-            ST_CfType st_cftype = ST_CfType.cellIs;
-            WriteConditionalFormattingType(rule.Type, out st_cftype);
-
+            ST_CfType st_cftype = (ST_CfType) rule.Type;
             CT_ColorScale ct_colorscale = null;
             CT_DataBar ct_databar = null;
             CT_IconSet ct_iconset = null;
@@ -515,10 +505,28 @@ namespace Codaxy.Xlio.IO
             if (rule is ConditionalFormattingCondition)
             {
                 ConditionalFormattingCondition condition = rule as ConditionalFormattingCondition;
-                //WriteConditionalFormattingIconSet(iconSetRule, out ct_iconset); //--OVDJE TREBA POZIV
+                if (condition.Type == ConditionalFormattingType.Top10)
+                {
+                    cfRule = ConvertTopBottom(condition);
+                    return;
+                }
+                if (condition.Type == ConditionalFormattingType.AboveAverage)
+                {
+                    cfRule = ConvertAboveAverage(condition);
+                    return;
+                }
+                if (condition.Type == ConditionalFormattingType.Expression)
+                {
+                    cfRule = ConvertExpression(condition);
+                    return;
+                }
                 List<string> formulas = new List<string>();
                 if (!string.IsNullOrEmpty(condition.Formula1))
-                    formulas.Add(condition.Formula1);
+                {
+                    //string textOperationsString = ConvertFormulaForTextOperations(condition.Formula1, rule.Type, firstCell);
+                    string textOperationsString = condition.Formula1;
+                    formulas.Add(textOperationsString);
+                }
                 if (!string.IsNullOrEmpty(condition.Formula2))
                     formulas.Add(condition.Formula2);
                 if (!string.IsNullOrEmpty(condition.Formula3))
@@ -533,7 +541,9 @@ namespace Codaxy.Xlio.IO
                     @operator = (ST_ConditionalFormattingOperator)condition.Operator, //1-1 
                     priority = rule.Priority,
                     dxfIdSpecified = true,
-                    dxfId = condition.dxfId
+                    dxfId = condition.dxfId,
+                    text = condition.Text,
+
                 };
                 cfRule = tempRule;
                 return;
@@ -541,10 +551,8 @@ namespace Codaxy.Xlio.IO
 
             cfRule = new CT_CfRule
             {
-                //formula = rule.Formulas.ToArray(), //DIO ZA CELL IS
                 typeSpecified = true,
                 type = st_cftype,
-                //@operator = (ST_ConditionalFormattingOperator)rule.Operator, //1-1 //DIO ZA CELL IS
                 colorScale = ct_colorscale,
                 dataBar = ct_databar,
                 iconSet = ct_iconset,
@@ -552,6 +560,65 @@ namespace Codaxy.Xlio.IO
             };
 
         }
+
+        public CT_CfRule ConvertTopBottom(ConditionalFormattingCondition condition)
+        {
+            //<cfRule type="top10" dxfId="1" priority="1" percent="1" bottom="1" rank="50"/>
+            CT_CfRule tempRule = new CT_CfRule
+            {
+                typeSpecified = true,
+                type = (ST_CfType)condition.Type,
+
+                dxfIdSpecified = true,
+                dxfId = condition.dxfId,
+
+                priority = condition.Priority,
+
+                percent = condition.IsPercent,
+
+                bottom = condition.IsBottom,
+
+                rankSpecified=true,
+                rank = condition.Rank
+            };
+            return tempRule;
+        }
+
+        public CT_CfRule ConvertAboveAverage(ConditionalFormattingCondition condition)
+        {
+            CT_CfRule tempRule = new CT_CfRule
+            {
+                typeSpecified = true,
+                type = (ST_CfType)condition.Type,
+
+                dxfIdSpecified = true,
+                dxfId = condition.dxfId,
+
+                priority = condition.Priority,
+
+                aboveAverage = condition.IsAboveAverage,
+                equalAverage = condition.IsEqualAverage,
+                stdDevSpecified = condition.IsStdDev,
+                stdDev = condition.StdDev
+            };
+            return tempRule;
+        }
+        public CT_CfRule ConvertExpression(ConditionalFormattingCondition condition)
+        {
+            var formulas = new List<string>();
+            formulas.Add(condition.Formula1);
+            CT_CfRule tempRule = new CT_CfRule
+            {
+                typeSpecified = true,
+                type = (ST_CfType)condition.Type,
+                dxfIdSpecified = true,
+                dxfId = condition.dxfId,
+                priority = condition.Priority,
+                formula = formulas.ToArray()
+            };
+            return tempRule;
+        }
+
 
         public void WriteConditionalFormattingColorScale(ColorScale colorScale, out CT_ColorScale cfColorScale)
         {
@@ -631,9 +698,7 @@ namespace Codaxy.Xlio.IO
             };
         }
 
-
         //END CONDITIONAL FORMATTING
-
 
         private string WriteCellValue(CellData data, out ST_CellType ct, out String value, out String format)
         {

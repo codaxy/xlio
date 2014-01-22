@@ -909,7 +909,7 @@ namespace Codaxy.Xlio
         Double,
         SingleAccounting,
         DoubleAccounting,
-        None,
+        None
     }
 
     /// <summary>

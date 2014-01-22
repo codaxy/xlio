@@ -180,6 +180,26 @@ namespace Codaxy.Xlio.IO
                                 };
                         }
                     }
+
+                //conditional formatting
+                if (xml.conditionalFormatting != null)
+                foreach (CT_ConditionalFormatting conditionalFormatting in xml.conditionalFormatting)
+                {
+                    var rules = new List<ConditionalFormattingRule>();
+                    if (conditionalFormatting.cfRule !=null)
+                    foreach (var cfRule in conditionalFormatting.cfRule)
+                    {
+                        var rule = GetConditionalFormattingRule(cfRule);
+                        rules.Add(rule);
+                    }
+                    ConditionalFormatting cf = new ConditionalFormatting
+                    {
+                        Ranges = conditionalFormatting.sqref.ToList(),
+                        Rules = rules
+                    };
+                    sheet.ConditionalFormatting.Add(cf);
+                }
+                 
             }
             catch (Exception ex)
             {                
@@ -187,6 +207,131 @@ namespace Codaxy.Xlio.IO
                 Debug.WriteLine(ex.StackTrace);
                 throw;
             }
+        }
+
+        private ConditionalFormattingRule GetConditionalFormattingRule(CT_CfRule ct_cfrule)
+        {
+            if (ct_cfrule.type == ST_CfType.iconSet)
+            {
+                return new IconSet
+                {
+                    IconSetType = (ConditionalFormattingIconSetType)ct_cfrule.iconSet.iconSet,
+                    Priority = ct_cfrule.priority,
+                    ShowValue = ct_cfrule.iconSet.showValue,
+                    Type = (ConditionalFormattingType)ct_cfrule.type,
+                    CFVOList = ConvertCFVOList(ct_cfrule.iconSet.cfvo)
+                };
+            }
+            if (ct_cfrule.type == ST_CfType.dataBar)
+            {
+                return new DataBar
+                {
+                    Priority = ct_cfrule.priority,
+                    Type = (ConditionalFormattingType)ct_cfrule.type,
+                    CFVOList = ConvertCFVOList(ct_cfrule.dataBar.cfvo),
+                    Color = ConvertColor(ct_cfrule.dataBar.color)
+                };
+            }
+            if (ct_cfrule.type == ST_CfType.colorScale)
+            {
+                var colors = new List<Color>();
+                foreach (CT_Color1 ct_color1 in ct_cfrule.colorScale.color)
+                {
+                    Color color = ConvertColor(ct_color1);
+                    colors.Add(color);
+                }
+                return new ColorScale
+                {
+                    Priority = ct_cfrule.priority,
+                    Type = (ConditionalFormattingType)ct_cfrule.type,
+                    CFVOList = ConvertCFVOList(ct_cfrule.colorScale.cfvo),
+                    Colors = colors
+                };
+            }
+            if (ct_cfrule.type == ST_CfType.cellIs)
+            {
+                string for1 = null, for2 = null, for3 = null;
+                if (ct_cfrule.formula.Length > 0)
+                    for1 = ct_cfrule.formula[0];
+                if (ct_cfrule.formula.Length > 1)
+                    for2 = ct_cfrule.formula[1];
+                if (ct_cfrule.formula.Length > 2)
+                    for3 = ct_cfrule.formula[2];
+                return new ConditionalFormattingCondition
+                {
+                    Priority = ct_cfrule.priority,
+                    Type = (ConditionalFormattingType)ct_cfrule.type,
+                    Formula1 = for1,
+                    Formula2 = for2,
+                    Formula3 = for3,
+                    dxfId = ct_cfrule.dxfId,
+                    Operator = (ConditionalFormattingOperator)ct_cfrule.@operator,
+                    Text = ct_cfrule.text,
+
+                };
+
+            }
+            //<cfRule type="top10" dxfId="1" priority="1" percent="1" bottom="1" rank="50"/>
+            if (ct_cfrule.type == ST_CfType.top10)
+            {
+                return new ConditionalFormattingCondition
+                {
+                    Priority = ct_cfrule.priority,
+                    Type = (ConditionalFormattingType)ct_cfrule.type,
+                    dxfId = ct_cfrule.dxfId,
+                    IsPercent = ct_cfrule.percent,
+                    IsBottom = ct_cfrule.bottom,
+                    Rank = ct_cfrule.rank
+                };
+            }
+            if (ct_cfrule.type == ST_CfType.aboveAverage)
+            {
+                return new ConditionalFormattingCondition
+                {
+                    Priority = ct_cfrule.priority,
+                    Type = (ConditionalFormattingType)ct_cfrule.type,
+                    dxfId = ct_cfrule.dxfId,
+                    IsAboveAverage = ct_cfrule.aboveAverage,
+                    IsEqualAverage = ct_cfrule.equalAverage,
+                    IsStdDev = ct_cfrule.stdDevSpecified,
+                    StdDev = ct_cfrule.stdDev
+                };
+            }
+            if (ct_cfrule.type == ST_CfType.uniqueValues || ct_cfrule.type == ST_CfType.duplicateValues)
+            {
+                return new ConditionalFormattingCondition
+                {
+                    Priority = ct_cfrule.priority,
+                    Type = (ConditionalFormattingType)ct_cfrule.type,
+                    dxfId = ct_cfrule.dxfId
+                };
+            }
+            if (ct_cfrule.type == ST_CfType.expression)
+            {
+                return new ConditionalFormattingCondition
+                {
+                    Priority = ct_cfrule.priority,
+                    Type = (ConditionalFormattingType)ct_cfrule.type,
+                    dxfId = ct_cfrule.dxfId,
+                    Formula1 = ct_cfrule.formula[0]
+                };
+            }
+            return null;
+        }
+
+        private List<ConditionalFormattingValueObject> ConvertCFVOList(CT_Cfvo[] cfvoArr)
+        {
+            var cfvoList = new List<ConditionalFormattingValueObject>();
+            foreach (var cfvo in cfvoArr)
+            {
+                ConditionalFormattingValueObject CFVO = new ConditionalFormattingValueObject
+                {
+                    Type = (CFVOType)cfvo.type,
+                    Value = cfvo.val
+                };
+                cfvoList.Add(CFVO);
+            }
+            return cfvoList;
         }
         
     }

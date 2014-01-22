@@ -119,6 +119,7 @@ namespace Codaxy.Xlio.IO
             if (style.fill != null)
             {
                 res.fill = ConvertFill(style.fill);
+                
             }
             if (style.alignment != null)
             {

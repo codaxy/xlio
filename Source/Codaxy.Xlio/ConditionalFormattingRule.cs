@@ -46,11 +46,32 @@ namespace Codaxy.Xlio
 
     public enum ConditionalFormattingType
     {
+        /*
         CellIs,
         ColorScale,
         DataBar,
         IconSet,
         BeginsWith //ADDED AFTEER
+         * 
+         * */
+        Expression,
+        CellIs,
+        ColorScale,
+        DataBar,
+        IconSet,
+        Top10,
+        UniqueValues,
+        DuplicateValues,
+        ContainsText,
+        NotContainsText,
+        BeginsWith,
+        EndsWith,
+        ContainsBlanks,
+        NotContainsBlanks,
+        ContainsErrors,
+        NotContainsErrors,
+        TimePeriod,
+        AboveAverage
     }
 
     public enum ConditionalFormattingOperator
