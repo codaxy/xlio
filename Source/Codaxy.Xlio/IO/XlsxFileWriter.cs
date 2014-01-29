@@ -420,135 +420,103 @@ namespace Codaxy.Xlio.IO
                 ws.mergeCells = new CT_MergeCells { mergeCell = mergedCells.ToArray() };
 
             //conditional formatting
-            CT_ConditionalFormatting[] cf = null;
+            CT_ConditionalFormatting[] cf;
             WriteConditionalFormatting(sheet, out cf);
             ws.conditionalFormatting = cf;
-            
-            foreach (ConditionalFormatting conditionalFormatting in sheet.ConditionalFormatting)
-            {
-                foreach (ConditionalFormattingRule rule in conditionalFormatting.Rules)
-                    if (rule is ConditionalFormattingCondition)
-                    {
-                        var conditionRule = rule as ConditionalFormattingCondition;
-                        uint dxfId = RegisterDxfStyle(conditionRule.Style);
-                        conditionRule.dxfId = dxfId;
-                    }
-            }
 
             WriteFile(sheetPath, ws, SpreadsheetNs(false));
         }
 
-        //START CONDITIONAL FORMATTING
+        #region ConditionalFormatting
 
         public void WriteConditionalFormatting(Sheet sheet, out CT_ConditionalFormatting[] cf)
         {
-
             List<CT_ConditionalFormatting> cflist = new List<CT_ConditionalFormatting>();
-            //Debug.WriteLine("sheet.ConditionalFormatting.Count : " + sheet.ConditionalFormatting.Count); //DEBUG
             foreach (var cfrCollection in sheet.ConditionalFormatting)
-            {
-                //Debug.WriteLine("cfrCollection.Count : " + cfrCollection.Count()); //DEBUG
-                List<CT_CfRule> ct_cfrule_list = new List<CT_CfRule>();
-                foreach (var ruleobj in cfrCollection)
+                if (cfrCollection.Ranges != null && cfrCollection.Ranges.Count > 0)
                 {
-                    CT_CfRule cfRule = null;
-                    //Debug.WriteLine("ruleobj.Type : " + ruleobj.Type); //DEBUG
-                    WriteConditionalFormattingRule(ruleobj, cfrCollection.GetFirstCellStringValue(), out cfRule);
-                    ct_cfrule_list.Add(cfRule);
+                    List<CT_CfRule> ct_cfrule_list = new List<CT_CfRule>();
+                    foreach (var ruleobj in cfrCollection)
+                    {
+                        CT_CfRule cfRule = null;
+                        WriteConditionalFormattingRule(ruleobj, cfrCollection.GetFirstCellStringValue(), out cfRule);
+                        ct_cfrule_list.Add(cfRule);
+                    }
+                    var tempCf = new CT_ConditionalFormatting
+                    {
+                        cfRule = ct_cfrule_list.ToArray(),
+                        sqref = cfrCollection.Ranges.ToArray()
+                    };
+                    cflist.Add(tempCf);
                 }
-                var tempCf = new CT_ConditionalFormatting
-                {
-                    cfRule = ct_cfrule_list.ToArray(),
-                    sqref = cfrCollection.Ranges.ToArray()
-                };
-                cflist.Add(tempCf);
-            }
             cf = cflist.ToArray();
         }
 
-        public string ConvertFormulaForTextOperations(string value, ConditionalFormattingType type, string firstCell) 
-        {
-            if (type == ConditionalFormattingType.ContainsText)
-                return "NOT(ISERROR(SEARCH(\"" + value + "\"," +firstCell + ")))";
-            if (type == ConditionalFormattingType.NotContainsText)
-                return "ISERROR(SEARCH(\"" + value + "\"," + firstCell + "))";
-            if (type == ConditionalFormattingType.BeginsWith)
-                return "LEFT(" + firstCell + ",LEN(\"" + value + "\"))=\"" + value + "\"";
-            if (type == ConditionalFormattingType.EndsWith)
-                return "RIGHT(" + firstCell + ",LEN(\"" + value + "\"))=\"" + value + "\"";
-            return value;
-        }
-
-        public void WriteConditionalFormattingRule(ConditionalFormattingRule rule, string firstCell, out CT_CfRule cfRule)
+        public void WriteConditionalFormattingRule(CFRule rule, string firstCell, out CT_CfRule cfRule)
         {
             ST_CfType st_cftype = (ST_CfType) rule.Type;
             CT_ColorScale ct_colorscale = null;
             CT_DataBar ct_databar = null;
             CT_IconSet ct_iconset = null;
 
-            if (rule.Type == ConditionalFormattingType.ColorScale)
+            if (rule.Type == CFType.ColorScale)
+                WriteConditionalFormattingColorScale(rule.ColorScale, out ct_colorscale);
+
+            if (rule.Type == CFType.DataBar)
+                WriteConditionalFormattingDataBar(rule.DataBar, out ct_databar);
+
+            if (rule.Type == CFType.IconSet)
+                WriteConditionalFormattingIconSet(rule.IconSet, out ct_iconset);
+
+            if (CFRule.RequiresDxf(rule.Type))
             {
-                ColorScale colorScaleRule = rule as ColorScale;
-                WriteConditionalFormattingColorScale(colorScaleRule, out ct_colorscale);//ColorScale
-            }
-            if (rule.Type == ConditionalFormattingType.DataBar)
-            {
-                DataBar dataBarRule = rule as DataBar;
-                WriteConditionalFormattingDataBar(dataBarRule, out ct_databar);//DataBar
-            }
-            if (rule.Type == ConditionalFormattingType.IconSet)
-            {
-                IconSet iconSetRule = rule as IconSet;
-                WriteConditionalFormattingIconSet(iconSetRule, out ct_iconset);//IconSet
-            }
-            //if (rule.Type == ConditionalFormattingType.CellIs)
-            if (rule is ConditionalFormattingCondition)
-            {
-                ConditionalFormattingCondition condition = rule as ConditionalFormattingCondition;
-                if (condition.Type == ConditionalFormattingType.Top10)
-                {
-                    cfRule = ConvertTopBottom(condition);
-                    return;
-                }
-                if (condition.Type == ConditionalFormattingType.AboveAverage)
-                {
-                    cfRule = ConvertAboveAverage(condition);
-                    return;
-                }
-                if (condition.Type == ConditionalFormattingType.Expression)
-                {
-                    cfRule = ConvertExpression(condition);
-                    return;
-                }
                 List<string> formulas = new List<string>();
-                if (!string.IsNullOrEmpty(condition.Formula1))
+
+                if (!string.IsNullOrEmpty(rule.Formula1))
+                    formulas.Add(rule.Formula1);
+
+                if (!string.IsNullOrEmpty(rule.Formula2))
+                    formulas.Add(rule.Formula2);
+
+                if (!string.IsNullOrEmpty(rule.Formula3))
+                    formulas.Add(rule.Formula3);
+
+                cfRule = new CT_CfRule
                 {
-                    //string textOperationsString = ConvertFormulaForTextOperations(condition.Formula1, rule.Type, firstCell);
-                    string textOperationsString = condition.Formula1;
-                    formulas.Add(textOperationsString);
-                }
-                if (!string.IsNullOrEmpty(condition.Formula2))
-                    formulas.Add(condition.Formula2);
-                if (!string.IsNullOrEmpty(condition.Formula3))
-                    formulas.Add(condition.Formula3);
-                
-                CT_CfRule tempRule = new CT_CfRule
-                {
-                    formula = formulas.ToArray(),
                     typeSpecified = true,
                     type = st_cftype,
-                    operatorSpecified = true,
-                    @operator = (ST_ConditionalFormattingOperator)condition.Operator, //1-1 
                     priority = rule.Priority,
-                    dxfIdSpecified = true,
-                    dxfId = condition.dxfId,
-                    text = condition.Text,
-
+                    formula = formulas.ToArray(),
+                    operatorSpecified = rule.Operator.HasValue,
+                    @operator = rule.Operator.HasValue ? (ST_ConditionalFormattingOperator)rule.Operator.Value : ST_ConditionalFormattingOperator.beginsWith,
+                    text = rule.Text,
                 };
-                cfRule = tempRule;
+                cfRule = SetDxfStyle(cfRule, rule.Style);
+
+                switch (rule.Type)
+                {
+                    case CFType.Top10:
+                        cfRule.percent = rule.IsPercent;
+                        cfRule.bottom = rule.IsBottom;
+                        cfRule.rankSpecified = rule.Rank.HasValue;
+                        cfRule.rank = (uint)rule.Rank.Value;
+                        break;
+
+                    case CFType.AboveAverage:
+                        cfRule.aboveAverage = rule.IsAboveAverage;
+                        cfRule.equalAverage = rule.IsEqualAverage;
+                        cfRule.stdDevSpecified = rule.IsStdDev;
+                        cfRule.stdDev = rule.StdDev;
+                        break;
+
+                    case CFType.TimePeriod:
+                        cfRule.timePeriodSpecified = true;
+                        cfRule.timePeriod = (ST_TimePeriod)rule.TimePeriod;
+                        break;
+                }
                 return;
             }
-
+            
             cfRule = new CT_CfRule
             {
                 typeSpecified = true,
@@ -561,64 +529,15 @@ namespace Codaxy.Xlio.IO
 
         }
 
-        public CT_CfRule ConvertTopBottom(ConditionalFormattingCondition condition)
+        public CT_CfRule SetDxfStyle(CT_CfRule ct_cfrule, CellStyle style)
         {
-            //<cfRule type="top10" dxfId="1" priority="1" percent="1" bottom="1" rank="50"/>
-            CT_CfRule tempRule = new CT_CfRule
+            if (style != null)
             {
-                typeSpecified = true,
-                type = (ST_CfType)condition.Type,
-
-                dxfIdSpecified = true,
-                dxfId = condition.dxfId,
-
-                priority = condition.Priority,
-
-                percent = condition.IsPercent,
-
-                bottom = condition.IsBottom,
-
-                rankSpecified=true,
-                rank = condition.Rank
-            };
-            return tempRule;
+                ct_cfrule.dxfId = RegisterDxfStyle(style);
+                ct_cfrule.dxfIdSpecified = true;
+            }
+            return ct_cfrule;
         }
-
-        public CT_CfRule ConvertAboveAverage(ConditionalFormattingCondition condition)
-        {
-            CT_CfRule tempRule = new CT_CfRule
-            {
-                typeSpecified = true,
-                type = (ST_CfType)condition.Type,
-
-                dxfIdSpecified = true,
-                dxfId = condition.dxfId,
-
-                priority = condition.Priority,
-
-                aboveAverage = condition.IsAboveAverage,
-                equalAverage = condition.IsEqualAverage,
-                stdDevSpecified = condition.IsStdDev,
-                stdDev = condition.StdDev
-            };
-            return tempRule;
-        }
-        public CT_CfRule ConvertExpression(ConditionalFormattingCondition condition)
-        {
-            var formulas = new List<string>();
-            formulas.Add(condition.Formula1);
-            CT_CfRule tempRule = new CT_CfRule
-            {
-                typeSpecified = true,
-                type = (ST_CfType)condition.Type,
-                dxfIdSpecified = true,
-                dxfId = condition.dxfId,
-                priority = condition.Priority,
-                formula = formulas.ToArray()
-            };
-            return tempRule;
-        }
-
 
         public void WriteConditionalFormattingColorScale(ColorScale colorScale, out CT_ColorScale cfColorScale)
         {
@@ -698,7 +617,7 @@ namespace Codaxy.Xlio.IO
             };
         }
 
-        //END CONDITIONAL FORMATTING
+        #endregion
 
         private string WriteCellValue(CellData data, out ST_CellType ct, out String value, out String format)
         {

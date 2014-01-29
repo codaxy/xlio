@@ -13,9 +13,6 @@ namespace Codaxy.Xlio.Samples
     {
         static void Main(string[] args)
         {
-            //ConditionalFormattingTest.ReadWriteTest();
-            //ConditionalFormattingTest.ReadConditionalFormatting();
-            //ConditionalFormattingTest.CreateConditionalFormatting();
             PetaTest.Runner.RunMain(args);            
         }
 

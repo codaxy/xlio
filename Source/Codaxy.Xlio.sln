@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codaxy.Xlio", "Codaxy.Xlio\Codaxy.Xlio.csproj", "{11F82973-690A-48A9-8CB8-BD97E0024E2C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codaxy.Xlio.Samples", "Codaxy.Xlio.Samples\Codaxy.Xlio.Samples.csproj", "{75101596-E55E-4A6B-8D95-DF9C8193A799}"
@@ -15,12 +15,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{0F8C47A7
 		..\NuGet\Codaxy.Xlio\Codaxy.Xlio.nuspec = ..\NuGet\Codaxy.Xlio\Codaxy.Xlio.nuspec
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codaxy.Xlio.Tests", "Codaxy.Xlio.Tests\Codaxy.Xlio.Tests.csproj", "{4CB9462B-DDD7-487A-A23F-29F5828FC0EC}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{FB073DC3-168B-449B-941A-B8577F60D9A0}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codaxy.Xlio.Tests", "Codaxy.Xlio.Tests\Codaxy.Xlio.Tests.csproj", "{4CB9462B-DDD7-487A-A23F-29F5828FC0EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

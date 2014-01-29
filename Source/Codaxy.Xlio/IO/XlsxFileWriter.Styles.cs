@@ -97,15 +97,6 @@ namespace Codaxy.Xlio.IO
 
         CT_Dxf ConvertDxfStyle(CellStyle style) 
         {
-            /*
-                private CT_Font fontField;
-                private CT_NumFmt numFmtField;
-                private CT_Fill fillField;
-                private CT_CellAlignment alignmentField;
-                private CT_Border borderField;
-                private CT_CellProtection protectionField;//no
-                private CT_ExtensionList extLstField;//no
-             */
             var res = new CT_Dxf();
 
             if (style.font != null)

@@ -187,8 +187,6 @@ namespace Codaxy.Xlio.IO
                     dxfs.Add(entry);
                 }
             }
-         
-
         }
 
         private CellFont ConvertDxfFont(CT_Font font)
@@ -199,7 +197,6 @@ namespace Codaxy.Xlio.IO
             int counter = 0;
             foreach (var item in items)
             {
-
                 if (font.ItemsElementName[counter] == ItemsChoiceType3.name)
                 {
                     var fontName = item as CT_FontName;
@@ -245,7 +242,7 @@ namespace Codaxy.Xlio.IO
                 if (font.ItemsElementName[counter] == ItemsChoiceType3.u)
                 {
                     var underlineItem = item as CT_UnderlineProperty;
-                    if (underlineItem != null && underlineItem.val != null)
+                    if (underlineItem != null)
                         cellFont.Underline = (FontUnderline)underlineItem.val;
                 }
                 if (font.ItemsElementName[counter] == ItemsChoiceType3.vertAlign)
@@ -362,16 +359,13 @@ namespace Codaxy.Xlio.IO
             //1 based
             if (index < xfs.Count)
                 return xfs[(int)index];
-
             return null;
         }
 
         private CellStyle GetDxfStyle(uint index)
         {
-            //1 based
             if (index < dxfs.Count)
                 return dxfs[(int)index];
-
             return null;
         }
         

@@ -16,6 +16,13 @@ namespace Codaxy.Xlio
             Range = range;
         }
 
+        public SheetRange SetValues(params object[] values) 
+        {
+            for (var i = 0; i < values.Length; i++)
+                this[i].Value = values[i];
+            return this;
+        }
+
         public CellData Merge()
         {
             for (var row = Range.Cell1.Row; row <= Range.Cell2.Row; row++)
