@@ -57,6 +57,7 @@ namespace Codaxy.Xlio.IO
     public partial class XlsxFileWriter
     {
         Mapper<CellStyle, CT_Xf> styles;
+        Mapper<CellStyle, CT_Dxf> dxfStyles;//ADDED
         Mapper<CellBorder, CT_Border> borders;
         Mapper<CellFill, CT_Fill> fills;
         Mapper<CellFont, CT_Font> fonts;
@@ -68,6 +69,7 @@ namespace Codaxy.Xlio.IO
         {
             styles = new Mapper<CellStyle, CT_Xf>(ConvertStyle);
             styles.Add(new CT_Xf());
+            dxfStyles = new Mapper<CellStyle, CT_Dxf>(ConvertDxfStyle); //ADDED
             borders = new Mapper<CellBorder, CT_Border>(ConvertBorder);
             borders.Add(new CT_Border());
             fills = new Mapper<CellFill, CT_Fill>(ConvertFill);
@@ -86,6 +88,40 @@ namespace Codaxy.Xlio.IO
         uint RegisterStyle(CellStyle style)
         {
             return styles.GetIndex(style);            
+        }
+
+        uint RegisterDxfStyle(CellStyle dxfstyle)
+        {
+            return dxfStyles.GetIndex(dxfstyle);
+        }
+
+        CT_Dxf ConvertDxfStyle(CellStyle style) 
+        {
+            var res = new CT_Dxf();
+
+            if (style.font != null)
+            {
+                res.font = ConvertFont(style.font);
+            }
+            if (style.format != null)
+            {
+                res.numFmt = ConvertNumFormat(style.format);
+            }
+            if (style.fill != null)
+            {
+                res.fill = ConvertFill(style.fill);
+                
+            }
+            if (style.alignment != null)
+            {
+                res.alignment = ConvertAlignment(style.alignment);
+            }
+            if (style.border != null)
+            {
+                res.border = ConvertBorder(style.border);
+            }
+
+            return res;
         }
 
         CT_Xf ConvertStyle(CellStyle style)

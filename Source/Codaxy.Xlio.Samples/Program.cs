@@ -5,6 +5,7 @@ using System.Text;
 using Codaxy.Xlio;
 using System.Diagnostics;
 using System.Threading;
+using Codaxy.Xlio.Samples.Usage;
 
 namespace Codaxy.Xlio.Samples
 {

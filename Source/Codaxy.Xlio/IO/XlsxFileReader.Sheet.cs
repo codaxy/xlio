@@ -180,6 +180,26 @@ namespace Codaxy.Xlio.IO
                                 };
                         }
                     }
+
+                //conditional formatting
+                if (xml.conditionalFormatting != null)
+                foreach (CT_ConditionalFormatting conditionalFormatting in xml.conditionalFormatting)
+                {
+                    var rules = new List<CFRule>();
+                    if (conditionalFormatting.cfRule !=null)
+                        foreach (var cfRule in conditionalFormatting.cfRule)
+                        {
+                            var rule = GetConditionalFormattingRule(cfRule);
+                            rules.Add(rule);
+                        }
+                    ConditionalFormatting cf = new ConditionalFormatting
+                    {
+                        Ranges = conditionalFormatting.sqref.ToList(),
+                        Rules = rules
+                    };
+                    sheet.ConditionalFormatting.Add(cf);
+                }
+                 
             }
             catch (Exception ex)
             {                
@@ -188,6 +208,110 @@ namespace Codaxy.Xlio.IO
                 throw;
             }
         }
-        
+
+        private CFRule GetConditionalFormattingRule(CT_CfRule ct_cfrule)
+        {
+            CFRule rule = new CFRule((CFType)ct_cfrule.type, ct_cfrule.priority);
+
+            if (ct_cfrule.formula != null)
+            {
+                string for1 = null, for2 = null, for3 = null;
+                if (ct_cfrule.formula.Length > 0)
+                    for1 = ct_cfrule.formula[0];
+                if (ct_cfrule.formula.Length > 1)
+                    for2 = ct_cfrule.formula[1];
+                if (ct_cfrule.formula.Length > 2)
+                    for3 = ct_cfrule.formula[2];
+                rule.Formula1 = for1;
+                rule.Formula2 = for2;
+                rule.Formula3 = for3;
+            }
+
+            switch (ct_cfrule.type)
+            {
+                case ST_CfType.iconSet:
+                    rule.IconSet = new IconSet
+                    {
+                        IconSetType = (IconSetType)ct_cfrule.iconSet.iconSet,
+                        ShowValue = ct_cfrule.iconSet.showValue,
+                        CFVOList = ConvertCFVOList(ct_cfrule.iconSet.cfvo)
+                    };
+                    break;
+
+                case ST_CfType.dataBar:
+                    rule.DataBar = new DataBar
+                    {
+                        CFVOList = ConvertCFVOList(ct_cfrule.dataBar.cfvo),
+                        Color = ConvertColor(ct_cfrule.dataBar.color)
+                    };
+                    break;
+
+                case ST_CfType.colorScale:
+                    rule.ColorScale = new ColorScale
+                    {
+                        CFVOList = ConvertCFVOList(ct_cfrule.colorScale.cfvo),
+                        Colors = ConvertColorList(ct_cfrule.colorScale.color)
+                    };
+                    break;
+
+                case ST_CfType.timePeriod:
+                    rule.TimePeriod = (TimePeriod)ct_cfrule.timePeriod;
+                    break;
+
+                case ST_CfType.top10:
+                    rule.IsPercent = ct_cfrule.percent;
+                    rule.IsBottom = ct_cfrule.bottom;
+                    rule.Rank = (int)ct_cfrule.rank;
+                    break;
+                
+                case ST_CfType.aboveAverage:
+                    rule.IsAboveAverage = ct_cfrule.aboveAverage;
+                    rule.IsEqualAverage = ct_cfrule.equalAverage;
+                    rule.IsStdDev = ct_cfrule.stdDevSpecified;
+                    rule.StdDev = ct_cfrule.stdDev;
+                    break;
+
+                case ST_CfType.containsText:
+                case ST_CfType.notContainsText:
+                case ST_CfType.beginsWith:
+                case ST_CfType.endsWith:
+                case ST_CfType.cellIs:
+                    rule.Text = ct_cfrule.text;
+                    rule.Operator = (CFOperator)ct_cfrule.@operator;
+                    break;
+            }
+
+            if (ct_cfrule.dxfIdSpecified)
+                rule.Style = GetDxfStyle(ct_cfrule.dxfId);
+
+            return rule;
+        }
+
+        private List<CFVO> ConvertCFVOList(CT_Cfvo[] cfvoArr)
+        {
+            var cfvoList = new List<CFVO>();
+            foreach (var cfvo in cfvoArr)
+            {
+                CFVO CFVO = new CFVO
+                {
+                    Type = (CFVOType)cfvo.type,
+                    Value = cfvo.val
+                };
+                cfvoList.Add(CFVO);
+            }
+            return cfvoList;
+        }
+
+        private List<Color> ConvertColorList(CT_Color1[] ct_color1Arr)
+        {
+            var colors = new List<Color>();
+            foreach (CT_Color1 ct_color1 in ct_color1Arr)
+            {
+                Color color = ConvertColor(ct_color1);
+                colors.Add(color);
+            }
+            return colors;
+        }
+
     }
 }

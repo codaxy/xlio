@@ -94,6 +94,7 @@
     <None Include="read\AdvancedSimExport.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="read\ConditionalFormatting.xlsx" />
     <None Include="read\ThemeColors.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

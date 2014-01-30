@@ -134,6 +134,7 @@ namespace Codaxy.Xlio.IO
                     var partPath = PathUtil.CombinePaths(filePath, rel.Target);
                     ReadSheet(partPath, sheet);
                 }
+                
                 workbook.Sheets.AddSheet(sheet);
             }
 
@@ -151,7 +152,6 @@ namespace Codaxy.Xlio.IO
             }
 
         }
-
 
         SharedStrings sharedStrings;
         private void ReadSharedStrings(string path)
@@ -175,8 +175,6 @@ namespace Codaxy.Xlio.IO
                     sharedStrings.Add(s);
                 }
         }
-
-       
 
         #region Zip
 

@@ -552,6 +552,18 @@ namespace Codaxy.Xlio
         /// Instance of black color.
         /// </summary>
         public static Color Black { get { return new Color(255, 0, 0, 0); } }
+        public static Color White { get { return new Color(255, 255, 255, 255); } }
+        public static Color Red { get { return new Color(255, 255, 0, 0); } }
+        public static Color Green { get { return new Color(255, 0, 255, 0); } }
+        public static Color Blue { get { return new Color(255, 0, 0, 255); } }
+        public static Color Yellow { get { return new Color(255, 255, 255, 0); } }
+        public static Color Orange { get { return new Color(255, 255, 165, 0); } }
+        public static Color Purple { get { return new Color(255, 128, 0, 128); } }
+        public static Color Pink { get { return new Color(255, 255, 192, 203); } }
+        public static Color Cyan { get { return new Color(255, 0, 255, 255); } }
+        public static Color LightBlue { get { return new Color(255, 173, 216, 230); } }
+        public static Color Magenta { get { return new Color(255, 255, 0, 255); } }
+        public static Color Gray { get { return new Color(255, 190, 190, 190); } }
     }
 
     public enum FillPattern
@@ -621,6 +633,11 @@ namespace Codaxy.Xlio
         public static CellFill Solid(Color color)
         {
             return new CellFill { Foreground = color, Pattern = FillPattern.Solid };
+        }
+
+        public static CellFill BackColor(Color color)
+        {
+            return new CellFill { Background = color, Pattern = FillPattern.Solid };
         }
     }
 
@@ -897,7 +914,7 @@ namespace Codaxy.Xlio
         Double,
         SingleAccounting,
         DoubleAccounting,
-        None,
+        None
     }
 
     /// <summary>
