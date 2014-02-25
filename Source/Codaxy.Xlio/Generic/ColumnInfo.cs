@@ -15,5 +15,7 @@ namespace Codaxy.Xlio.Generic
         public Func<object, object> ImportConverter { get; set; }
         public Func<CellData, T> Importer { get; set; }
         public Action<T, object> Setter { get; set; }
+
+        public Action<CellData, T, int, object> ExportFormatter { get; set; }
     }
 }

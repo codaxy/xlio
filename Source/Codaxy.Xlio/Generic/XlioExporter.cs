@@ -60,6 +60,8 @@ namespace Codaxy.Xlio.Generic
                         if (exportColumns[i].ExportConverter != null)
                             value = exportColumns[i].ExportConverter(value);
                         sheet[row, i].Value = value;
+                        if (exportColumns[i].ExportFormatter != null)
+                            exportColumns[i].ExportFormatter(sheet[row, i], record, i, value);
                     }
                 }
                 ++row;
