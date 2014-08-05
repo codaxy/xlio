@@ -24,10 +24,13 @@ namespace Codaxy.Xlio.Generic
             wb.SaveToStream(stream, IO.XlsxFileWriterOptions.AutoFit);
         }
 
-        public static void Export<T>(IEnumerable<T> data, Sheet sheet, TableInfo<T> t = null) where T : new()
+        public static void Export<T>(IEnumerable<T> data, Sheet sheet, TableInfo<T> t = null, Cell tableOrigin = null) where T : new()
         {
             if (t == null)
                 t = TableInfo<T>.Build();
+
+            if (tableOrigin == null)
+                tableOrigin = new Cell(0, 0);
 
             var exportColumns = t.Columns.Where(a => a.Getter != null).ToArray();
 
@@ -39,8 +42,8 @@ namespace Codaxy.Xlio.Generic
 
             for (var i = 0; i < exportColumns.Length; i++)
             {
-                sheet[0, i].Value = exportColumns[i].Caption ?? exportColumns[i].Name;
-                sheet[0, i].Style = headerStyle;
+                sheet[tableOrigin.Row, tableOrigin.Col + i].Value = exportColumns[i].Caption ?? exportColumns[i].Name;
+                sheet[tableOrigin.Row, tableOrigin.Col + i].Style = headerStyle;
             }
 
             int row = 1;
@@ -52,14 +55,14 @@ namespace Codaxy.Xlio.Generic
                     if (exportColumns[i].Exporter != null)
                     {
                         var cell = exportColumns[i].Exporter(record);
-                        sheet[row, i] = cell;
+                        sheet[tableOrigin.Row + row, tableOrigin.Col + i] = cell;
                     }
                     else
                     {
                         var value = exportColumns[i].Getter(record);
                         if (exportColumns[i].ExportConverter != null)
                             value = exportColumns[i].ExportConverter(value);
-                        sheet[row, i].Value = value;
+                        sheet[tableOrigin.Row + row, tableOrigin.Col + i].Value = value;
                         if (exportColumns[i].ExportFormatter != null)
                             exportColumns[i].ExportFormatter(sheet[row, i], record, i, value);
                     }

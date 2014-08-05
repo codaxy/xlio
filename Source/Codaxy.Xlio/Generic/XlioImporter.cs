@@ -15,22 +15,28 @@ namespace Codaxy.Xlio.Generic
             public ColumnInfo<T> Column { get; set; }
         }
 
-        public static List<T> Import<T>(Sheet sheet, TableInfo<T> t = null, bool skipEmptyRows = true) where T : new()
+        public static List<T> Import<T>(Sheet sheet, TableInfo<T> t = null, bool skipEmptyRows = true, Cell tableOrigin = null) where T : new()
         {
             if (t == null)
                 t = TableInfo<T>.Build();
 
+            if (tableOrigin == null)
+                tableOrigin = new Cell();
+
             var importColumns = new List<ImportedColumnInfo<T>>();
-            var firstRow = sheet[0];
-            foreach (var cell in firstRow)
+            var headerRow = sheet[tableOrigin.Row];
+            foreach (var cell in headerRow)
             {
-                var name = cell.Value.Value as String;
-                if (!String.IsNullOrEmpty(name))
+                if (cell.Key >= tableOrigin.Col && cell.Key <= tableOrigin.Col + t.Columns.Count)
                 {
-                    var c = t.Columns.FirstOrDefault(a => a.Name == name) ?? t.Columns.FirstOrDefault(a => a.Caption == name);
-                    if (c != null && c.Setter!=null)
+                    var name = cell.Value.Value as String;
+                    if (!String.IsNullOrEmpty(name))
                     {
-                        importColumns.Add(new ImportedColumnInfo<T> { Index = cell.Key, Column = c });
+                        var c = t.Columns.FirstOrDefault(a => a.Name == name) ?? t.Columns.FirstOrDefault(a => a.Caption == name);
+                        if (c != null && c.Setter != null)
+                        {
+                            importColumns.Add(new ImportedColumnInfo<T> { Index = cell.Key, Column = c });
+                        }
                     }
                 }
             }
