@@ -99,12 +99,16 @@ namespace Codaxy.Xlio.IO
                                             var n = Convert.ToDouble(c.v, CultureInfo.InvariantCulture);
                                             value = data.style != null && NumberFormat.IsDateTimeFormat(data.style.format) ? value = XlioUtil.ToDateTime(n) : n;
                                             break;
+
+                                        case ST_CellType.str:
                                         case ST_CellType.inlineStr:
                                             value = c.v;
                                             break;
+
                                         case ST_CellType.s:
                                             value = sharedStrings[Convert.ToInt32(c.v, CultureInfo.InvariantCulture)];
                                             break;
+
                                         case ST_CellType.b:
                                             value = c.v != null && c.v.Length > 0 && (c.v[0] == 'T' || c.v[0] == 't' || c.v[0] == '1');
                                             break;
