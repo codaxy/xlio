@@ -43,7 +43,7 @@ namespace Codaxy.Xlio.Generic
 
             List<T> result = new List<T>();
 
-            for (var i = 1; i < sheet.Data.Count; i++)
+            for (var i = tableOrigin.Row + 1; i < sheet.Data.Count; i++)
             {
                 if (!skipEmptyRows || sheet.Data[i].Cells.Data.Values.Any(a => a.Value != null))
                 {
