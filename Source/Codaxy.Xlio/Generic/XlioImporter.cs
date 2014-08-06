@@ -43,20 +43,32 @@ namespace Codaxy.Xlio.Generic
 
             List<T> result = new List<T>();
 
-            for (var i = tableOrigin.Row + 1; i < sheet.Data.Count; i++)
+            foreach (var rowData in sheet.Data)
             {
-                if (!skipEmptyRows || sheet.Data[i].Cells.Data.Values.Any(a => a.Value != null))
+                if (rowData.Key > tableOrigin.Row)
                 {
+                    bool empty = true;
                     var row = new T();
                     foreach (var ic in importColumns)
                     {
-                        var v = sheet.Data[i, ic.Index].Value;
+                        var v = rowData.Value[ic.Index].Value;
+                        if (v != null)
+                            empty = false;
                         if (ic.Column.ImportConverter != null)
                             v = ic.Column.ImportConverter(v);
 
                         ic.Column.Setter(row, v);
                     }
-                    result.Add(row);
+                    if (!empty || !skipEmptyRows)
+                        result.Add(row);
+                }
+            }
+
+            for (var i = tableOrigin.Row + 1; i < sheet.Data.Count; i++)
+            {
+                if (!skipEmptyRows || sheet.Data[i].Cells.Data.Values.Any(a => a.Value != null))
+                {
+                    
                 }
             }
 
