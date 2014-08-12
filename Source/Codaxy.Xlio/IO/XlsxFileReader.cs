@@ -170,6 +170,13 @@ namespace Codaxy.Xlio.IO
                             sb.Append(t.t);
                         s = sb.ToString();
                     }
+                    else if (ss.r != null)
+                    {
+                        StringBuilder sb = new StringBuilder();
+                        foreach (var t in ss.r)
+                            sb.Append(t.t);
+                        s = sb.ToString();
+                    }
                     else
                         s = String.Empty;
                     sharedStrings.Add(s);
