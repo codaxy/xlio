@@ -53,11 +53,13 @@ namespace Codaxy.Xlio.Generic
                     {
                         var v = rowData.Value[ic.Index].Value;
                         if (v != null)
+                        {
                             empty = false;
-                        if (ic.Column.ImportConverter != null)
-                            v = ic.Column.ImportConverter(v);
+                            if (ic.Column.ImportConverter != null)
+                                v = ic.Column.ImportConverter(v);
 
-                        ic.Column.Setter(row, v);
+                            ic.Column.Setter(row, v);
+                        }
                     }
                     if (!empty || !skipEmptyRows)
                         result.Add(row);
