@@ -147,7 +147,11 @@ namespace Codaxy.Xlio.IO
                         Name = dn.name,
                         Value = dn.Value
                     };
-                    workbook.DefinedNames.AddDefinedName(definedName);
+
+                    if (dn.localSheetIdSpecified && dn.localSheetId > 0)
+                        workbook.Sheets[(int)dn.localSheetId - 1].DefinedNames.AddDefinedName(definedName);                    
+                    else
+                        workbook.DefinedNames.AddDefinedName(definedName);
                 }
             }
 

@@ -8,7 +8,7 @@ using System.IO;
 namespace Codaxy.Xlio.Generic
 {
 
-    [TestFixture(Active=true)]
+    [TestFixture(Active=false)]
     class ImportExportTests
     {
         class C1

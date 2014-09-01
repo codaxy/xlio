@@ -104,23 +104,36 @@ namespace Codaxy.Xlio.IO
                 sheets = sheets.ToArray(),
                 bookViews = new[] { new CT_BookView() }
             };
-
-
-            if (workbook.DefinedNames.Count != 0)
+            
+            var definedNames = new List<CT_DefinedName>();
+            foreach (var definedName in workbook.DefinedNames)
             {
-                var definedNames = new List<CT_DefinedName>();
+                var dn = new CT_DefinedName
+                {
+                    name = definedName.Name,
+                    Value = definedName.Value
+                };
+                definedNames.Add(dn);
+            }
+
+            for (var i = 0; i < workbook.Sheets.Count; i++)
+            {
                 foreach (var definedName in workbook.DefinedNames)
                 {
                     var dn = new CT_DefinedName
                     {
                         name = definedName.Name,
-                        Value = definedName.Value
+                        Value = definedName.Value,
+                        localSheetId = (uint)i + 1,
+                        localSheetIdSpecified = true
                     };
                     definedNames.Add(dn);
                 }
-                
-                wb.definedNames = definedNames.ToArray();
             }
+
+            if (definedNames.Count > 0)
+                wb.definedNames = definedNames.ToArray();
+            
 
             WriteFile("xl/workbook.xml", wb, SpreadsheetNs(true));
 

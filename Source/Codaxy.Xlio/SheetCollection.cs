@@ -91,5 +91,7 @@ namespace Codaxy.Xlio
         {
             return sheets.GetEnumerator();
         }
+
+        public int Count { get { return sheets.Count; } }
     }
 }

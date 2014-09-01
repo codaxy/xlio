@@ -18,10 +18,13 @@ namespace Codaxy.Xlio
             ShowGridLines = true;
             //ConditionalFormatting = new List<ConditionalFormatting>();
             ConditionalFormatting = new List<ConditionalFormatting>();
+            DefinedNames = new DefinedNameCollection();
         }
 
         //public List<ConditionalFormatting> ConditionalFormatting { get; set; }
         public List<ConditionalFormatting> ConditionalFormatting { get; set; }
+
+        public DefinedNameCollection DefinedNames { get; private set; }
         
         public string SheetName { get; internal set; }
 

@@ -120,7 +120,22 @@ namespace Codaxy.Xlio
 
             using (var f = File.Open("PageBreak.xlsx", FileMode.Create))
                 wb.SaveToStream(f);
+        }
 
+        [Test(Active = true)]
+        public void DefinedNamesTest()
+        {
+            {
+                var wb = new Workbook();
+                var sheet = wb.Sheets.AddSheet(new Sheet("Sheet") { ShowGridLines = true });
+                sheet.DefinedNames.AddValue("X", "1");
+                wb.Save("DefinedNames.xlsx");
+            }
+
+            {
+                var wb = Workbook.Load("DefinedNames.xlsx");
+                Assert.AreEqual(1, wb.Sheets[0].DefinedNames.Count);
+            }
         }
     }
 }

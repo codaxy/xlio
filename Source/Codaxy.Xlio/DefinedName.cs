@@ -10,6 +10,5 @@ namespace Codaxy.Xlio
         public String Name { get; set; }
 
         public String Value { get; set; }
-
     }
 }
