@@ -124,7 +124,7 @@ namespace Codaxy.Xlio.IO
                     {
                         name = definedName.Name,
                         Value = definedName.Value,
-                        localSheetId = (uint)i + 1,
+                        localSheetId = (uint)i,
                         localSheetIdSpecified = true
                     };
                     definedNames.Add(dn);
