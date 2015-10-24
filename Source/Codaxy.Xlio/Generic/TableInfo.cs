@@ -8,12 +8,47 @@ using Codaxy.Xlio.IO;
 
 namespace Codaxy.Xlio.Generic
 {
+    public class ImportExportOptions
+    {
+        public Func<Type, Action<SheetColumn>> DefaultColumnFormatter { get; set; }
+
+        public CellStyle DefaultHeaderStyle { get; set; }
+
+        public static ImportExportOptions _default;
+        public static ImportExportOptions Default
+        {
+            get
+            {
+                if (_default == null)
+                    _default = InitDefaultOptions();
+
+                return _default;
+            }
+
+            set { _default = value; }
+        }
+
+        static ImportExportOptions InitDefaultOptions()
+        {
+            var options = new ImportExportOptions();
+            options.DefaultHeaderStyle = new CellStyle
+            {
+                Fill = new CellFill { Pattern = FillPattern.Solid, Foreground = new Color(255, 0x46, 0x82, 0xB4) },
+                Font = new CellFont { Color = new Color(255, 255, 255, 255), Bold = true }
+            };
+            return options;
+        }
+    }
+
     public class TableInfo<T>
     {
-        public List<ColumnInfo<T>> Columns { get; set; }        
+        public List<ColumnInfo<T>> Columns { get; set; }
 
-        public static TableInfo<T> Build()
+        public static TableInfo<T> Build(ImportExportOptions options = null)
         {
+            if (options == null)
+                options = ImportExportOptions.Default;
+
             var type = typeof(T);
             var properties = type.GetProperties();
             var result = new TableInfo<T>
@@ -24,18 +59,29 @@ namespace Codaxy.Xlio.Generic
             foreach (var p in properties)
             {
                 var prop = p;
-                result.Columns.Add(new ColumnInfo<T>
+                var c = new ColumnInfo<T>
                 {
                     Name = prop.Name,
                     Getter = prop.CanRead ? (row) => { return prop.GetValue(row, null); } : (Func<T, object>)null,
                     Setter = prop.CanWrite ? (row, value) =>
-                    {                        
+                    {
                         prop.SetValue(row, value, null);
-                    } : (Action<T, object>)null,
+                    }
+                    : (Action<T, object>)null,
                     ExportConverter = GetExportConverter(prop.PropertyType),
-                    ImportConverter = GetImportConverter(prop.PropertyType)
-                });
+                    ImportConverter = GetImportConverter(prop.PropertyType),
+                    ExportColumnFormatter = options != null && options.DefaultColumnFormatter != null ? options.DefaultColumnFormatter(prop.PropertyType) : null
+                };
+
+                if (options.DefaultColumnFormatter != null)
+                    c.ExportColumnFormatter = options.DefaultColumnFormatter(prop.PropertyType);
+
+                if (options.DefaultHeaderStyle != null)
+                    c.HeaderStyle = options.DefaultHeaderStyle.Clone();
+
+                result.Columns.Add(c);
             }
+
 
             return result;
         }
@@ -44,9 +90,9 @@ namespace Codaxy.Xlio.Generic
         {
             if (TypeInfo.IsNullableType(propertyType))
                 return GetNullableConverter(GetExportConverter(Nullable.GetUnderlyingType(propertyType)));
-            
+
             if (propertyType == typeof(Guid))
-                return GuidExportConverter;           
+                return GuidExportConverter;
             return null;
         }
 
@@ -56,9 +102,9 @@ namespace Codaxy.Xlio.Generic
                 return GetNullableConverter(GetImportConverter(Nullable.GetUnderlyingType(propertyType)));
 
             if (propertyType == typeof(DateTime))
-                return DateTimeImportConverter;            
+                return DateTimeImportConverter;
             if (propertyType == typeof(Guid))
-                return GuidImportConverter;            
+                return GuidImportConverter;
 
             return GetStandardConverter(propertyType);
         }
@@ -66,7 +112,7 @@ namespace Codaxy.Xlio.Generic
         private static Func<object, object> GetNullableConverter(Func<object, object> converter)
         {
             if (converter == null)
-                return null;                    
+                return null;
             return (value) =>
             {
                 if (value == null)
@@ -80,7 +126,7 @@ namespace Codaxy.Xlio.Generic
             if (o is Double)
                 return XlioUtil.ToDateTime((double)o);
             return Convert.ChangeType(o, typeof(DateTime), CultureInfo.InvariantCulture);
-        }   
+        }
 
         static object GuidImportConverter(object o)
         {
@@ -109,7 +155,7 @@ namespace Codaxy.Xlio.Generic
         }
     }
 
-    
+
 
 
 }

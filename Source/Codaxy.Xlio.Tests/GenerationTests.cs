@@ -122,7 +122,7 @@ namespace Codaxy.Xlio
                 wb.SaveToStream(f);
         }
 
-        [Test(Active = true)]
+        [Test(Active = false)]
         public void DefinedNamesTest()
         {
             {

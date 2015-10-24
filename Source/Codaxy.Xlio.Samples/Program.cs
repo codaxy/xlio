@@ -11,11 +11,18 @@ namespace Codaxy.Xlio.Samples
 {
     class Program
     {
+        class A
+        {
+            public String Name
+            {
+                get; set;
+            }
+        }
         static void Main(string[] args)
         {
-            PetaTest.Runner.RunMain(args);            
+            PetaTest.Runner.RunMain(args);
         }
 
-        
+
     }
 }

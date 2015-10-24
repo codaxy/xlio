@@ -34,16 +34,18 @@ namespace Codaxy.Xlio.Generic
 
             var exportColumns = t.Columns.Where(a => a.Getter != null).ToArray();
 
-            var headerStyle = new CellStyle
-            {
-                Fill = new CellFill { Pattern = FillPattern.Solid, Foreground = new Color(255, 0x46, 0x82, 0xB4) },
-                Font = new CellFont { Color = new Color(255, 255, 255, 255), Bold = true }
-            };
+
 
             for (var i = 0; i < exportColumns.Length; i++)
             {
                 sheet[tableOrigin.Row, tableOrigin.Col + i].Value = exportColumns[i].Caption ?? exportColumns[i].Name;
-                sheet[tableOrigin.Row, tableOrigin.Col + i].Style = headerStyle;
+                sheet[tableOrigin.Row, tableOrigin.Col + i].Style = exportColumns[i].HeaderStyle;
+
+                if (exportColumns[i].ExportHeaderFormatter != null)
+                    exportColumns[i].ExportHeaderFormatter(exportColumns[i], sheet[tableOrigin.Row, tableOrigin.Col + i]);
+
+                if (exportColumns[i].ExportColumnFormatter != null)
+                    exportColumns[i].ExportColumnFormatter(sheet.Columns[tableOrigin.Col + i]);
             }
 
             int row = 1;

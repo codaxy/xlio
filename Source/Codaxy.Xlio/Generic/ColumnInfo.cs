@@ -17,5 +17,11 @@ namespace Codaxy.Xlio.Generic
         public Action<T, object> Setter { get; set; }
 
         public Action<CellData, T, int, object> ExportFormatter { get; set; }
+
+        public Action<SheetColumn> ExportColumnFormatter { get; set; }
+
+        public Action<ColumnInfo<T>, CellData> ExportHeaderFormatter { get; set; }
+
+        public CellStyle HeaderStyle { get; set; }
     }
 }
