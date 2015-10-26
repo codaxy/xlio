@@ -656,7 +656,7 @@ namespace Codaxy.Xlio.IO
             {
                 var dt = (DateTime)data.Value;
                 ct = ST_CellType.n;
-                format = dt.Hour == 0 && dt.Minute == 0 && dt.Second == 0 && dt.Millisecond == 0 ? "m/d/yyyy" : "m/d/yyyy\\ h:mm:ss";
+                format = "mm-dd-yy";
                 return value = String.Format(CultureInfo.InvariantCulture, "{0}", XlioUtil.ToExcelDateTime(dt));
             }
             if (type == typeof(string))

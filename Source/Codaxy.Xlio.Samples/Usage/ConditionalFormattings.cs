@@ -10,7 +10,7 @@ namespace Codaxy.Xlio.Samples.Usage
     [TestFixture]
     class ConditionalFormattings
     {
-        [Test(Active=true)]
+        [Test(Active=false)]
         public static void CreateConditionalFormatting()
         {
             var workbook = new Workbook(); //creating workbook and adding sheet

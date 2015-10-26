@@ -55,7 +55,7 @@ namespace Codaxy.Xlio.Samples
 
             var title = sheet[2, 0, 2, 3].Merge();
             title.Value = "Title";
-            title.Style.Alignment.HAlign = HorizontalAlignment.Center;
+            title.Style.Alignment.HAlign = HorizontalAlignment.Center;            
 
             var headers = sheet["A4", "D4"];
             headers.SetBorder(new BorderEdge { Style = BorderStyle.Thin, Color = Color.Black }); //add border to header cells
