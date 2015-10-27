@@ -68,6 +68,10 @@ namespace Codaxy.Xlio.Generic
                         if (exportColumns[i].ExportFormatter != null)
                             exportColumns[i].ExportFormatter(sheet[row, i], record, i, value);
                     }
+
+                    var x = sheet[tableOrigin.Row + row, tableOrigin.Col + i];
+                    if (x.style == null && sheet.Columns[tableOrigin.Col + i].style != null)
+                        x.style = sheet.Columns[tableOrigin.Col + i].style;
                 }
                 ++row;
             }

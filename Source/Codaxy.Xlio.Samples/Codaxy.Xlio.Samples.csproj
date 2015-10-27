@@ -75,6 +75,7 @@
     <Compile Include="Usage\ConditionalFormattings.cs" />
     <Compile Include="Usage\DefinedNames.cs" />
     <Compile Include="Usage\Formulas.cs" />
+    <Compile Include="Usage\ImportExport.cs" />
     <Compile Include="Usage\Styles.cs" />
   </ItemGroup>
   <ItemGroup>

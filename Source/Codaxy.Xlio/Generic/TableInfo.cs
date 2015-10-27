@@ -69,8 +69,7 @@ namespace Codaxy.Xlio.Generic
                     }
                     : (Action<T, object>)null,
                     ExportConverter = GetExportConverter(prop.PropertyType),
-                    ImportConverter = GetImportConverter(prop.PropertyType),
-                    ExportColumnFormatter = options != null && options.DefaultColumnFormatter != null ? options.DefaultColumnFormatter(prop.PropertyType) : null
+                    ImportConverter = GetImportConverter(prop.PropertyType)
                 };
 
                 if (options.DefaultColumnFormatter != null)
