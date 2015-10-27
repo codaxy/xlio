@@ -341,13 +341,19 @@ namespace Codaxy.Xlio.IO
             var cols = new List<CT_Col>();
             if (calcAutoFit)
             {
-                for (uint i = 0; i < width.Length; i++)
+                for (int i = 0; i < width.Length; i++)
                     if (width[i] > 0)
                     {
-                        cols.Add(new CT_Col { min = i + 1, max = i + 1, bestFit = true, customWidth = true, width = width[i] + 1, widthSpecified = true });
+                        if (!sheet.Columns[i].Width.HasValue)
+                        {
+                            sheet.Columns[i].Width = width[i];
+                            sheet.Columns[i].BestFit = true;
+                        }
+
                     }
             }
-            else if (sheet.Columns.data.Count > 0)
+
+            if (sheet.Columns.data.Count > 0)
             {
                 foreach (var node in sheet.Columns.data)
                 {
