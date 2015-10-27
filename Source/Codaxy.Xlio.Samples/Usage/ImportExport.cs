@@ -19,7 +19,10 @@ namespace Codaxy.Xlio.Samples.Usage
         [Test(Active =true)]
         public void Export() {
 
-            var data = new[] { new Model { Name = "N", Number = 10.25m } };
+            var data = new[] {
+                new Model { Name = " N", Number = 10.25m },
+                new Model { Name = "M  D", Number = 10.25m }
+            };
 
             var table = Generic.TableInfo<Model>.Build();
 

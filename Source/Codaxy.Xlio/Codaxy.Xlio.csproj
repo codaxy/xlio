@@ -80,6 +80,7 @@
     <Compile Include="ConditionalFormattingRule.cs" />
     <Compile Include="DefinedName.cs" />
     <Compile Include="DefinedNameCollection.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Generic\ColumnInfo.cs" />
     <Compile Include="Generic\TableInfo.cs" />
     <Compile Include="Generic\XlioExporter.cs" />

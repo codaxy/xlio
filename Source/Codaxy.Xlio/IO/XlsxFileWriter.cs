@@ -180,7 +180,11 @@ namespace Codaxy.Xlio.IO
             var rest = new List<CT_Rst>();
             foreach (var s in sharedStrings)
             {
-                rest.Add(new CT_Rst { t = s });
+                rest.Add(new CT_Rst
+                {
+                    t = s,
+                    Space = s.StartsWith(" ") || s.EndsWith(" ") ? "preserve" : null
+                });
             }
             CT_Sst sst = new CT_Sst() { si = rest.ToArray() };
             var relativePath = "sharedStrings.xml";
