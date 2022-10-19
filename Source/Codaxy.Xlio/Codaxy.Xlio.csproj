@@ -7,7 +7,7 @@
 		<RunAnalyzersDuringBuild>True</RunAnalyzersDuringBuild>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Description>Codaxy Excel IO library provides useful tool for rading/writing Excel files.</Description>
-		<Version>0.9.9</Version>
+		<Version>1.0.0</Version>
 		<Company>Codaxy</Company>
 		<Authors>Codaxy</Authors>
 		<PackageProjectUrl>http://dox.codaxy.com/xlio/</PackageProjectUrl>
