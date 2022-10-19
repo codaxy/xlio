@@ -21,14 +21,14 @@ namespace Codaxy.Xlio.Generic.Tests.Bugreports
                 Assert.AreEqual(BorderStyle.Thin, sheet["B9"].Style.Border.Top.Style);
             };
 
-            var wb1 = Workbook.Load(@"files\AdvancedSimExport.xlsx");
+            var wb1 = Workbook.Load(@"files/AdvancedSimExport.xlsx");
             var sheet1 = wb1.Sheets[0];
 
             test(sheet1, "Read");
 
-            wb1.Save(@"files\AdvancedSimExport-out.xlsx");
+            wb1.Save(@"files/AdvancedSimExport-out.xlsx");
 
-            var wb2 = Workbook.Load(@"files\AdvancedSimExport-out.xlsx");
+            var wb2 = Workbook.Load(@"files/AdvancedSimExport-out.xlsx");
             var sheet2 = wb2.Sheets[0];
 
             test(sheet2, "Write");

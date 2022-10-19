@@ -1,13 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>netstandard2.0</TargetFramework>
-		<LangVersion>8.0</LangVersion>
+		<TargetFramework>netstandard2.1</TargetFramework>
 		<Nullable>enable</Nullable>
 		<RunAnalyzersDuringBuild>True</RunAnalyzersDuringBuild>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Description>Codaxy Excel IO library provides useful tool for rading/writing Excel files.</Description>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<Company>Codaxy</Company>
 		<Authors>Codaxy</Authors>
 		<PackageProjectUrl>http://dox.codaxy.com/xlio/</PackageProjectUrl>
@@ -17,10 +16,6 @@
 	  <Compile Remove="xsd\**" />
 	  <EmbeddedResource Remove="xsd\**" />
 	  <None Remove="xsd\**" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="SharpZipLib.NETStandard" Version="1.0.7" />
 	</ItemGroup>
 
 </Project>

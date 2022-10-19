@@ -3,25 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using ICSharpCode.SharpZipLib.Zip;
 using Codaxy.Xlio.Model.Opc;
 using System.Xml.Serialization;
 using Codaxy.Xlio.Model.Oxml;
 using System.Diagnostics;
+using System.IO.Compression;
 
 namespace Codaxy.Xlio.IO
 {
     //SRP: Read xlsx file into Workbook
     public partial class XlsxFileReader : IDisposable
     {
-        ZipFile archive;
+        ZipArchive archive;
 
         ContentTypes contentTypes;
         Workbook workbook;
 
         public XlsxFileReader(Stream input)
         {
-            archive = new ZipFile(input);
+            archive = new ZipArchive(input);
         }
 
         #region ContentTypes
@@ -197,8 +197,8 @@ namespace Codaxy.Xlio.IO
         bool FileExists(string filePath)
         {
             var zipPath = GetZipPath(filePath);
-            var zipEntry = archive.FindEntry(zipPath, true);            
-            return zipEntry != -1;
+            var zipEntry = archive.GetEntry(zipPath);
+            return zipEntry != null;
         }
 
         T ReadFile<T>(String fileName)
@@ -207,7 +207,7 @@ namespace Codaxy.Xlio.IO
             var zipEntry = archive.GetEntry(zipPath);
             if (zipEntry == null)
                 throw ExceptionFactory.InvalidOperation("File '{0}' not found in archive!", fileName);
-            using (var stream = archive.GetInputStream(zipEntry))
+            using (var stream = zipEntry.Open())
 			using (var reader = new StreamReader(stream, true))
             {
 				XmlSerializer s = new XmlSerializer(typeof(T));

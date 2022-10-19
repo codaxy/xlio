@@ -14,8 +14,8 @@ namespace Codaxy.Xlio
         public void ReadWriteTest()
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
-            System.IO.Directory.CreateDirectory(".\\write");
-            foreach (var f in System.IO.Directory.GetFileSystemEntries(".", "read\\*.xlsx").OrderBy(a => a))
+            System.IO.Directory.CreateDirectory("./write");
+            foreach (var f in System.IO.Directory.GetFileSystemEntries(".", "read/*.xlsx").OrderBy(a => a))
             {
                 try
                 {
@@ -24,7 +24,7 @@ namespace Codaxy.Xlio
                     Workbook wb = Workbook.Load(f);
                     Console.WriteLine("{0:0.00 ms}", stopwatch.Elapsed.TotalMilliseconds);
                     stopwatch.Reset(); stopwatch.Start();
-                    var of = f.Replace("\\read\\", "\\write\\");
+                    var of = f.Replace("read", "write");
                     Console.Write("Writing file '{0}'...", of);
                     wb.Save(of);
                     Console.WriteLine("{0:0.00 ms}", stopwatch.Elapsed.TotalMilliseconds);

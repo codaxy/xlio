@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using ICSharpCode.SharpZipLib.Zip;
 using Codaxy.Xlio.Model.Oxml;
 using Codaxy.Xlio.Model.Opc;
 using System.Xml.Serialization;
 using System.Globalization;
 using System.Diagnostics;
+using System.IO.Compression;
 
 namespace Codaxy.Xlio.IO
 {
@@ -21,12 +21,12 @@ namespace Codaxy.Xlio.IO
 
     public partial class XlsxFileWriter : IDisposable
     {
-        ZipOutputStream output;
+        ZipArchive archive;
         Workbook workbook;
         public XlsxFileWriterOptions Options { get; set; }
         public XlsxFileWriter(Stream output)
         {
-            this.output = new ZipOutputStream(output) { UseZip64 = UseZip64.Off };
+            this.archive = new ZipArchive(output, ZipArchiveMode.Create);
         }
 
         SharedStrings sharedStrings;
@@ -710,17 +710,19 @@ namespace Codaxy.Xlio.IO
 
         private void WriteFile<T>(string filePath, T data, XmlSerializerNamespaces ns)
         {
-            var entry = new ZipEntry(filePath);
-            output.PutNextEntry(entry);
+            var entry = archive.CreateEntry(filePath);
             var xs = new XmlSerializer(typeof(T));
-            var writer = new StreamWriter(output, Encoding.UTF8);
-            xs.Serialize(writer, data, ns);
+            using (var output = entry.Open())
+            {
+                var writer = new StreamWriter(output, Encoding.UTF8);
+                xs.Serialize(writer, data, ns);
+            }
         }
 
         public void Dispose()
         {
-            this.output.Dispose();
-            this.output = null;
+            this.archive.Dispose();
+            this.archive = null;
         }
 
         struct Lazy<T> where T : class, new()
