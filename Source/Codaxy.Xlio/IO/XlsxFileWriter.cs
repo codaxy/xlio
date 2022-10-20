@@ -118,7 +118,7 @@ namespace Codaxy.Xlio.IO
 
             for (var i = 0; i < workbook.Sheets.Count; i++)
             {
-                foreach (var definedName in workbook.DefinedNames)
+                foreach (var definedName in workbook.Sheets[i].DefinedNames)
                 {
                     var dn = new CT_DefinedName
                     {
